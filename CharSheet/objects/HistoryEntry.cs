@@ -1,26 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace CharSheet.objects
 {
-    class HistoryEntry
+    [DataContract]
+    public class HistoryEntry
     {
-        public int id;
+        [DataMember]
         public string description { get; set; }
-        private int skillModified_1 = -1;
-        private int skillValue_1 = 0;
-        private int skillModified_2 = -1;
-        private int skillValue_2 = 0;
-        private int attributeModified = -1;
-        private int attributeValue = 0;
+        [DataMember]
+        public int xpValue { get; set; }
+        [DataMember]
+        public int primarySkill { get; set; }
+        [DataMember]
+        public string timestamp { get; set; }
 
-        public HistoryEntry(string description)
+        public HistoryEntry(string description, int xp=0, int primarySkill=-1)
         {
             this.description = description;
+            this.xpValue = xp;
+            this.primarySkill = primarySkill;
+            this.timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
         }
 
         public TextBlock GenerateHistoryEntryTextBlock()

@@ -145,5 +145,10 @@ namespace CharSheet.Pages
 
             SkillDropdown.ItemsSource = skills;
         }
+
+        private void TESTER_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Save("../../saves/tester2.xml");
+        }
     }
 }

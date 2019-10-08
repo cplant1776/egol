@@ -32,11 +32,11 @@ namespace CharSheet.Pages
         {
             List<Milestone> milestones = new List<Milestone>
             {
-                new Milestone(1, "milestone1"),
-                new Milestone(2, "milestone2"),
-                new Milestone(3, "milestone3"),
-                new Milestone(4, "milestone4"),
-                new Milestone(5, "milestone5")
+                new Milestone("milestone1", -1, 0),
+                new Milestone("milestone2", -1, 0),
+                new Milestone("milestone3", -1, 0),
+                new Milestone("milestone4", -1, 0),
+                new Milestone("milestone5", -1, 0)
             };
 
             foreach(Milestone ms in milestones)

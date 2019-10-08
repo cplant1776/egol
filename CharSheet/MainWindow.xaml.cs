@@ -22,9 +22,18 @@ namespace CharSheet
     public partial class MainWindow : Window
     {
 
+        public Character currentCharacter = new Character();
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        public void Save(string destination)
+        {
+            currentCharacter.dataHandler.SaveToXml(currentCharacter, destination);
+        }
     }
+
+
 }

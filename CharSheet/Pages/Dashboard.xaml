@@ -236,7 +236,8 @@
             <Button
                 Grid.Column="4"
                 VerticalAlignment="Center"
-                HorizontalContentAlignment="Center">
+                HorizontalContentAlignment="Center"
+                Click="TESTER_Click">
                 Add
             </Button>
 

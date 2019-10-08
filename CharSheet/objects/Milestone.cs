@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CharSheet.objects
 {
-    class Milestone
+    [DataContract]
+    public class Milestone
     {
-        private readonly int id;
-        public string Description { get;}
-        private readonly int attributeId=0;
-        private readonly int attributeModifierValue=0;
+        [DataMember]
+        public string Description { get; set; }
+        [DataMember]
+        private int AttributeId { get; set; }
+        [DataMember]
+        private int AttributeModifierValue { get; set; }
+        [DataMember]
+        public string timestamp { get; set; }
 
-        public Milestone(int milestoneId, string desc)
+        public Milestone(string desc, int attribute, int attributeValue)
         {
-            id = milestoneId;
-            Description = desc;
+            this.Description = desc;
+            this.AttributeId = attribute;
+            this.AttributeModifierValue = attributeValue;
+            this.timestamp = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         }
 
     }

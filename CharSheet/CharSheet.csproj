@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -83,9 +84,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="objects\Character.cs" />
     <Compile Include="objects\HistoryEntry.cs" />
     <Compile Include="objects\Milestone.cs" />
     <Compile Include="objects\MyPlotter.cs" />
+    <Compile Include="objects\XmlHelper.cs" />
     <Compile Include="Pages\CharacterCreationPage.xaml.cs">
       <DependentUpon>CharacterCreationPage.xaml</DependentUpon>
     </Compile>
@@ -152,7 +155,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="characters\" />
+    <Folder Include="saves\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="media\icons\tester.png" />
