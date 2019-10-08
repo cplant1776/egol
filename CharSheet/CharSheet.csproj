@@ -57,11 +57,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CharacterCreation.xaml">
+    <Page Include="Pages\CharacterCreationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LevelUpPage.xaml">
+    <Page Include="Pages\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LevelUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -73,21 +77,46 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CharacterCreation.xaml.cs">
-      <DependentUpon>CharacterCreation.xaml</DependentUpon>
+    <Compile Include="objects\Milestone.cs" />
+    <Compile Include="Pages\CharacterCreationPage.xaml.cs">
+      <DependentUpon>CharacterCreationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LevelUpPage.xaml.cs">
+    <Compile Include="Pages\Dashboard.xaml.cs">
+      <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LevelUpPage.xaml.cs">
       <DependentUpon>LevelUpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\MilestoneValuePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RemoveMilestonePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MilestoneDescPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="objects\AttributeRow.cs" />
     <Compile Include="objects\DataHandler.cs" />
     <Compile Include="objects\SkillRow.cs" />
+    <Compile Include="Pages\MilestoneValuePage.xaml.cs">
+      <DependentUpon>MilestoneValuePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RemoveMilestonePage.xaml.cs">
+      <DependentUpon>RemoveMilestonePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MilestoneDescPage.xaml.cs">
+      <DependentUpon>MilestoneDescPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -72,7 +72,7 @@ namespace CharSheet.objects
                 VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 FontSize = 16,
-                Text = SkillName
+                Text = SkillName,
             };
             Grid.SetColumn(skillName, 1);
 
