@@ -5,31 +5,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace CharSheet.objects
 {
-    public class AttributeRow
+    public class SkillRow
     {
-        public String AttributeName { get; set; }
+        public String SkillName { get; set; }
         public String PlusIconPath { get; set; }
         public String MinusIconPath { get; set; }
-        public int AttributeValue { get; set; }
+        public int SkillValue { get; set; }
         public int GridRow { get; set; }
 
-        public AttributeRow(String name, int val)
+        public SkillRow(String name, int val)
         {
-            AttributeName = name;
-            AttributeValue = val;
+            SkillName = name;
+            SkillValue = val;
 
             PlusIconPath = "../../media/icons/Add_grey_16xMD.png";
             MinusIconPath = "../../media/icons/Subtract_16x.png";
         }
 
-        public Grid GenerateAttributeRow()
+        public Grid GenerateSkillRow()
         {
             // Create grid
-            Grid attrGrid = new Grid()
+            Grid skillGrid = new Grid()
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch
@@ -60,32 +59,32 @@ namespace CharSheet.objects
             {
                 Width = new GridLength(1.4, GridUnitType.Star)
             };
-            attrGrid.ColumnDefinitions.Add(colDef1);
-            attrGrid.ColumnDefinitions.Add(colDef2);
-            attrGrid.ColumnDefinitions.Add(colDef3);
-            attrGrid.ColumnDefinitions.Add(colDef4);
-            attrGrid.ColumnDefinitions.Add(colDef5);
-            attrGrid.ColumnDefinitions.Add(colDef6);
+            skillGrid.ColumnDefinitions.Add(colDef1);
+            skillGrid.ColumnDefinitions.Add(colDef2);
+            skillGrid.ColumnDefinitions.Add(colDef3);
+            skillGrid.ColumnDefinitions.Add(colDef4);
+            skillGrid.ColumnDefinitions.Add(colDef5);
+            skillGrid.ColumnDefinitions.Add(colDef6);
 
-            // Attr Name TextBlock
-            TextBlock attrName = new TextBlock
+            // Skill Name TextBlock
+            TextBlock skillName = new TextBlock
             {
                 VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 FontSize = 16,
-                Text = AttributeName
+                Text = SkillName
             };
-            Grid.SetColumn(attrName, 1);
+            Grid.SetColumn(skillName, 1);
 
-            // Attr Value TextBlock
-            TextBlock attrVal = new TextBlock()
+            // skill Value TextBlock
+            TextBlock skillVal = new TextBlock()
             {
                 VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 FontSize = 20,
-                Text = AttributeValue.ToString()
+                Text = SkillValue.ToString()
             };
-            Grid.SetColumn(attrVal, 2);
+            Grid.SetColumn(skillVal, 2);
 
             // Plus Button
             Image plusImg = new Image
@@ -116,12 +115,12 @@ namespace CharSheet.objects
             Grid.SetColumn(minusBtn, 4);
 
             // Add Elements to Row
-            attrGrid.Children.Add(attrName);
-            attrGrid.Children.Add(attrVal);
-            attrGrid.Children.Add(plusBtn);
-            attrGrid.Children.Add(minusBtn);
+            skillGrid.Children.Add(skillName);
+            skillGrid.Children.Add(skillVal);
+            skillGrid.Children.Add(plusBtn);
+            skillGrid.Children.Add(minusBtn);
 
-            return attrGrid;
+            return skillGrid;
         }
     }
 }

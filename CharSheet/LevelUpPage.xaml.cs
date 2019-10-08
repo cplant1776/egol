@@ -41,13 +41,13 @@ namespace CharSheet
         {
             List<AttributeRow> rows = new List<AttributeRow>
             {
-                new AttributeRow("Constitution", 99, 2),
-                new AttributeRow("Strength", 99, 1),
-                new AttributeRow("Agility", 99, 2),
-                new AttributeRow("Intelligence", 99, 3),
-                new AttributeRow("Wisdom", 99, 4),
-                new AttributeRow("Charisma", 99, 5),
-                new AttributeRow("Luck", 99, 6)
+                new AttributeRow("Constitution", 99),
+                new AttributeRow("Strength", 99),
+                new AttributeRow("Agility", 99),
+                new AttributeRow("Intelligence", 99),
+                new AttributeRow("Wisdom", 99),
+                new AttributeRow("Charisma", 99),
+                new AttributeRow("Luck", 99)
             };
 
             AttributeRows.ItemsSource = rows;

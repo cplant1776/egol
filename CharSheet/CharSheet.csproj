@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CharacterCreation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LevelUpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -68,6 +73,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CharacterCreation.xaml.cs">
+      <DependentUpon>CharacterCreation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LevelUpPage.xaml.cs">
       <DependentUpon>LevelUpPage.xaml</DependentUpon>
     </Compile>
@@ -79,6 +87,7 @@
   <ItemGroup>
     <Compile Include="objects\AttributeRow.cs" />
     <Compile Include="objects\DataHandler.cs" />
+    <Compile Include="objects\SkillRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
