@@ -18,9 +18,9 @@ namespace CharSheet.Pages
     /// <summary>
     /// Interaction logic for SetValuePrompt.xaml
     /// </summary>
-    public partial class SetValuePrompt : Page
+    public partial class MilestoneDescPage : Page
     {
-        public SetValuePrompt()
+        public MilestoneDescPage()
         {
             InitializeComponent();
         }

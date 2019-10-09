@@ -15,6 +15,6 @@ namespace CharSheet
     /// 
     public partial class App : Application
     {
-
+     
     }
 }

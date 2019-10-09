@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using CharSheet.objects;
+using CharSheet.Pages;
 
 namespace CharSheet
 {
@@ -29,6 +30,7 @@ namespace CharSheet
         {
             InitializeComponent();
             this.currentCharacter = new Character();
+            AppSettings.InitializeSettings();
         }
 
         public void Save(string destination)
@@ -42,7 +44,15 @@ namespace CharSheet
             doc.Load(origin);
             this.currentCharacter = (Character)currentCharacter.dataHandler.ReadFromXml(doc.OuterXml, typeof(Character));
         }
+        
+        public void NavigateTo(string pagePath, NavigationService navService)
+        {
+            Dashboard nextPage = new Dashboard();
+            navService.Navigate(new Uri(pagePath, UriKind.Relative));
+        }
     }
+
+
 
 
 }

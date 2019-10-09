@@ -83,7 +83,7 @@ namespace CharSheet.Pages
 
         private void TESTER_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).Load("../../saves/tester2.xml");
+            mainWindow.Load("../../saves/tester2.xml");
         }
     }
 }
