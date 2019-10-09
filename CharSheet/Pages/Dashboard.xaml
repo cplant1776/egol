@@ -175,11 +175,36 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBox
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                FontSize="20"
-                Text="Enter Description" />
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="EntryDescription"
+                    Grid.Column="0"
+                    Margin="5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center" />
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Foreground="DarkGray"
+                    IsHitTestVisible="False"
+                    Text="Enter Description">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=EntryDescription}" Value="">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
 
             <StackPanel
                 Grid.Column="2"
@@ -193,6 +218,7 @@
                     Text="XP Value: " />
 
                 <ComboBox
+                    x:Name="EntryXPValue"
                     Grid.Column="3"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center">
@@ -226,7 +252,7 @@
                     Text="Primary Skill: " />
 
                 <ComboBox
-                    x:Name="SkillDropdown"
+                    x:Name="EntrySkill"
                     Grid.Column="3"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center" />
@@ -237,7 +263,7 @@
                 Grid.Column="4"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
-                Click="TESTER_Click">
+                Click="NewEntry_Click">
                 Add
             </Button>
 

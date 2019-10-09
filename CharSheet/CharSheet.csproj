@@ -91,12 +91,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="objects\AppSettings.cs" />
-    <Compile Include="objects\Character.cs" />
-    <Compile Include="objects\HistoryEntry.cs" />
-    <Compile Include="objects\Milestone.cs" />
-    <Compile Include="objects\MyPlotter.cs" />
-    <Compile Include="objects\XmlHelper.cs" />
+    <Compile Include="classes\AppSettings.cs" />
+    <Compile Include="classes\data\Character.cs" />
+    <Compile Include="classes\data\HistoryEntry.cs" />
+    <Compile Include="classes\data\Milestone.cs" />
+    <Compile Include="classes\display\MyPlotter.cs" />
+    <Compile Include="classes\data\XmlHelper.cs" />
     <Compile Include="Pages\CharacterCreationPage.xaml.cs">
       <DependentUpon>CharacterCreationPage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -135,9 +135,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="objects\AttributeRow.cs" />
-    <Compile Include="objects\DataHandler.cs" />
-    <Compile Include="objects\SkillRow.cs" />
+    <Compile Include="classes\display\AttributeRow.cs" />
+    <Compile Include="classes\data\DataHandler.cs" />
+    <Compile Include="classes\display\SkillRow.cs" />
     <Compile Include="Pages\MilestoneValuePage.xaml.cs">
       <DependentUpon>MilestoneValuePage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

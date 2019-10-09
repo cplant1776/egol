@@ -78,12 +78,20 @@ namespace CharSheet.Pages
                 skills.Add(skillDesc);
             };
 
-            SkillDropdown.ItemsSource = skills;
+            EntrySkill.ItemsSource = skills;
         }
 
-        private void TESTER_Click(object sender, RoutedEventArgs e)
+        private void NewEntry_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.Load("../../saves/tester2.xml");
+            mainWindow.currentCharacter.Add(new HistoryEntry
+                    (
+                        description : EntryDescription.Text,
+                        xp : Convert.ToInt32(EntryXPValue.Text),
+                        primarySkill : EntrySkill.SelectedIndex
+                    )
+                );
+
+            this.NavigationService.Refresh();
         }
     }
 }

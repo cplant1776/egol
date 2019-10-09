@@ -37,5 +37,10 @@ namespace CharSheet.objects
             this.milestones = dataHandler.GenerateNewMilestones();
         }
 
+        public void Add(HistoryEntry entry)
+        {
+            eventHistory.Add(entry);
+        }
+
     }
 }
