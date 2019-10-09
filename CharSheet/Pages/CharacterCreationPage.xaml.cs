@@ -21,6 +21,9 @@ namespace CharSheet
     /// </summary>
     public partial class CharacterCreation : Page
     {
+
+        public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
         public CharacterCreation()
         {
             InitializeComponent();
@@ -31,46 +34,23 @@ namespace CharSheet
 
         private void GenerateAttributeRows()
         {
-            List<AttributeRow> rows = new List<AttributeRow>
+            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.attributeValue)
             {
-                new AttributeRow("Constitution", 99),
-                new AttributeRow("Strength", 99),
-                new AttributeRow("Agility", 99),
-                new AttributeRow("Intelligence", 99),
-                new AttributeRow("Wisdom", 99),
-                new AttributeRow("Charisma", 99),
-                new AttributeRow("Luck", 99)
+                // Create row from current character's values
+                var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
+                AttributeStack.Children.Add(newRow.GenerateAttributeRow());
             };
-
-            foreach(AttributeRow r in rows)
-            {
-                AttributeStack.Children.Add(r.GenerateAttributeRow());
-            }
         }
 
         private void GenerateSkillRows()
         {
-            List<SkillRow> rows = new List<SkillRow>
+            // Iterate through skill dictionary
+            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.skillValue)
             {
-                new SkillRow("Skill1", 99),
-                new SkillRow("Skill2", 99),
-                new SkillRow("Skill3", 99),
-                new SkillRow("Skill4", 99),
-                new SkillRow("Skill5", 99),
-                new SkillRow("Skill6", 99),
-                new SkillRow("Skill17", 99),
-                new SkillRow("Skill18", 99),
-                new SkillRow("Skill19", 99),
-                new SkillRow("Skill110", 99),
-                new SkillRow("Skill111", 99),
-                new SkillRow("Skill112", 99),
-                new SkillRow("Skill113", 99)
+                // Create row from current character's values
+                var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
+                SkillStack.Children.Add(newRow.GenerateSkillRow());
             };
-
-            foreach(SkillRow r in rows)
-            {
-                SkillStack.Children.Add(r.GenerateSkillRow());
-            }
         }
     }
 }

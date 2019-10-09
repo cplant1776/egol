@@ -25,6 +25,8 @@ namespace CharSheet.objects
         public String name;
         [DataMember]
         public int currentXP;
+        [DataMember]
+        public int level;
 
         //Create New Character
         public Character()

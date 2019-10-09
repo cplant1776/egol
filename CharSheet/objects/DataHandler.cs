@@ -13,7 +13,7 @@ namespace CharSheet.objects
     public class DataHandler
     {
 
-        private Dictionary<int, string> attributeDict = new Dictionary<int, string>
+        public static Dictionary<int, string> attributeDict = new Dictionary<int, string>
         {
             {1, "Attribute 1" },
             {2, "Attribute 2" },
@@ -25,7 +25,7 @@ namespace CharSheet.objects
             {8, "Attribute 8" }
         };
 
-        private Dictionary<int, string> skillsDict = new Dictionary<int, string>
+        public static Dictionary<int, string> skillsDict = new Dictionary<int, string>
         {
             {1, "Skill 1" },
             {2, "Skill 2" },
@@ -62,6 +62,29 @@ namespace CharSheet.objects
                 }
             }
             File.WriteAllText(destination, xmlString);
+        }
+
+        public object ReadFromXml(string xml, Type toType)
+        {
+            using (Stream stream = new MemoryStream())
+            {
+                byte[] data = Encoding.UTF8.GetBytes(xml);
+                stream.Write(data, 0, data.Length);
+                stream.Position = 0;
+                DataContractSerializer deserializer = new DataContractSerializer(toType);
+                return deserializer.ReadObject(stream);
+            };
+        }
+
+
+        public static string getSkillDesc(int n)
+        {
+            return skillsDict[n];
+        }
+
+        public static string getAttributeDesc(int n)
+        {
+            return attributeDict[n];
         }
 
         public List<Milestone> GenerateNewMilestones()

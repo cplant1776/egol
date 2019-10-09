@@ -38,7 +38,7 @@
     <d1p1:HistoryEntry>
       <d1p1:description>History entry description right here...default values used</d1p1:description>
       <d1p1:primarySkill>-1</d1p1:primarySkill>
-      <d1p1:timestamp>2019-10-08_16-39-07</d1p1:timestamp>
+      <d1p1:timestamp>2019-10-08_16-59-55</d1p1:timestamp>
       <d1p1:xpValue>0</d1p1:xpValue>
     </d1p1:HistoryEntry>
   </d1p1:eventHistory>
@@ -47,7 +47,7 @@
       <d1p1:AttributeId>-1</d1p1:AttributeId>
       <d1p1:AttributeModifierValue>-1</d1p1:AttributeModifierValue>
       <d1p1:Description>Placeholder Milestone Description</d1p1:Description>
-      <d1p1:timestamp>2019-10-08-16-39-07</d1p1:timestamp>
+      <d1p1:timestamp>2019-10-08-16-59-55</d1p1:timestamp>
     </d1p1:Milestone>
   </d1p1:milestones>
   <d1p1:name i:nil="true" />

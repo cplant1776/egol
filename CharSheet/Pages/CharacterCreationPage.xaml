@@ -36,19 +36,13 @@
             </Grid.ColumnDefinitions>
 
             <!--  Attribute Grid  -->
-            <ScrollViewer Grid.Column="1" Background="Crimson">
-                <StackPanel
-                    x:Name="AttributeStack"
-                    Grid.Column="1"
-                    Background="Violet" />
+            <ScrollViewer Grid.Column="1">
+                <StackPanel x:Name="AttributeStack" Grid.Column="1" />
             </ScrollViewer>
 
             <!--  Skills Grid  -->
-            <ScrollViewer Grid.Column="3" Background="Green">
-                <StackPanel
-                    x:Name="SkillStack"
-                    Grid.Column="1"
-                    Background="Blue" />
+            <ScrollViewer Grid.Column="3">
+                <StackPanel x:Name="SkillStack" Grid.Column="1" />
             </ScrollViewer>
         </Grid>
 

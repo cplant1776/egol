@@ -22,6 +22,9 @@ namespace CharSheet
     /// </summary>
     public partial class LevelUpPage : Page, INotifyPropertyChanged
     {
+
+        public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -39,18 +42,12 @@ namespace CharSheet
 
         private void GenerateAttributeRows()
         {
-            List<AttributeRow> rows = new List<AttributeRow>
+            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.attributeValue)
             {
-                new AttributeRow("Constitution", 99),
-                new AttributeRow("Strength", 99),
-                new AttributeRow("Agility", 99),
-                new AttributeRow("Intelligence", 99),
-                new AttributeRow("Wisdom", 99),
-                new AttributeRow("Charisma", 99),
-                new AttributeRow("Luck", 99)
+                // Create row from current character's values
+                var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
+                AttributeStack.Children.Add(newRow.GenerateAttributeRow());
             };
-
-            AttributeRows.ItemsSource = rows;
         }
 
     }

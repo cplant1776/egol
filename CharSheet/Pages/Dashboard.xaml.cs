@@ -21,7 +21,7 @@ namespace CharSheet.Pages
     /// </summary>
     public partial class Dashboard : Page
     {
-
+        public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
         public Dashboard()
         {
             InitializeComponent();
@@ -41,40 +41,7 @@ namespace CharSheet.Pages
 
         private void GenerateHistory()
         {
-            List<HistoryEntry> entries = new List<HistoryEntry>
-            {
-                new HistoryEntry("Description 1 is going here. Woohoo!"),
-                new HistoryEntry("Description 2 is going here. Woohoo!"),
-                new HistoryEntry("Description 3 is going here. Woohoo!"),
-                new HistoryEntry("Description 4 is going here. Woohoo!"),
-                new HistoryEntry("Description 5 is going here. Woohoo!"),
-                new HistoryEntry("Description 6 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!"),
-                new HistoryEntry("Description 7 is going here. Woohoo!")
-            };
-
-            foreach(HistoryEntry e in entries)
+            foreach(HistoryEntry e in mainWindow.currentCharacter.eventHistory)
             {
                 HistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
             }
@@ -82,65 +49,33 @@ namespace CharSheet.Pages
 
         private void GenerateAttributeRows()
         {
-            List<AttributeRow> rows = new List<AttributeRow>
+            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.attributeValue)
             {
-                new AttributeRow("Constitution", 99),
-                new AttributeRow("Strength", 99),
-                new AttributeRow("Agility", 99),
-                new AttributeRow("Intelligence", 99),
-                new AttributeRow("Wisdom", 99),
-                new AttributeRow("Charisma", 99),
-                new AttributeRow("Luck", 99)
+                // Create row from current character's values
+                var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
+                AttributeStack.Children.Add(newRow.GenerateAttributeRow());
             };
-
-            foreach (AttributeRow r in rows)
-            {
-                AttributeStack.Children.Add(r.GenerateAttributeRow());
-            }
         }
 
         private void GenerateSkillRows()
         {
-            List<SkillRow> rows = new List<SkillRow>
+            // Iterate through skill dictionary
+            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.skillValue)
             {
-                new SkillRow("Skill1", 99),
-                new SkillRow("Skill2", 99),
-                new SkillRow("Skill3", 99),
-                new SkillRow("Skill4", 99),
-                new SkillRow("Skill5", 99),
-                new SkillRow("Skill6", 99),
-                new SkillRow("Skill17", 99),
-                new SkillRow("Skill18", 99),
-                new SkillRow("Skill19", 99),
-                new SkillRow("Skill110", 99),
-                new SkillRow("Skill111", 99),
-                new SkillRow("Skill112", 99),
-                new SkillRow("Skill113", 99)
+                // Create row from current character's values
+                var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
+                SkillStack.Children.Add(newRow.GenerateSkillRow());
             };
-
-            foreach (SkillRow r in rows)
-            {
-                SkillStack.Children.Add(r.GenerateSkillRow());
-            }
         }
 
         public void GenerateSkillDropdown()
         {
-            List<String> skills = new List<String>
+            List<String> skills = new List<String> { };
+            foreach (int skill in mainWindow.currentCharacter.skillValue.Keys)
             {
-                "Skill1",
-                "Skill2",
-                "Skill3",
-                "Skill4",
-                "Skill5",
-                "Skill6",
-                "Skill7",
-                "Skill8",
-                "Skill9",
-                "Skill10",
-                "Skill11",
-                "Skill12",
-                "Skill13"
+                // Create row from current character's values
+                var skillDesc = DataHandler.getSkillDesc(skill);
+                skills.Add(skillDesc);
             };
 
             SkillDropdown.ItemsSource = skills;
@@ -148,7 +83,7 @@ namespace CharSheet.Pages
 
         private void TESTER_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)System.Windows.Application.Current.MainWindow).Save("../../saves/tester2.xml");
+            ((MainWindow)Application.Current.MainWindow).Load("../../saves/tester2.xml");
         }
     }
 }
