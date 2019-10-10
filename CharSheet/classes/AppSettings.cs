@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     public static class AppSettings
     {

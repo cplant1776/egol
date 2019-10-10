@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     public static class XmlHelper
     {

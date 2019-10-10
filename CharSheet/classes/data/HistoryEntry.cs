@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     [DataContract]
     public class HistoryEntry
@@ -14,16 +14,21 @@ namespace CharSheet.objects
         [DataMember]
         public string description { get; set; }
         [DataMember]
-        public int xpValue { get; set; }
+        public bool isMilestone { get; set; }
+        [DataMember]
+        public int value { get; set; }
         [DataMember]
         public int primarySkill { get; set; }
         [DataMember]
         public string timestamp { get; set; }
 
-        public HistoryEntry(string description, int xp=0, int primarySkill=-1)
+        //Functions as both xp entries and milestones for the moment
+        //TODO: Rewrite as two inherited classes instead
+        public HistoryEntry(string description, bool isMilestone, int value=0, int primarySkill=-1)
         {
             this.description = description;
-            this.xpValue = xp;
+            this.isMilestone = isMilestone;
+            this.value = value;
             this.primarySkill = primarySkill;
             this.timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
         }

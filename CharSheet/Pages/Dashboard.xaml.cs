@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CharSheet.objects;
+using CharSheet.classes;
 
 namespace CharSheet.Pages
 {
@@ -86,11 +86,28 @@ namespace CharSheet.Pages
             mainWindow.currentCharacter.Add(new HistoryEntry
                     (
                         description : EntryDescription.Text,
-                        xp : Convert.ToInt32(EntryXPValue.Text),
+                        isMilestone : false,
+                        value : Convert.ToInt32(EntryXPValue.Text),
                         primarySkill : EntrySkill.SelectedIndex
                     )
                 );
 
+            RefreshPage();
+        }
+
+        private void AddMilestone_Click(object sender, RoutedEventArgs e)
+        {
+            DialogWindow popup = new DialogWindow();
+            if(popup.ShowDialog() == true)
+            {
+                HistoryEntry newEntry = popup.result;
+                mainWindow.currentCharacter.Add(newEntry);
+            }
+            RefreshPage();
+        }
+
+        private void RefreshPage()
+        {
             this.NavigationService.Refresh();
         }
     }

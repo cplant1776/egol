@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CharSheet.classes;
 
 namespace CharSheet.Pages
 {
@@ -20,9 +21,37 @@ namespace CharSheet.Pages
     /// </summary>
     public partial class MilestoneValuePage : Page
     {
+
+        private String description;
         public MilestoneValuePage()
         {
             InitializeComponent();
+        }
+
+        public MilestoneValuePage(String description)
+        {
+            InitializeComponent();
+            this.description = description;
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogWindow = Window.GetWindow(this);
+            dialogWindow.DialogResult = false;
+            dialogWindow.Close();
+        }
+
+        private void Done_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogWindow = Application.Current.Windows.OfType<DialogWindow>().SingleOrDefault(w => w.IsActive);
+            dialogWindow.DialogResult = true;
+            dialogWindow.result = new HistoryEntry(
+                                                    description : this.description,
+                                                    isMilestone : true,
+                                                    value : Convert.ToInt32(SelectedValue.Text),
+                                                    primarySkill : SelectedAttribute.SelectedIndex
+                                                    );
+            dialogWindow.Close();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     [DataContract]
     public class Milestone

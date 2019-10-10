@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OxyPlot;
 using OxyPlot.Series;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     class MyPlotter
     {

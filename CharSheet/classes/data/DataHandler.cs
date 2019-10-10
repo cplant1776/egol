@@ -6,9 +6,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using CharSheet.objects;
+using CharSheet.classes;
 
-namespace CharSheet.objects
+namespace CharSheet.classes
 {
     public class DataHandler
     {
@@ -99,7 +99,7 @@ namespace CharSheet.objects
         {
             return new List<HistoryEntry>
             {
-                new HistoryEntry("History entry description right here...default values used")
+                new HistoryEntry("History entry description right here...default values used", false, 99, -1)
             };
         }
 

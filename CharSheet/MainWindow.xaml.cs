@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
-using CharSheet.objects;
+using CharSheet.classes;
 using CharSheet.Pages;
 
 namespace CharSheet

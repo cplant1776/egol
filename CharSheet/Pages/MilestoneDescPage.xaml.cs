@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CharSheet.classes;
 
 namespace CharSheet.Pages
 {
@@ -23,6 +24,19 @@ namespace CharSheet.Pages
         public MilestoneDescPage()
         {
             InitializeComponent();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogWindow = Window.GetWindow(this);
+            dialogWindow.DialogResult = false;
+            dialogWindow.Close();
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            MilestoneValuePage newPage = new MilestoneValuePage(EntryDescription.Text);
+            this.NavigationService.Navigate(newPage);
         }
     }
 }

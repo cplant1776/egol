@@ -68,6 +68,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CharacterCreationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -97,6 +101,9 @@
     <Compile Include="classes\data\Milestone.cs" />
     <Compile Include="classes\display\MyPlotter.cs" />
     <Compile Include="classes\data\XmlHelper.cs" />
+    <Compile Include="DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CharacterCreationPage.xaml.cs">
       <DependentUpon>CharacterCreationPage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
