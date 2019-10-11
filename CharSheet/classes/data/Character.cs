@@ -25,8 +25,6 @@ namespace CharSheet.classes
         public String name;
         [DataMember]
         public int currentXP;
-        [DataMember]
-        public int level;
 
         //Create New Character
         public Character()
@@ -35,6 +33,7 @@ namespace CharSheet.classes
             this.skillValue = dataHandler.GenerateNewSkillValue();
             this.eventHistory = dataHandler.GenerateNewEventHistory();
             this.milestones = dataHandler.GenerateNewMilestones();
+            this.currentXP = 160;
         }
 
         public void Add(HistoryEntry entry)

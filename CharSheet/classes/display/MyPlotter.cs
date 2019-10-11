@@ -16,28 +16,40 @@ namespace CharSheet.classes
 
         public MyPlotter()
         {
+            this.points = new List<DataPoint> { };
+        }
+
+        public void PlotXPHistory(List<HistoryEntry> entries)
+        {
             this.MyModel = new PlotModel
             {
                 Title = "XP / Day",
-                
             };
 
-            this.points = new List<DataPoint>
-                              {
-                                  new DataPoint(0, 4),
-                                  new DataPoint(10, 13),
-                                  new DataPoint(20, 15),
-                                  new DataPoint(30, 16),
-                                  new DataPoint(40, 12),
-                                  new DataPoint(50, 12)
-                              };
+            DateTime today = DateTime.Now;
+            DateTime entryDate;
+            int dayDifference;
+            DataPoint newPoint;
 
-            LineSeries s = new LineSeries();
-            foreach(DataPoint x in points)
+            foreach (HistoryEntry entry in entries)
             {
-                s.Points.Add(x);
+                entryDate = DateTime.Parse(entry.timestamp.Substring(0, 10));
+                if (!entry.isMilestone)
+                {
+                    Console.WriteLine(entry.timestamp);
+                    dayDifference = (today - entryDate).Days;
+                    newPoint = new DataPoint(dayDifference, entry.value);
+                    this.points.Add(newPoint);
+                }
+
+                LineSeries s = new LineSeries();
+                foreach(DataPoint p in points)
+                {
+                    s.Points.Add(p);
+                }
+
+                this.MyModel.Series.Add(s);
             }
-            this.MyModel.Series.Add(s);
         }
     }
 }

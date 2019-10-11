@@ -122,5 +122,55 @@ namespace CharSheet.classes
 
             return skillGrid;
         }
+
+        public Grid GenerateSkillDisplayRow()
+        {
+            // Create grid
+            Grid skillGrid = new Grid()
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
+            };
+
+            // Col Definitions
+            ColumnDefinition colDef1 = new ColumnDefinition
+            {
+                Width = new GridLength(4, GridUnitType.Star)
+            };
+            ColumnDefinition colDef2 = new ColumnDefinition
+            {
+                Width = new GridLength(1, GridUnitType.Star)
+            };
+            
+            skillGrid.ColumnDefinitions.Add(colDef1);
+            skillGrid.ColumnDefinitions.Add(colDef2);
+
+
+            // Skill Name TextBlock
+            TextBlock skillName = new TextBlock
+            {
+                VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                FontSize = 16,
+                Text = SkillName,
+            };
+            Grid.SetColumn(skillName, 0);
+
+            // skill Value TextBlock
+            TextBlock skillVal = new TextBlock()
+            {
+                VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                FontSize = 20,
+                Text = SkillValue.ToString()
+            };
+            Grid.SetColumn(skillVal, 1);
+
+            // Add Elements to Row
+            skillGrid.Children.Add(skillName);
+            skillGrid.Children.Add(skillVal);
+
+            return skillGrid;
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace CharSheet.classes
             this.isMilestone = isMilestone;
             this.value = value;
             this.primarySkill = primarySkill;
-            this.timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            this.timestamp = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
         }
 
         public TextBlock GenerateHistoryEntryTextBlock()

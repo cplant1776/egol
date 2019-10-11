@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,42 @@ namespace CharSheet.Pages
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Dashboard : Page
+    public partial class Dashboard : Page, INotifyPropertyChanged
     {
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
+        private int _currentXP;
+        private int _levelProgress;
+        private int _currentLevel;
+
+        public int CurrentXP
+        {
+            get { return _currentXP; }
+            set
+            {
+                _currentXP = value;
+                LevelProgress = _currentXP % 100;
+                CurrentLevel = _currentXP / 100;
+                OnPropertyChanged("LevelProgress");
+                OnPropertyChanged("CurrentLevel");
+                OnPropertyChanged("CurrentXP");
+            }
+        }
+        public int LevelProgress { get; set; }
+        public int CurrentLevel {
+            get { return _currentLevel; }
+            set{ _currentLevel = value; OnPropertyChanged("LevelProgress");
+                OnPropertyChanged("CurrentLevel");
+                OnPropertyChanged("CurrentXP");
+            }
+        }
+
         public Dashboard()
         {
             InitializeComponent();
+
+            this.CurrentXP = mainWindow.currentCharacter.currentXP;
+            Console.WriteLine(this.CurrentLevel);
 
             GenerateAttributeRows();
             GenerateSkillRows();
@@ -33,9 +64,18 @@ namespace CharSheet.Pages
             GenerateSkillDropdown();
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private void GenerateExpPlot()
         {
             MyPlotter myPlotter = new MyPlotter();
+            myPlotter.PlotXPHistory(mainWindow.currentCharacter.eventHistory);
             ExpPlot.Model = myPlotter.MyModel;
         }
 
@@ -53,7 +93,7 @@ namespace CharSheet.Pages
             {
                 // Create row from current character's values
                 var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
-                AttributeStack.Children.Add(newRow.GenerateAttributeRow());
+                AttributeStack.Children.Add(newRow.GenerateAttributeDisplayRow());
             };
         }
 
@@ -64,7 +104,7 @@ namespace CharSheet.Pages
             {
                 // Create row from current character's values
                 var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
-                SkillStack.Children.Add(newRow.GenerateSkillRow());
+                SkillStack.Children.Add(newRow.GenerateSkillDisplayRow());
             };
         }
 

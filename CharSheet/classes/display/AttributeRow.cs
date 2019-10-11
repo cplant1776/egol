@@ -123,5 +123,54 @@ namespace CharSheet.classes
 
             return attrGrid;
         }
+
+        public Grid GenerateAttributeDisplayRow()
+        {
+            // Create grid
+            Grid attrGrid = new Grid()
+            {
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
+            };
+
+            // Col Definitions
+            ColumnDefinition colDef1 = new ColumnDefinition
+            {
+                Width = new GridLength(4, GridUnitType.Star)
+            };
+            ColumnDefinition colDef2 = new ColumnDefinition
+            {
+                Width = new GridLength(1, GridUnitType.Star)
+            };
+           
+            attrGrid.ColumnDefinitions.Add(colDef1);
+            attrGrid.ColumnDefinitions.Add(colDef2);
+
+            // Attr Name TextBlock
+            TextBlock attrName = new TextBlock
+            {
+                VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                FontSize = 16,
+                Text = AttributeName
+            };
+            Grid.SetColumn(attrName, 0);
+
+            // Attr Value TextBlock
+            TextBlock attrVal = new TextBlock()
+            {
+                VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                FontSize = 20,
+                Text = AttributeValue.ToString()
+            };
+            Grid.SetColumn(attrVal, 1);
+
+            // Add Elements to Row
+            attrGrid.Children.Add(attrName);
+            attrGrid.Children.Add(attrVal);
+
+            return attrGrid;
+        }
     }
 }
