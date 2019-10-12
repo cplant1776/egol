@@ -93,10 +93,11 @@ namespace CharSheet.classes
                 Source = new System.Windows.Media.Imaging.BitmapImage(
                  new Uri(PlusIconPath, UriKind.RelativeOrAbsolute))
             };
-            Button plusBtn = new Button()
+            AttributeModifierButton plusBtn = new AttributeModifierButton()
             {
+                Name = "plus" + AttributeName.Replace(" ", ""),
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
-                Content = plusImg
+                Content = plusImg,
             };
 
             Grid.SetColumn(plusBtn, 3);
@@ -107,8 +108,9 @@ namespace CharSheet.classes
                 Source = new System.Windows.Media.Imaging.BitmapImage(
                 new Uri(MinusIconPath, UriKind.RelativeOrAbsolute))
             };
-            Button minusBtn = new Button()
+            AttributeModifierButton minusBtn = new AttributeModifierButton()
             {
+                Name = "minus" + AttributeName.Replace(" ", ""),
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
                 Content = minusImg
 
@@ -171,6 +173,11 @@ namespace CharSheet.classes
             attrGrid.Children.Add(attrVal);
 
             return attrGrid;
+        }
+
+        public class AttributeModifierButton : Button
+        {
+            public int StartingValue { get; set; }
         }
     }
 }

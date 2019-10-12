@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:CharSheet"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="LevelUpPage"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="700"
+    d:DesignWidth="600"
     mc:Ignorable="d">
 
     <Grid>
@@ -28,9 +28,9 @@
         <!--  Attribute Row  -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="4*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!--  Attribute Grid  -->
@@ -45,7 +45,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="26"
-            Text="Add 1 attribute point" />
+            Text="{Binding DisplayNumOfLevels, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
         <!--  Buttons  -->
         <Grid Grid.Row="3">
@@ -57,8 +57,22 @@
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1">Done</Button>
-            <Button Grid.Column="3">Cancel</Button>
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="Cancel_Click"
+                Content="Cancel"
+                FontSize="20" />
+            <Button
+                Grid.Column="3"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="Done_Click"
+                Content="Done"
+                FontSize="20" />
+
 
         </Grid>
     </Grid>

@@ -41,10 +41,20 @@ namespace CharSheet.Pages
                 OnPropertyChanged("CurrentXP");
             }
         }
-        public int LevelProgress { get; set; }
+        public int LevelProgress {
+            get { return _levelProgress; }
+            set
+            {
+                _levelProgress = value;
+                OnPropertyChanged("LevelProgress");
+                OnPropertyChanged("CurrentLevel");
+                OnPropertyChanged("CurrentXP");
+            }
+        }
         public int CurrentLevel {
             get { return _currentLevel; }
-            set{ _currentLevel = value; OnPropertyChanged("LevelProgress");
+            set{ _currentLevel = value;
+                OnPropertyChanged("LevelProgress");
                 OnPropertyChanged("CurrentLevel");
                 OnPropertyChanged("CurrentXP");
             }
@@ -123,6 +133,29 @@ namespace CharSheet.Pages
 
         private void NewEntry_Click(object sender, RoutedEventArgs e)
         {
+            // Check for level up
+            int previousLevel = this.CurrentLevel;
+            this.CurrentXP += Convert.ToInt32(EntryXPValue.Text);
+            if (previousLevel != this.CurrentLevel)
+            {
+                LevelUpWindow popup = new LevelUpWindow(this.CurrentLevel - previousLevel);
+                // If true, popup returns a stack panel of grids containing the updated attribute info
+                if(popup.ShowDialog() == true)
+                {
+                    foreach (Grid attributeRow in popup.result.Children)
+                    {
+                        // Get attribute name & value
+                        string attributeName = attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).First().Text;
+                        int attributeValue = Convert.ToInt32(attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).First().Text);
+
+                        // Update atrtibute value on current character
+                        int attributeId = DataHandler.getAttributeId(attributeName);
+                        mainWindow.currentCharacter.attributeValue[attributeId] = attributeValue;
+                    }
+                }
+            }
+
+            // Update character history
             mainWindow.currentCharacter.Add(new HistoryEntry
                     (
                         description : EntryDescription.Text,
@@ -131,6 +164,8 @@ namespace CharSheet.Pages
                         primarySkill : EntrySkill.SelectedIndex
                     )
                 );
+            // Update character XP/Level/Progress
+            mainWindow.currentCharacter.currentXP = this.CurrentXP;
 
             RefreshPage();
         }

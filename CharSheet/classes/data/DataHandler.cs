@@ -13,7 +13,7 @@ namespace CharSheet.classes
     public class DataHandler
     {
 
-        public static Dictionary<int, string> attributeDict = new Dictionary<int, string>
+        public static Dictionary<int, string> attributeStringDict = new Dictionary<int, string>
         {
             {1, "Attribute 1" },
             {2, "Attribute 2" },
@@ -25,7 +25,20 @@ namespace CharSheet.classes
             {8, "Attribute 8" }
         };
 
-        public static Dictionary<int, string> skillsDict = new Dictionary<int, string>
+        public static Dictionary<string, int> attributeIdDict = new Dictionary<string, int>
+        {
+            {"Attribute 1", 1},
+            {"Attribute 2" , 2},
+            {"Attribute 3", 3 },
+            {"Attribute 4", 4 },
+            {"Attribute 5", 5 },
+            {"Attribute 6", 6 },
+            {"Attribute 7", 7 },
+            {"Attribute 8", 8 }
+        };
+
+
+        public static Dictionary<int, string> skillsStringDict = new Dictionary<int, string>
         {
             {1, "Skill 1" },
             {2, "Skill 2" },
@@ -40,6 +53,23 @@ namespace CharSheet.classes
             {11, "Skill 11" },
             {12, "Skill 12" },
             {13, "Skill 13" }
+        };
+
+        public static Dictionary<string, int> skillsIdDict = new Dictionary<string, int>
+        {
+            {"Skill 1", 1 },
+            {"Skill 2", 1 },
+            {"Skill 3", 1 },
+            {"Skill 4", 1 },
+            {"Skill 5", 5 },
+            {"Skill 6", 6 },
+            {"Skill 7", 7 },
+            {"Skill 8", 8 },
+            {"Skill 9", 9 },
+            {"Skill 10", 10 },
+            {"Skill 11", 11 },
+            {"Skill 12", 12 },
+            {"Skill 13", 13 }
         };
 
         public DataHandler()
@@ -79,12 +109,22 @@ namespace CharSheet.classes
 
         public static string getSkillDesc(int n)
         {
-            return skillsDict[n];
+            return skillsStringDict[n];
+        }
+
+        public static int getSkillId(string s)
+        {
+            return skillsIdDict[s];
         }
 
         public static string getAttributeDesc(int n)
         {
-            return attributeDict[n];
+            return attributeStringDict[n];
+        }
+
+        public static int getAttributeId(string s)
+        {
+            return attributeIdDict[s];
         }
 
         public List<Milestone> GenerateNewMilestones()
