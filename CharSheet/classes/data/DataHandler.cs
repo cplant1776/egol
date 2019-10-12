@@ -58,9 +58,9 @@ namespace CharSheet.classes
         public static Dictionary<string, int> skillsIdDict = new Dictionary<string, int>
         {
             {"Skill 1", 1 },
-            {"Skill 2", 1 },
-            {"Skill 3", 1 },
-            {"Skill 4", 1 },
+            {"Skill 2", 2 },
+            {"Skill 3", 3 },
+            {"Skill 4", 4 },
             {"Skill 5", 5 },
             {"Skill 6", 6 },
             {"Skill 7", 7 },

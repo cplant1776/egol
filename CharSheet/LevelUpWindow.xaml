@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:CharSheet"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Level Up!"
-    Width="600"
+    Width="1000"
     Height="700"
     mc:Ignorable="d">
     <Frame

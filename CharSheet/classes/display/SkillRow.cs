@@ -92,7 +92,7 @@ namespace CharSheet.classes
                 Source = new System.Windows.Media.Imaging.BitmapImage(
                  new Uri(PlusIconPath, UriKind.RelativeOrAbsolute))
             };
-            Button plusBtn = new Button()
+            SkillModifierButton plusBtn = new SkillModifierButton()
             {
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
                 Content = plusImg
@@ -106,7 +106,7 @@ namespace CharSheet.classes
                 Source = new System.Windows.Media.Imaging.BitmapImage(
                 new Uri(MinusIconPath, UriKind.RelativeOrAbsolute))
             };
-            Button minusBtn = new Button()
+            SkillModifierButton minusBtn = new SkillModifierButton()
             {
                 Margin = new System.Windows.Thickness(5, 5, 5, 5),
                 Content = minusImg
@@ -171,6 +171,11 @@ namespace CharSheet.classes
             skillGrid.Children.Add(skillVal);
 
             return skillGrid;
+        }
+
+        public class SkillModifierButton : Button
+        {
+            public int StartingValue { get; set; }
         }
     }
 }

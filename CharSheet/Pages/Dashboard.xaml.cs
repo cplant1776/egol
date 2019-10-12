@@ -138,21 +138,7 @@ namespace CharSheet.Pages
             this.CurrentXP += Convert.ToInt32(EntryXPValue.Text);
             if (previousLevel != this.CurrentLevel)
             {
-                LevelUpWindow popup = new LevelUpWindow(this.CurrentLevel - previousLevel);
-                // If true, popup returns a stack panel of grids containing the updated attribute info
-                if(popup.ShowDialog() == true)
-                {
-                    foreach (Grid attributeRow in popup.result.Children)
-                    {
-                        // Get attribute name & value
-                        string attributeName = attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).First().Text;
-                        int attributeValue = Convert.ToInt32(attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).First().Text);
-
-                        // Update atrtibute value on current character
-                        int attributeId = DataHandler.getAttributeId(attributeName);
-                        mainWindow.currentCharacter.attributeValue[attributeId] = attributeValue;
-                    }
-                }
+                LevelUpSequence(previousLevel);
             }
 
             // Update character history
@@ -179,6 +165,39 @@ namespace CharSheet.Pages
                 mainWindow.currentCharacter.Add(newEntry);
             }
             RefreshPage();
+        }
+
+        private void LevelUpSequence(int previousLevel)
+        {
+            // Open level up popup
+            LevelUpWindow popup = new LevelUpWindow(this.CurrentLevel - previousLevel);
+            // If true, popup returns a stack panel of grids containing the updated attribute info
+            if (popup.ShowDialog() == true)
+            {
+                // Iterate through attribute rows
+                foreach (Grid attributeRow in popup.attributeStack.Children)
+                {
+                    // Get attribute name & value
+                    string attributeName = attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).First().Text;
+                    int attributeValue = Convert.ToInt32(attributeRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).First().Text);
+
+                    // Update atrtibute value on current character
+                    int attributeId = DataHandler.getAttributeId(attributeName);
+                    mainWindow.currentCharacter.attributeValue[attributeId] = attributeValue;
+                }
+
+                // Iterate through skill rows
+                foreach (Grid skillRow in popup.skillStack.Children)
+                {
+                    // Get attribute name & value
+                    string skillName = skillRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).First().Text;
+                    int skillValue = Convert.ToInt32(skillRow.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).First().Text);
+
+                    // Update atrtibute value on current character
+                    int skillId = DataHandler.getSkillId(skillName);
+                     mainWindow.currentCharacter.skillValue[skillId] = skillValue;
+                }
+            }
         }
 
         private void RefreshPage()

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="LevelUpPage"
     d:DesignHeight="700"
-    d:DesignWidth="600"
+    d:DesignWidth="1000"
     mc:Ignorable="d">
 
     <Grid>
@@ -31,11 +31,18 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!--  Attribute Grid  -->
             <ScrollViewer Grid.Column="1">
-                <StackPanel x:Name="AttributeStack" Grid.Column="1" />
+                <StackPanel x:Name="AttributeStack" />
+            </ScrollViewer>
+
+            <!--  Skill Grid  -->
+            <ScrollViewer Grid.Column="3">
+                <StackPanel x:Name="SkillStack" />
             </ScrollViewer>
         </Grid>
 

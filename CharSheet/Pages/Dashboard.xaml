@@ -16,7 +16,7 @@
 
     <Grid Background="Azure">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -149,14 +149,15 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
 
             <TextBlock
+                Grid.Row="0"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 FontSize="20"
-                Text="History" />
+                Text="" />
 
             <ScrollViewer Grid.Row="1" Grid.Column="1">
                 <StackPanel x:Name="HistoryStack" />

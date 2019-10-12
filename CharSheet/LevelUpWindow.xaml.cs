@@ -20,7 +20,9 @@ namespace CharSheet
     public partial class LevelUpWindow : Window
     {
         public int numOfLevels;
-        public StackPanel result;
+        public StackPanel attributeStack;
+        public StackPanel skillStack;
+
         public LevelUpWindow()
         {
             InitializeComponent();
