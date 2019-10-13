@@ -37,7 +37,7 @@ namespace CharSheet.Pages
             ContactDescription.Text = contact.Description;
 
             ContactImage.Source = new System.Windows.Media.Imaging.BitmapImage(
-                new Uri(contact.imgPath, UriKind.RelativeOrAbsolute)));
+                new Uri(contact.imgPath, UriKind.RelativeOrAbsolute));
 
             ContactReputationBar.Value = contact.Reputation;
             ContactReputationText.Text = contact.Reputation.ToString() + " / 100";

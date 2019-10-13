@@ -24,5 +24,25 @@ namespace CharSheet.Pages
         {
             InitializeComponent();
         }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddImage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FullHistory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

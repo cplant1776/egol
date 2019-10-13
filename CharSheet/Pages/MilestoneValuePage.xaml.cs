@@ -49,7 +49,7 @@ namespace CharSheet.Pages
                                                     description : this.description,
                                                     isMilestone : true,
                                                     value : Convert.ToInt32(SelectedValue.Text),
-                                                    primarySkill : SelectedAttribute.SelectedIndex
+                                                    primarySkill : DataHandler.attributeIdDict[SelectedAttribute.Text]
                                                     );
             dialogWindow.Close();
         }

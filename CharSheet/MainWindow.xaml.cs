@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,28 +23,37 @@ namespace CharSheet
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
-        public Character currentCharacter { get; set; }
+        private Character _currentCharacter;
+        public Character CurrentCharacter
+        {
+            get { return _currentCharacter; }
+            set
+            {
+                _currentCharacter = value;
+                OnPropertyChanged(() => CurrentCharacter);
+            }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.currentCharacter = new Character();
+            this.CurrentCharacter = new Character();
             AppSettings.InitializeSettings();
         }
 
         public void Save(string destination)
         {
-            currentCharacter.dataHandler.SaveToXml(currentCharacter, destination);
+            CurrentCharacter.dataHandler.SaveToXml(CurrentCharacter, destination);
         }
 
         public void Load(string origin)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(origin);
-            this.currentCharacter = (Character)currentCharacter.dataHandler.ReadFromXml(doc.OuterXml, typeof(Character));
+            this.CurrentCharacter = (Character)CurrentCharacter.dataHandler.ReadFromXml(doc.OuterXml, typeof(Character));
         }
         
         public void NavigateTo(string pagePath, NavigationService navService)
@@ -50,7 +61,21 @@ namespace CharSheet
             Dashboard nextPage = new Dashboard();
             navService.Navigate(new Uri(pagePath, UriKind.Relative));
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Just so we can call it via lambda which is nicer
+        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
+        {
+            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
+        }
     }
+
 
 
 

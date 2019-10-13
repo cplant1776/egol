@@ -34,13 +34,13 @@ namespace CharSheet.Pages
         private void GenerateExpPlot()
         {
             MyPlotter myPlotter = new MyPlotter();
-            myPlotter.PlotXPHistory(mainWindow.currentCharacter.eventHistory);
+            myPlotter.PlotXPHistory(mainWindow.CurrentCharacter.EventHistory);
             ExpPlot.Model = myPlotter.MyModel;
         }
 
         private void GenerateHistory()
         {
-            foreach (HistoryEntry e in mainWindow.currentCharacter.eventHistory)
+            foreach (HistoryEntry e in mainWindow.CurrentCharacter.EventHistory)
             {
                 HistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
             }

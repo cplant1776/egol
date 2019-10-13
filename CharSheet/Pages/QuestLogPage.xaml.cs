@@ -24,5 +24,10 @@ namespace CharSheet.Pages
         {
             InitializeComponent();
         }
+
+        private void Complete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

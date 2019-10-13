@@ -22,7 +22,17 @@ namespace CharSheet.Pages
     /// </summary>
     public partial class Dashboard : Page, INotifyPropertyChanged
     {
-        public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+        private MainWindow _mainWindow;
+
+        public MainWindow MainWindow
+        {
+            get { return _mainWindow; }
+            set
+            {
+                _mainWindow = value;
+                OnPropertyChanged("MainWindow");
+            }
+        }
 
         private int _currentXP;
         private int _levelProgress;
@@ -64,14 +74,13 @@ namespace CharSheet.Pages
         {
             InitializeComponent();
 
-            this.CurrentXP = mainWindow.currentCharacter.currentXP;
+            this.MainWindow = (MainWindow)Application.Current.MainWindow;
+            this.CurrentXP = MainWindow.CurrentCharacter.CurrentXP;
             Console.WriteLine(this.CurrentLevel);
 
             GenerateAttributeRows();
             GenerateSkillRows();
-            GenerateExpPlot();
             GenerateHistory();
-            GenerateSkillDropdown();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -82,16 +91,9 @@ namespace CharSheet.Pages
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void GenerateExpPlot()
-        {
-            MyPlotter myPlotter = new MyPlotter();
-            myPlotter.PlotXPHistory(mainWindow.currentCharacter.eventHistory);
-            ExpPlot.Model = myPlotter.MyModel;
-        }
-
         private void GenerateHistory()
         {
-            foreach(HistoryEntry e in mainWindow.currentCharacter.eventHistory)
+            foreach(HistoryEntry e in MainWindow.CurrentCharacter.EventHistory)
             {
                 HistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
             }
@@ -99,7 +101,7 @@ namespace CharSheet.Pages
 
         private void GenerateAttributeRows()
         {
-            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.attributeValue)
+            foreach (KeyValuePair<int, int> entry in MainWindow.CurrentCharacter.AttributeValue)
             {
                 // Create row from current character's values
                 var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
@@ -110,50 +112,12 @@ namespace CharSheet.Pages
         private void GenerateSkillRows()
         {
             // Iterate through skill dictionary
-            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.skillValue)
+            foreach (KeyValuePair<int, int> entry in MainWindow.CurrentCharacter.SkillValue)
             {
                 // Create row from current character's values
                 var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
                 SkillStack.Children.Add(newRow.GenerateSkillDisplayRow());
             };
-        }
-
-        public void GenerateSkillDropdown()
-        {
-            List<String> skills = new List<String> { };
-            foreach (int skill in mainWindow.currentCharacter.skillValue.Keys)
-            {
-                // Create row from current character's values
-                var skillDesc = DataHandler.getSkillDesc(skill);
-                skills.Add(skillDesc);
-            };
-
-            EntrySkill.ItemsSource = skills;
-        }
-
-        private void NewEntry_Click(object sender, RoutedEventArgs e)
-        {
-            // Check for level up
-            int previousLevel = this.CurrentLevel;
-            this.CurrentXP += Convert.ToInt32(EntryXPValue.Text);
-            if (previousLevel != this.CurrentLevel)
-            {
-                LevelUpSequence(previousLevel);
-            }
-
-            // Update character history
-            mainWindow.currentCharacter.Add(new HistoryEntry
-                    (
-                        description : EntryDescription.Text,
-                        isMilestone : false,
-                        value : Convert.ToInt32(EntryXPValue.Text),
-                        primarySkill : EntrySkill.SelectedIndex
-                    )
-                );
-            // Update character XP/Level/Progress
-            mainWindow.currentCharacter.currentXP = this.CurrentXP;
-
-            RefreshPage();
         }
 
         private void AddMilestone_Click(object sender, RoutedEventArgs e)
@@ -162,9 +126,30 @@ namespace CharSheet.Pages
             if(popup.ShowDialog() == true)
             {
                 HistoryEntry newEntry = popup.result;
-                mainWindow.currentCharacter.Add(newEntry);
+                MainWindow.CurrentCharacter.Add(newEntry);
+                MainWindow.CurrentCharacter.AttributeValue[newEntry.primarySkill] += newEntry.value;
             }
             RefreshPage();
+        }
+
+        private void FullHistory_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavigateTo(AppSettings.pagePaths["FullHistory"], this.NavigationService);
+        }
+
+        private void AddQuest_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavigateTo(AppSettings.pagePaths["NewQuest"], this.NavigationService);
+        }
+
+        private void CompleteSelected_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void QuestLog_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavigateTo(AppSettings.pagePaths["QuestLog"], this.NavigationService);
         }
 
         private void LevelUpSequence(int previousLevel)
@@ -183,7 +168,7 @@ namespace CharSheet.Pages
 
                     // Update atrtibute value on current character
                     int attributeId = DataHandler.getAttributeId(attributeName);
-                    mainWindow.currentCharacter.attributeValue[attributeId] = attributeValue;
+                    MainWindow.CurrentCharacter.AttributeValue[attributeId] = attributeValue;
                 }
 
                 // Iterate through skill rows
@@ -195,7 +180,7 @@ namespace CharSheet.Pages
 
                     // Update atrtibute value on current character
                     int skillId = DataHandler.getSkillId(skillName);
-                     mainWindow.currentCharacter.skillValue[skillId] = skillValue;
+                    MainWindow.CurrentCharacter.SkillValue[skillId] = skillValue;
                 }
             }
         }

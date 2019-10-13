@@ -2,8 +2,15 @@
     x:Class="CharSheet.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cnv="clr-namespace:CharSheet.classes.display"
     xmlns:local="clr-namespace:CharSheet"
     StartupUri="MainWindow.xaml">
 
-    <Application.Resources />
+    <Application.Resources>
+        <ResourceDictionary xmlns:local="using CharSheet;">
+            <cnv:XPToProgressConverter x:Key="XPToProgressConverter" />
+            <cnv:XPToLevelConverter x:Key="XPToLevelConverter" />
+            <cnv:XPToProgressConverterString x:Key="XPToProgressConverterString" />
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

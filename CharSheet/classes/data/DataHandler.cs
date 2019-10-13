@@ -139,7 +139,8 @@ namespace CharSheet.classes
         {
             return new List<HistoryEntry>
             {
-                new HistoryEntry("History entry description right here...default values used", false, 99, -1)
+                new HistoryEntry("History entry description right here...default values used", false, 99, -1),
+                new HistoryEntry("Can it handle 2? I hope so ...", false, 99, -1)
             };
         }
 
@@ -150,19 +151,19 @@ namespace CharSheet.classes
             // Placeholder generated skill list
             var tupleList = new List<(int, int)>
             {
-                (1, 0),
-                (2, 0),
-                (3, 0),
-                (4, 0),
-                (5, 0),
-                (6, 0),
-                (7, 0),
-                (8, 0),
-                (9, 0),
-                (10, 0),
-                (11, 0),
-                (12, 0),
-                (13, 0)
+                (1, 1),
+                (2, 2),
+                (3, 3),
+                (4, 4),
+                (5, 5),
+                (6, 6),
+                (7, 7),
+                (8, 8),
+                (9, 9),
+                (10, 10),
+                (11, 11),
+                (12, 12),
+                (13, 13)
             };
 
             foreach(var t in tupleList)
@@ -180,14 +181,14 @@ namespace CharSheet.classes
             // Placeholder generated attribute list
             var tupleList = new List<(int, int)>
             {
-                (1, 0),
-                (2, 0),
-                (3, 0),
-                (4, 0),
-                (5, 0),
-                (6, 0),
-                (7, 0),
-                (8, 0)
+                (1, 10),
+                (2, 20),
+                (3, 30),
+                (4, 40),
+                (5, 50),
+                (6, 60),
+                (7, 70),
+                (8, 80)
             };
 
             foreach (var t in tupleList)

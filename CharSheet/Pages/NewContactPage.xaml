@@ -58,6 +58,7 @@
                 <Button
                     Grid.Row="1"
                     Grid.Column="1"
+                    Click="AddImage_Click"
                     Content="Add Image" />
             </Grid>
 
@@ -134,14 +135,14 @@
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Click="Cancel"
+                Click="Cancel_Click"
                 Content="Cancel"
                 FontSize="16" />
             <Button
                 Grid.Column="2"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Click="Add_Click"
+                Click="AddContact_Click"
                 Content="Add"
                 FontSize="16" />
 

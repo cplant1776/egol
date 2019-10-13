@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,36 +12,112 @@ namespace CharSheet.classes
 {
     [DataContract]
     [KnownType(typeof(Character))]
-    public class Character
+    public class Character : INotifyPropertyChanged
     {
         public DataHandler dataHandler = new DataHandler();
         [DataMember]
-        public Dictionary<int, int> attributeValue = new Dictionary<int, int> { }; // (Attribute ID, Value)
+        public Dictionary<int, int> _attributeValue; // (Attribute ID: Value)
         [DataMember]
-        public Dictionary<int, int> skillValue = new Dictionary<int, int>{ }; // (Skill ID, Value)
+        public Dictionary<int, int> _skillValue; // (Skill ID: Value)
         [DataMember]
-        public List<HistoryEntry> eventHistory = new List<HistoryEntry> { };
+        public List<HistoryEntry> _eventHistory;
         [DataMember]
-        public List<Milestone> milestones = new List<Milestone> { };
+        private List<Milestone> _milestones;
 
         [DataMember]
-        public String name;
+        private String _name;
         [DataMember]
-        public int currentXP;
+        private int _currentXP;
+
+        public Dictionary<int, int> AttributeValue
+        {
+            get { return _attributeValue; }
+            set
+            {
+                _attributeValue = value;
+                OnPropertyChanged(() => AttributeValue);
+            }
+        }
+
+        public Dictionary<int, int> SkillValue
+        {
+            get { return _skillValue; }
+            set
+            {
+                _skillValue = value;
+                OnPropertyChanged(() => SkillValue);
+            }
+        }
+
+        public List<HistoryEntry> EventHistory
+        {
+            get { return _eventHistory; }
+            set
+            {
+                _eventHistory = value;
+                OnPropertyChanged(() => EventHistory);
+            }
+        }
+
+        public List<Milestone> Milestones
+        {
+            get { return _milestones; }
+            set
+            {
+                _milestones = value;
+                OnPropertyChanged(() => Milestones);
+            }
+        }
+
+        public String Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChanged(() => Name);
+            }
+        }
+
+        public int CurrentXP
+        {
+            get { return _currentXP; }
+            set
+            {
+                _currentXP = value;
+                OnPropertyChanged(() => CurrentXP);
+            }
+        }
 
         //Create New Character
         public Character()
         {
-            this.attributeValue = dataHandler.GenerateNewAttributeValue();
-            this.skillValue = dataHandler.GenerateNewSkillValue();
-            this.eventHistory = dataHandler.GenerateNewEventHistory();
-            this.milestones = dataHandler.GenerateNewMilestones();
-            this.currentXP = 160;
+            this.Name = "Generic Bob";
+            this.AttributeValue = dataHandler.GenerateNewAttributeValue();
+            this.SkillValue = dataHandler.GenerateNewSkillValue();
+            this.EventHistory = dataHandler.GenerateNewEventHistory();
+            this.Milestones = dataHandler.GenerateNewMilestones();
+            this.CurrentXP = 460;
         }
 
         public void Add(HistoryEntry entry)
         {
-            eventHistory.Add(entry);
+            EventHistory.Add(entry);
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Just so we can call it via lambda which is nicer
+        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
+        {
+            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
         }
 
     }

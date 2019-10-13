@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\display\MyConverters.cs" />
     <Compile Include="window\QuestWindow.xaml.cs">
       <DependentUpon>QuestWindow.xaml</DependentUpon>
     </Compile>

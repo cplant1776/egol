@@ -85,7 +85,7 @@
             Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Click="Button_Click"
+            Click="Close_Click"
             Content="Close"
             FontSize="16" />
     </Grid>

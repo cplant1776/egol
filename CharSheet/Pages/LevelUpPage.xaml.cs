@@ -72,7 +72,7 @@ namespace CharSheet
 
         private void GenerateAttributeRows()
         {
-            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.attributeValue)
+            foreach (KeyValuePair<int, int> entry in mainWindow.CurrentCharacter.AttributeValue)
             {
                 // Create row from current character's values
                 var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
@@ -82,7 +82,7 @@ namespace CharSheet
 
         private void GenerateSkillRows()
         {
-            foreach (KeyValuePair<int, int> entry in mainWindow.currentCharacter.skillValue)
+            foreach (KeyValuePair<int, int> entry in mainWindow.CurrentCharacter.SkillValue)
             {
                 // Create row from current character's values
                 var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
