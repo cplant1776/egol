@@ -68,11 +68,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="DialogWindow.xaml">
+    <Compile Include="window\QuestWindow.xaml.cs">
+      <DependentUpon>QuestWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Pages\ContactPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LevelUpWindow.xaml">
+    <Page Include="Pages\FullHistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewContactPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewQuestPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuestLogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="window\ContactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="window\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="window\LevelUpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,14 +128,34 @@
     </Compile>
     <Compile Include="classes\AppSettings.cs" />
     <Compile Include="classes\data\Character.cs" />
+    <Compile Include="classes\data\Contact.cs" />
     <Compile Include="classes\data\HistoryEntry.cs" />
     <Compile Include="classes\data\Milestone.cs" />
+    <Compile Include="classes\data\Quest.cs" />
     <Compile Include="classes\display\MyPlotter.cs" />
     <Compile Include="classes\data\XmlHelper.cs" />
-    <Compile Include="DialogWindow.xaml.cs">
+    <Compile Include="Pages\ContactPage.xaml.cs">
+      <DependentUpon>ContactPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FullHistoryPage.xaml.cs">
+      <DependentUpon>FullHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewContactPage.xaml.cs">
+      <DependentUpon>NewContactPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewQuestPage.xaml.cs">
+      <DependentUpon>NewQuestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuestLogPage.xaml.cs">
+      <DependentUpon>QuestLogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="window\ContactWindow.xaml.cs">
+      <DependentUpon>ContactWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="window\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LevelUpWindow.xaml.cs">
+    <Compile Include="window\LevelUpWindow.xaml.cs">
       <DependentUpon>LevelUpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CharacterCreationPage.xaml.cs">
@@ -146,6 +193,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="window\QuestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
