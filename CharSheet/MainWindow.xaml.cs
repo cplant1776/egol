@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using CharSheet.classes.data;
 using CharSheet.classes;
 using CharSheet.Pages;
 
@@ -39,21 +40,22 @@ namespace CharSheet
 
         public MainWindow()
         {
+            AppSettings.InitializeSettings();
             InitializeComponent();
             this.CurrentCharacter = new Character();
-            AppSettings.InitializeSettings();
+            this.CurrentCharacter = this.CurrentCharacter.CharacterDummy();
         }
 
         public void Save(string destination)
         {
-            CurrentCharacter.dataHandler.SaveToXml(CurrentCharacter, destination);
+            DataHandler.SaveToXml(CurrentCharacter, destination);
         }
 
         public void Load(string origin)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(origin);
-            this.CurrentCharacter = (Character)CurrentCharacter.dataHandler.ReadFromXml(doc.OuterXml, typeof(Character));
+            this.CurrentCharacter = (Character)DataHandler.ReadFromXml(doc.OuterXml, typeof(Character));
         }
         
         public void NavigateTo(string pagePath, NavigationService navService)

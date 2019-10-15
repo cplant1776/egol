@@ -29,7 +29,8 @@ namespace CharSheet.classes.data
 
         }
 
-        public Quest(String title, String description, int xpValue, int contactId, int reputationValue, DateTime deadline)
+        public Quest(String title, String description, int xpValue, int contactId,
+            int reputationValue, DateTime deadline=new DateTime(), int status=-1)
         {
             this.Title = title;
             this.Description = description;
@@ -38,7 +39,14 @@ namespace CharSheet.classes.data
             this.ReputationValue = reputationValue;
             this.Deadline = deadline;
             this.Created = DateTime.UtcNow;
-            this.Status = (int)QuestStatus.CURRENT;
+            if (status == -1)
+            {
+                this.Status = (int)QuestStatus.ACCEPTED;
+            }
+            else
+            {
+                this.Status = status;
+            }
         }
 
     }

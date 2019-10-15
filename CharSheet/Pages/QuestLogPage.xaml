@@ -24,7 +24,9 @@
                         <ListView
                             x:Name="CurrentQuestsList"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom" />
+                            VerticalAlignment="Bottom"
+                            SelectionChanged="UpdateSelectedQuest"
+                            SelectionMode="Single" />
                     </Expander>
                     <Expander Header="Accepted Quests">
                         <ListView
@@ -66,14 +68,14 @@
                         x:Name="ContactName"
                         HorizontalAlignment="Center"
                         FontSize="26"
-                        Text="CONTACT NAME" />
+                        Text="{Binding SelectedContact.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
                     <ProgressBar
                         x:Name="ContactReputationBar"
                         Height="20"
                         Margin="10"
                         Maximum="100"
                         Minimum="-100"
-                        Value="0" />
+                        Value="{Binding SelectedContact.Reputation, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
                     <TextBlock
                         x:Name="ContactReputationString"
                         HorizontalAlignment="Center"
@@ -99,7 +101,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         FontSize="26"
-                        Text="QUEST TITLE" />
+                        Text="{Binding SelectedQuest.Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
                     <TextBlock
                         x:Name="QuestXPValue"
                         Grid.Row="0"
@@ -107,7 +109,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         FontSize="26"
-                        Text="##" />
+                        Text="{Binding SelectedQuest.XPValue, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
                     <TextBlock
                         Grid.Row="1"
@@ -138,7 +140,7 @@
                     <TextBlock
                         x:Name="QuestDescription"
                         FontSize="16"
-                        Text="DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"
+                        Text="{Binding SelectedQuest.Description, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
                         TextWrapping="Wrap" />
                 </ScrollViewer>
 

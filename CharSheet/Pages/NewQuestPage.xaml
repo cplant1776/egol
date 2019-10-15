@@ -133,7 +133,8 @@
                 x:Name="QuestTitle"
                 Grid.Column="0"
                 Margin="10"
-                FontSize="20" />
+                FontSize="20"
+                TextWrapping="Wrap" />
 
             <ComboBox
                 x:Name="QuestXPValue"
@@ -181,7 +182,8 @@
         <TextBox
             x:Name="QuestDescription"
             Grid.Row="6"
-            Grid.Column="1" />
+            Grid.Column="1"
+            TextWrapping="Wrap" />
 
         <!--  Submit/Cancel Buttons  -->
         <Grid Grid.Row="7" Grid.Column="1">

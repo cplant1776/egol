@@ -124,7 +124,8 @@ namespace CharSheet.Pages
 
         private void AddQuest_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavigateTo(AppSettings.pagePaths["NewQuest"], this.NavigationService);
+            //MainWindow.NavigateTo(AppSettings.pagePaths["NewQuest"], this.NavigationService);
+            MainWindow.Save(AppSettings.SaveDestination);
         }
 
         private void CompleteSelected_Click(object sender, RoutedEventArgs e)
@@ -136,7 +137,6 @@ namespace CharSheet.Pages
                 if (q.Status == (int)Quest.QuestStatus.CURRENT)
                 {
                     TextBlock selectedQuest = (TextBlock)QuestList.SelectedItems[0];
-                    var x = selectedQuest.Text;
                     if (q.Title == selectedQuest.Text)
                     {
                         q.Status = (int)Quest.QuestStatus.COMPLETED;

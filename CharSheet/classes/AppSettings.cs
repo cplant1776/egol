@@ -14,8 +14,11 @@ namespace CharSheet.classes
     {
         public static string json;
         public static Dictionary<String, String> pagePaths;
+        public static Dictionary<int, String> Attributes;
+        public static Dictionary<int, String> Skills;
         public static int AttributePointsPerLevel;
         public static int SkillPointsPerLevel;
+        public static string SaveDestination;
         public static void InitializeSettings()
         {
             json = File.ReadAllText("../../appSettings.json");
@@ -30,6 +33,18 @@ namespace CharSheet.classes
             AttributePointsPerLevel = (int)jToken.ToObject(typeof(int));
             jToken = jObject.GetValue("SkillPointsPerLevel");
             SkillPointsPerLevel = (int)jToken.ToObject(typeof(int));
+
+            // Save destination
+            jToken = jObject.GetValue("SaveDestination");
+            SaveDestination = (string)jToken.ToObject(typeof(string));
+
+            // Attribute List
+            jToken = jObject.GetValue("Attributes");
+            Attributes = (Dictionary<int, String>)jToken.ToObject(typeof(Dictionary<int, String>));
+
+            // Skill List
+            jToken = jObject.GetValue("Skills");
+            Skills = (Dictionary<int, String>)jToken.ToObject(typeof(Dictionary<int, String>));
 
         }
     }

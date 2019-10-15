@@ -33,10 +33,9 @@ namespace CharSheet.classes
 
             foreach (HistoryEntry entry in entries)
             {
-                entryDate = DateTime.Parse(entry.timestamp.Substring(0, 10));
                 if (!entry.isMilestone)
                 {
-                    dayDifference = (today - entryDate).Days;
+                    dayDifference = (today - entry.timestamp).Days;
                     newPoint = new DataPoint(dayDifference, entry.value);
                     this.points.Add(newPoint);
                 }

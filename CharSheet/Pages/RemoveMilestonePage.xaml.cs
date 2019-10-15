@@ -25,26 +25,8 @@ namespace CharSheet.Pages
         {
             InitializeComponent();
 
-            GenerateMilestoneList();
         }
-
-        private void GenerateMilestoneList()
-        {
-            List<Milestone> milestones = new List<Milestone>
-            {
-                new Milestone("milestone1", -1, 0),
-                new Milestone("milestone2", -1, 0),
-                new Milestone("milestone3", -1, 0),
-                new Milestone("milestone4", -1, 0),
-                new Milestone("milestone5", -1, 0)
-            };
-
-            foreach(Milestone ms in milestones)
-            {
-                MilestoneList.Items.Add(ms.Description);
-            }
-
-        }
+        
     }
 
 

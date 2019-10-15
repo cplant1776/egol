@@ -9,22 +9,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace CharSheet.classes
+namespace CharSheet.classes.data
 {
     [DataContract]
     [KnownType(typeof(Character))]
-    public class Character : INotifyPropertyChanged
+    public partial class Character : INotifyPropertyChanged
     {
-        public DataHandler dataHandler = new DataHandler();
-
         [DataMember]
-        public Dictionary<int, int> _attributeValue; // (Attribute ID: Value)
+        public Dictionary<int, int> _attributeValue = new Dictionary<int, int> { }; // (Attribute ID: Value)
         [DataMember]
-        public Dictionary<int, int> _skillValue; // (Skill ID: Value)
+        public Dictionary<int, int> _skillValue = new Dictionary<int, int> { }; // (Skill ID: Value)
         [DataMember]
-        public List<HistoryEntry> _eventHistory;
-        [DataMember]
-        private List<Milestone> _milestones;
+        public List<HistoryEntry> _eventHistory = new List<HistoryEntry> { };
         [DataMember]
         private List<Quest> _quests = new List<Quest> { };
         [DataMember]
@@ -65,15 +61,15 @@ namespace CharSheet.classes
             }
         }
 
-        public List<Milestone> Milestones
-        {
-            get { return _milestones; }
-            set
-            {
-                _milestones = value;
-                OnPropertyChanged(() => Milestones);
-            }
-        }
+        //public List<Milestone> Milestones
+        //{
+        //    get { return _milestones; }
+        //    set
+        //    {
+        //        _milestones = value;
+        //        OnPropertyChanged(() => Milestones);
+        //    }
+        //}
 
         public String Name
         {
@@ -115,23 +111,37 @@ namespace CharSheet.classes
             }
         }
 
-        //Create New Character
+        //Create New Character With Default Stats
         public Character()
         {
             this.Name = "Generic Bob";
-            this.AttributeValue = dataHandler.GenerateNewAttributeValue();
-            this.SkillValue = dataHandler.GenerateNewSkillValue();
-            this.EventHistory = dataHandler.GenerateNewEventHistory();
-            this.Milestones = dataHandler.GenerateNewMilestones();
-            this.CurrentXP = 460;
+            SetDefaultAttributeValues();
+            SetDefaultSkillValues();
+            this.CurrentXP = 0;
+        }
+
+        private void SetDefaultAttributeValues()
+        {
+            // Set all attributes to 0 (default)
+            foreach(int key in AppSettings.Attributes.Keys)
+            {
+                this.AttributeValue.Add(key, 0);
+            }
+        }
+
+        private void SetDefaultSkillValues()
+        {
+            // Set all skills to 0 (default)
+            foreach (int key in AppSettings.Skills.Keys)
+            {
+                this.SkillValue.Add(key, 0);
+            }
         }
 
         public void Add(HistoryEntry entry)
         {
             EventHistory.Add(entry);
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

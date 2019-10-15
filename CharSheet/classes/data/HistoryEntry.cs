@@ -20,17 +20,24 @@ namespace CharSheet.classes
         [DataMember]
         public int primarySkill { get; set; }
         [DataMember]
-        public string timestamp { get; set; }
+        public DateTime timestamp { get; set; }
 
         //Functions as both xp entries and milestones for the moment
         //TODO: Rewrite as two inherited classes instead
-        public HistoryEntry(string description, bool isMilestone, int value=0, int primarySkill=-1)
+        public HistoryEntry(string description, bool isMilestone, int value=0, int primarySkill=-1, DateTime timestamp=new DateTime())
         {
             this.description = description;
             this.isMilestone = isMilestone;
             this.value = value;
             this.primarySkill = primarySkill;
-            this.timestamp = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+            if (timestamp == DateTime.MinValue) // No timestamp passed
+            {
+                this.timestamp = DateTime.UtcNow;
+            }
+            else
+            {
+                this.timestamp = timestamp;
+            }
         }
 
         public TextBlock GenerateHistoryEntryTextBlock()

@@ -10,74 +10,19 @@ using CharSheet.classes;
 
 namespace CharSheet.classes
 {
-    public class DataHandler
+    public static class DataHandler
     {
 
-        public static Dictionary<int, string> attributeStringDict = new Dictionary<int, string>
-        {
-            {1, "Attribute 1" },
-            {2, "Attribute 2" },
-            {3, "Attribute 3" },
-            {4, "Attribute 4" },
-            {5, "Attribute 5" },
-            {6, "Attribute 6" },
-            {7, "Attribute 7" },
-            {8, "Attribute 8" }
-        };
+        public static Dictionary<int, string> attributeStringDict = AppSettings.Attributes;
 
-        public static Dictionary<string, int> attributeIdDict = new Dictionary<string, int>
-        {
-            {"Attribute 1", 1},
-            {"Attribute 2" , 2},
-            {"Attribute 3", 3 },
-            {"Attribute 4", 4 },
-            {"Attribute 5", 5 },
-            {"Attribute 6", 6 },
-            {"Attribute 7", 7 },
-            {"Attribute 8", 8 }
-        };
+        public static Dictionary<string, int> attributeIdDict = (Dictionary<string, int>)AppSettings.Attributes.Reverse();
 
 
-        public static Dictionary<int, string> skillsStringDict = new Dictionary<int, string>
-        {
-            {1, "Skill 1" },
-            {2, "Skill 2" },
-            {3, "Skill 3" },
-            {4, "Skill 4" },
-            {5, "Skill 5" },
-            {6, "Skill 6" },
-            {7, "Skill 7" },
-            {8, "Skill 8" },
-            {9, "Skill 9" },
-            {10, "Skill 10" },
-            {11, "Skill 11" },
-            {12, "Skill 12" },
-            {13, "Skill 13" }
-        };
+        public static Dictionary<int, string> skillsStringDict = AppSettings.Skills;
 
-        public static Dictionary<string, int> skillsIdDict = new Dictionary<string, int>
-        {
-            {"Skill 1", 1 },
-            {"Skill 2", 2 },
-            {"Skill 3", 3 },
-            {"Skill 4", 4 },
-            {"Skill 5", 5 },
-            {"Skill 6", 6 },
-            {"Skill 7", 7 },
-            {"Skill 8", 8 },
-            {"Skill 9", 9 },
-            {"Skill 10", 10 },
-            {"Skill 11", 11 },
-            {"Skill 12", 12 },
-            {"Skill 13", 13 }
-        };
+        public static Dictionary<string, int> skillsIdDict = (Dictionary<string, int>)AppSettings.Skills.Reverse();
 
-        public DataHandler()
-        {
-
-        }
-
-        public void SaveToXml(Object obj, String destination)
+        public static void SaveToXml(Object obj, String destination)
         {
             var serializer = new DataContractSerializer(typeof(Object));
             string xmlString;
@@ -94,7 +39,7 @@ namespace CharSheet.classes
             File.WriteAllText(destination, xmlString);
         }
 
-        public object ReadFromXml(string xml, Type toType)
+        public static object ReadFromXml(string xml, Type toType)
         {
             using (Stream stream = new MemoryStream())
             {
@@ -127,76 +72,16 @@ namespace CharSheet.classes
             return attributeIdDict[s];
         }
 
-        public List<Milestone> GenerateNewMilestones()
+        public static Dictionary<TValue, TKey> Reverse<TKey, TValue>(this IDictionary<TKey, TValue> source)
         {
-            return new List<Milestone>
+            var dictionary = new Dictionary<TValue, TKey>();
+            foreach (var entry in source)
             {
-                new Milestone("Placeholder Milestone Description", -1, -1)
-            };
-        }
-
-        public List<HistoryEntry> GenerateNewEventHistory()
-        {
-            return new List<HistoryEntry>
-            {
-                new HistoryEntry("History entry description right here...default values used", false, 99, -1),
-                new HistoryEntry("Can it handle 2? I hope so ...", false, 99, -1)
-            };
-        }
-
-        public Dictionary<int, int> GenerateNewSkillValue()
-        {
-            Dictionary<int, int> result = new Dictionary<int, int> { };
-
-            // Placeholder generated skill list
-            var tupleList = new List<(int, int)>
-            {
-                (1, 1),
-                (2, 2),
-                (3, 3),
-                (4, 4),
-                (5, 5),
-                (6, 6),
-                (7, 7),
-                (8, 8),
-                (9, 9),
-                (10, 10),
-                (11, 11),
-                (12, 12),
-                (13, 13)
-            };
-
-            foreach(var t in tupleList)
-            {
-                result.Add(t.Item1, t.Item2);
+                if (!dictionary.ContainsKey(entry.Value))
+                    dictionary.Add(entry.Value, entry.Key);
             }
-
-            return result;
+            return dictionary;
         }
 
-        public Dictionary<int, int> GenerateNewAttributeValue()
-        {
-            Dictionary<int, int> result = new Dictionary<int, int> { };
-
-            // Placeholder generated attribute list
-            var tupleList = new List<(int, int)>
-            {
-                (1, 10),
-                (2, 20),
-                (3, 30),
-                (4, 40),
-                (5, 50),
-                (6, 60),
-                (7, 70),
-                (8, 80)
-            };
-
-            foreach (var t in tupleList)
-            {
-                result.Add(t.Item1, t.Item2);
-            }
-
-            return result;
-        }
     }
 }

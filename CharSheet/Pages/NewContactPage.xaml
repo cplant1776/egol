@@ -87,7 +87,8 @@
                     x:Name="ContactName"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="10,0,10,0" />
+                    Margin="10,0,10,0"
+                    TextWrapping="Wrap" />
                 <!--  Description  -->
                 <Label
                     Grid.Row="1"
@@ -97,7 +98,8 @@
                     x:Name="ContactDescription"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="10" />
+                    Margin="10"
+                    TextWrapping="Wrap" />
                 <!--  Reputation  -->
                 <Label
                     Grid.Row="2"

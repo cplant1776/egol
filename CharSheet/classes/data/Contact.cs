@@ -62,12 +62,24 @@ namespace CharSheet.classes.data
             this.ImgPath = "";
         }
 
-        public Contact(String name, String description, int reputation=0, String imgPath="")
+        public Contact(String name, String description, int reputation=0, String imgPath="", int id=-1)
         {
             this.Name = name;
             this.Description = description;
             this.Reputation = reputation;
             this.ImgPath = imgPath;
+
+            // Id
+            Random rnd = new Random();
+            if (id < 0)
+            {
+                this.Id = rnd.Next(1, 60000); // generate random id
+            }
+            else
+            {
+                this.Id = id;
+            }
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
