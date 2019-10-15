@@ -1,21 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CharSheet.classes.data
 {
-    public class Quest
+    public class Quest : INotifyPropertyChanged
     {
-        public String Title;
-        public String Description;
+        private String _title;
+        private String _description;
+        private int _xpValue;
+        private int _reputatinValue;
+        private DateTime _deadline;
+        private DateTime _created;
+
+        public String Title
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                OnPropertyChanged(() => Title);
+            }
+        }
+        public String Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(() => Description);
+            }
+        }
         public int Status;
-        public int XPValue;
-        public int ReputationValue;
+        public int XPValue
+        {
+            get { return _xpValue; }
+            set
+            {
+                _xpValue = value;
+                OnPropertyChanged(() => XPValue);
+            }
+        }
+        public int ReputationValue
+        {
+            get { return _reputatinValue; }
+            set
+            {
+                _reputatinValue = value;
+                OnPropertyChanged(() => ReputationValue);
+            }
+        }
         public int ContactId;
-        public DateTime Deadline;
-        public DateTime Created;
+        public DateTime Deadline
+        {
+            get { return _deadline; }
+            set
+            {
+                _deadline = value;
+                OnPropertyChanged(() => Deadline);
+            }
+        }
+        public DateTime Created
+        {
+            get { return _created; }
+            set
+            {
+                _created = value;
+                OnPropertyChanged(() => Created);
+            }
+        }
 
         public enum QuestStatus
         {
@@ -47,6 +104,20 @@ namespace CharSheet.classes.data
             {
                 this.Status = status;
             }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Just so we can call it via lambda which is nicer
+        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
+        {
+            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
         }
 
     }

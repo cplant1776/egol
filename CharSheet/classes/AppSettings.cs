@@ -19,6 +19,8 @@ namespace CharSheet.classes
         public static int AttributePointsPerLevel;
         public static int SkillPointsPerLevel;
         public static string SaveDestination;
+        public static string ContactImagePath;
+
         public static void InitializeSettings()
         {
             json = File.ReadAllText("../../appSettings.json");
@@ -46,6 +48,10 @@ namespace CharSheet.classes
             jToken = jObject.GetValue("Skills");
             Skills = (Dictionary<int, String>)jToken.ToObject(typeof(Dictionary<int, String>));
 
+
+            // Root directory for contact images
+            jToken = jObject.GetValue("ContactImagePath");
+            ContactImagePath = (string)jToken.ToObject(typeof(string));
         }
     }
 }

@@ -48,7 +48,7 @@ namespace CharSheet.Pages
                 name : ContactName.Text,
                 description : ContactDescription.Text,
                 reputation : (int)ContactReputation.Value,
-                imgPath : ""
+                imgName: ""
                 );
 
             contactWindow.Close();

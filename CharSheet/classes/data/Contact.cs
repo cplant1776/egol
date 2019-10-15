@@ -14,7 +14,7 @@ namespace CharSheet.classes.data
         private String _name;
         private String _description;
         private int _reputation;
-        private string _imgPath;
+        private string _imgName;
 
         public int Id { get; set; }
         public String Name
@@ -44,13 +44,13 @@ namespace CharSheet.classes.data
                 OnPropertyChanged(() => Reputation);
             }
         }
-        public String ImgPath
+        public String ImgName
         {
-            get { return _imgPath; }
+            get { return _imgName; }
             set
             {
-                _imgPath = value;
-                OnPropertyChanged(() => ImgPath);
+                _imgName = value;
+                OnPropertyChanged(() => ImgName);
             }
         }
 
@@ -59,15 +59,20 @@ namespace CharSheet.classes.data
             this.Name = "";
             this.Description = "";
             this.Reputation = 0;
-            this.ImgPath = "";
+            this.ImgName = "";
         }
 
-        public Contact(String name, String description, int reputation=0, String imgPath="", int id=-1)
+        public Contact(String name, String description, int reputation=0, String imgName = "", int id=-1)
         {
             this.Name = name;
             this.Description = description;
             this.Reputation = reputation;
-            this.ImgPath = imgPath;
+
+            // Image path
+            if (imgName != "")
+            {
+                this.ImgName = AppSettings.ContactImagePath + imgName;
+            }
 
             // Id
             Random rnd = new Random();

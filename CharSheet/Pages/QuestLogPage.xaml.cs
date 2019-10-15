@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CharSheet.classes;
 
 namespace CharSheet.Pages
 {
@@ -84,32 +85,61 @@ namespace CharSheet.Pages
 
         private void Complete_Click(object sender, RoutedEventArgs e)
         {
+            // Find quest and mark as completed
+            Quest targetQuest = new Quest();
+            foreach (Quest q in mainWindow.CurrentCharacter.Quests)
+            {
+                    if (q.Title == this.SelectedQuest.Title)
+                    {
+                        q.Status = (int)Quest.QuestStatus.COMPLETED;
+                        targetQuest = q;
+                    }
+            }
+            // Update contact reputation
+            foreach (Contact c in mainWindow.CurrentCharacter.CharacterContacts)
+            {
+                if (c.Id == targetQuest.ContactId)
+                {
+                    c.Reputation += targetQuest.ReputationValue;
+                }
+            }
 
+            // Update XP
+            mainWindow.UpdateXP(targetQuest.XPValue);
+
+            //Refresh page
+            this.NavigationService.Refresh();
         }
 
         private void UpdateSelectedQuest(object sender, SelectionChangedEventArgs args)
         {
-            TextBlock questTitle = (TextBlock)(sender as ListView).SelectedItems[0];
-            
-            // Locate selected quest object
-            foreach(Quest q in mainWindow.CurrentCharacter.Quests)
+            if ((sender as ListView).SelectedItems.Count > 0)
             {
-                if (q.Status == (int)Quest.QuestStatus.CURRENT)
+                TextBlock questTitle = (TextBlock)(sender as ListView).SelectedItems[0];
+
+                // Locate selected quest object
+                foreach (Quest q in mainWindow.CurrentCharacter.Quests)
                 {
-                    if(q.Title == questTitle.Text)
+                    if (q.Title == questTitle.Text)
                     {
                         this.SelectedQuest = q;
                     }
                 }
-            }
-            // Set contact
-            foreach(Contact c in mainWindow.CurrentCharacter.CharacterContacts)
-            {
-                if (c.Id == this.SelectedQuest.ContactId)
+                // Set contact
+                foreach (Contact c in mainWindow.CurrentCharacter.CharacterContacts)
                 {
-                    this.SelectedContact = c;
+                    if (c.Id == this.SelectedQuest.ContactId)
+                    {
+                        this.SelectedContact = c;
+                    }
                 }
             }
+
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], this.NavigationService);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -123,6 +153,11 @@ namespace CharSheet.Pages
         public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
         {
             OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
+        }
+
+        private void ListView_MouseLeave(object sender, MouseEventArgs e)
+        {
+            (sender as ListView).UnselectAll();
         }
     }
 }

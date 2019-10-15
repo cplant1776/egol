@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\data\CharacterDummy.cs" />
+    <Compile Include="classes\data\InotifyPropertyChanged.cs" />
     <Compile Include="classes\display\MyConverters.cs" />
     <Compile Include="Pages\CompleteHistoryPage.xaml.cs">
       <DependentUpon>CompleteHistoryPage.xaml</DependentUpon>
@@ -278,11 +279,22 @@
     <Folder Include="saves\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="media\icons\tester.png" />
+    <Resource Include="media\icons\tester.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="media\icons\Add_grey_16xMD.png" />
-    <Resource Include="media\icons\Subtract_16x.png" />
+    <Resource Include="media\icons\Add_grey_16xMD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="media\icons\Subtract_16x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="media\contacts\default.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,6 +11,7 @@
             <cnv:XPToProgressConverter x:Key="XPToProgressConverter" />
             <cnv:XPToLevelConverter x:Key="XPToLevelConverter" />
             <cnv:XPToProgressConverterString x:Key="XPToProgressConverterString" />
+            <cnv:DeadlineDateTimeToStringConverter x:Key="DeadlineDateTimeToStringConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
