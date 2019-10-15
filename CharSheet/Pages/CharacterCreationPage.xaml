@@ -29,10 +29,10 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <!--  Attribute Grid  -->
@@ -44,6 +44,39 @@
             <ScrollViewer Grid.Column="3">
                 <StackPanel x:Name="SkillStack" Grid.Column="1" />
             </ScrollViewer>
+
+            <!--  Name/Description  -->
+            <Grid Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="4*" />
+                </Grid.RowDefinitions>
+
+                <!--  Name  -->
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Text="Name" />
+                <TextBox
+                    x:Name="CharacterName"
+                    Grid.Row="1"
+                    Margin="10" />
+
+                <!--  Description  -->
+                <TextBlock
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Text="Description" />
+                <TextBox
+                    x:Name="CharacterDescription"
+                    Grid.Row="3"
+                    Margin="10"
+                    TextWrapping="Wrap" />
+            </Grid>
         </Grid>
 
         <!--  Description Text  -->
@@ -52,20 +85,31 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="26"
-            Text="" />
+            Text="Set starting attribute and skill points." />
 
         <!--  Buttons  -->
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="1">Done</Button>
-            <Button Grid.Column="3">Cancel</Button>
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="Cancel_Click"
+                Content=" Cancel "
+                FontSize="20" />
+            <Button
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="Done_Click"
+                Content=" Done "
+                FontSize="20" />
 
         </Grid>
     </Grid>

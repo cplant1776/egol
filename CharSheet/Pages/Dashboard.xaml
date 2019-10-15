@@ -82,7 +82,12 @@
                     FontSize="20"
                     Text="{Binding MainWindow.CurrentCharacter.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
-                <Image x:Name="CharacterImage" Grid.Row="1" />
+                <Image
+                    x:Name="CharacterImage"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Stretch"
+                    Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>

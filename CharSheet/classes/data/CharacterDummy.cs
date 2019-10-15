@@ -19,7 +19,9 @@ namespace CharSheet.classes.data
             this.Quests = GenerateQuests();
             this.SkillValue = GenerateSkills();
             this.AttributeValue = GenerateAttributes();
-            
+            this.EventHistory = GenerateEventHistory();
+
+
             return this;
         }
 

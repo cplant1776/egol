@@ -43,7 +43,6 @@ namespace CharSheet
             AppSettings.InitializeSettings();
             InitializeComponent();
             this.CurrentCharacter = new Character();
-            this.CurrentCharacter = this.CurrentCharacter.CharacterDummy();
         }
 
         public void Save(string destination)

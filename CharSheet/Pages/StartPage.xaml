@@ -15,6 +15,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -30,18 +31,24 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Click="NewCharacter_Click"
-            FontSize="30">
-            New Character
-        </Button>
+            Content=" New Character "
+            FontSize="30" />
 
         <Button
             Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Click="LoadCharacter_Click"
-            FontSize="30">
-            Load Character
-        </Button>
+            Content=" Load Character "
+            FontSize="30" />
+
+        <Button
+            Grid.Row="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="DebugCharacter_Click"
+            Content=" Debug Character "
+            FontSize="30" />
 
     </Grid>
 </Page>

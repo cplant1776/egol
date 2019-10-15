@@ -29,7 +29,11 @@ namespace CharSheet.classes.data
         [DataMember]
         private String _name;
         [DataMember]
+        private String _description;
+        [DataMember]
         private int _currentXP;
+        [DataMember]
+        private string _imgName;
 
         public Dictionary<int, int> AttributeValue
         {
@@ -111,6 +115,26 @@ namespace CharSheet.classes.data
             }
         }
 
+        public String Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChanged(() => Description);
+            }
+        }
+
+        public String ImgName
+        {
+            get { return _imgName; }
+            set
+            {
+                _imgName = value;
+                OnPropertyChanged(() => ImgName);
+            }
+        }
+
         //Create New Character With Default Stats
         public Character()
         {
@@ -118,6 +142,7 @@ namespace CharSheet.classes.data
             SetDefaultAttributeValues();
             SetDefaultSkillValues();
             this.CurrentXP = 0;
+            this.ImgName = AppSettings.ContactImagePath + "default.png";
         }
 
         private void SetDefaultAttributeValues()
