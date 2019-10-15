@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Window
     x:Class="CharSheet.window.ContactWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -10,5 +10,8 @@
     d:DesignWidth="600"
     mc:Ignorable="d">
 
-    <Grid />
-</Page>
+    <Frame
+        Name="ContactFrame"
+        NavigationUIVisibility="Hidden"
+        Source="../Pages/NewContactPage.xaml" />
+</Window>

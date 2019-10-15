@@ -36,7 +36,6 @@ namespace CharSheet.classes
                 entryDate = DateTime.Parse(entry.timestamp.Substring(0, 10));
                 if (!entry.isMilestone)
                 {
-                    Console.WriteLine(entry.timestamp);
                     dayDifference = (today - entryDate).Days;
                     newPoint = new DataPoint(dayDifference, entry.value);
                     this.points.Add(newPoint);

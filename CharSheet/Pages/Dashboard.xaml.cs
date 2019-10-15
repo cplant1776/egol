@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CharSheet.classes;
+using CharSheet.classes.data;
 
 namespace CharSheet.Pages
 {
@@ -34,53 +35,16 @@ namespace CharSheet.Pages
             }
         }
 
-        private int _currentXP;
-        private int _levelProgress;
-        private int _currentLevel;
-
-        public int CurrentXP
-        {
-            get { return _currentXP; }
-            set
-            {
-                _currentXP = value;
-                LevelProgress = _currentXP % 100;
-                CurrentLevel = _currentXP / 100;
-                OnPropertyChanged("LevelProgress");
-                OnPropertyChanged("CurrentLevel");
-                OnPropertyChanged("CurrentXP");
-            }
-        }
-        public int LevelProgress {
-            get { return _levelProgress; }
-            set
-            {
-                _levelProgress = value;
-                OnPropertyChanged("LevelProgress");
-                OnPropertyChanged("CurrentLevel");
-                OnPropertyChanged("CurrentXP");
-            }
-        }
-        public int CurrentLevel {
-            get { return _currentLevel; }
-            set{ _currentLevel = value;
-                OnPropertyChanged("LevelProgress");
-                OnPropertyChanged("CurrentLevel");
-                OnPropertyChanged("CurrentXP");
-            }
-        }
-
         public Dashboard()
         {
             InitializeComponent();
 
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
-            this.CurrentXP = MainWindow.CurrentCharacter.CurrentXP;
-            Console.WriteLine(this.CurrentLevel);
 
             GenerateAttributeRows();
             GenerateSkillRows();
             GenerateHistory();
+            GenerateCurrentQuests();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -120,6 +84,27 @@ namespace CharSheet.Pages
             };
         }
 
+        private void GenerateCurrentQuests()
+        {
+            foreach(Quest quest in MainWindow.CurrentCharacter.Quests)
+            {
+                if (quest.Status == (int)Quest.QuestStatus.CURRENT)
+                {
+                    TextBlock newQuest = new TextBlock()
+                    {
+                        Text = quest.Title
+                    };
+
+                    QuestList.Items.Add(newQuest);
+                }
+                else
+                {
+                    ;
+                }
+
+            }
+        }
+
         private void AddMilestone_Click(object sender, RoutedEventArgs e)
         {
             DialogWindow popup = new DialogWindow();
@@ -132,7 +117,7 @@ namespace CharSheet.Pages
             RefreshPage();
         }
 
-        private void FullHistory_Click(object sender, RoutedEventArgs e)
+        private void CompleteHistory_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavigateTo(AppSettings.pagePaths["FullHistory"], this.NavigationService);
         }
@@ -144,7 +129,38 @@ namespace CharSheet.Pages
 
         private void CompleteSelected_Click(object sender, RoutedEventArgs e)
         {
+            // Find quest and mark as completed
+            Quest targetQuest = new Quest();
+            foreach(Quest q in MainWindow.CurrentCharacter.Quests)
+            {
+                if (q.Status == (int)Quest.QuestStatus.CURRENT)
+                {
+                    TextBlock selectedQuest = (TextBlock)QuestList.SelectedItems[0];
+                    var x = selectedQuest.Text;
+                    if (q.Title == selectedQuest.Text)
+                    {
+                        q.Status = (int)Quest.QuestStatus.COMPLETED;
+                        targetQuest = q;
+                    }
+                }
+            }
+            // Update contact reputation
+            foreach(Contact c in MainWindow.CurrentCharacter.CharacterContacts)
+            {
+                if (c.Id == targetQuest.ContactId)
+                {
+                    c.Reputation += targetQuest.ReputationValue;
+                }
+            }
 
+            // Update XP
+            int previousLevel = this.MainWindow.CurrentCharacter.CurrentXP / 100;
+            this.MainWindow.CurrentCharacter.CurrentXP += targetQuest.XPValue;
+            int currentLevel = this.MainWindow.CurrentCharacter.CurrentXP / 100;
+            if (previousLevel < currentLevel)
+                LevelUpSequence(previousLevel);
+
+            RefreshPage();
         }
 
         private void QuestLog_Click(object sender, RoutedEventArgs e)
@@ -155,7 +171,7 @@ namespace CharSheet.Pages
         private void LevelUpSequence(int previousLevel)
         {
             // Open level up popup
-            LevelUpWindow popup = new LevelUpWindow(this.CurrentLevel - previousLevel);
+            LevelUpWindow popup = new LevelUpWindow((MainWindow.CurrentCharacter.CurrentXP / 100) - previousLevel);
             // If true, popup returns a stack panel of grids containing the updated attribute info
             if (popup.ShowDialog() == true)
             {

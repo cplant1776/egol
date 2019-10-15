@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharSheet.classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,18 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CharSheet.classes;
 
 namespace CharSheet.Pages
 {
     /// <summary>
-    /// Interaction logic for FullHistoryPage.xaml
+    /// Interaction logic for CompleteHistoryPage.xaml
     /// </summary>
-    public partial class FullHistoryPage : Page
+    public partial class CompleteHistoryPage : Page
     {
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
-        public FullHistoryPage()
+        public CompleteHistoryPage()
         {
             InitializeComponent();
 
@@ -35,19 +35,20 @@ namespace CharSheet.Pages
         {
             MyPlotter myPlotter = new MyPlotter();
             myPlotter.PlotXPHistory(mainWindow.CurrentCharacter.EventHistory);
-            ExpPlot.Model = myPlotter.MyModel;
+            //ExpPlot.Model = myPlotter.MyModel;
         }
 
         private void GenerateHistory()
         {
             foreach (HistoryEntry e in mainWindow.CurrentCharacter.EventHistory)
             {
-                FullHistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
+                //FullHistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
             }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine("Click!");
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], NavigationService.GetNavigationService(this));
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharSheet.classes.data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace CharSheet.classes
     public class Character : INotifyPropertyChanged
     {
         public DataHandler dataHandler = new DataHandler();
+
         [DataMember]
         public Dictionary<int, int> _attributeValue; // (Attribute ID: Value)
         [DataMember]
@@ -23,6 +25,10 @@ namespace CharSheet.classes
         public List<HistoryEntry> _eventHistory;
         [DataMember]
         private List<Milestone> _milestones;
+        [DataMember]
+        private List<Quest> _quests = new List<Quest> { };
+        [DataMember]
+        private List<Contact> _characterContacts = new List<Contact> { };
 
         [DataMember]
         private String _name;
@@ -86,6 +92,26 @@ namespace CharSheet.classes
             {
                 _currentXP = value;
                 OnPropertyChanged(() => CurrentXP);
+            }
+        }
+
+        public List<Quest> Quests
+        {
+            get { return _quests; }
+            set
+            {
+                _quests = value;
+                OnPropertyChanged(() => Quests);
+            }
+        }
+
+        public List<Contact> CharacterContacts
+        {
+            get { return _characterContacts; }
+            set
+            {
+                _characterContacts = value;
+                OnPropertyChanged(() => CharacterContacts);
             }
         }
 

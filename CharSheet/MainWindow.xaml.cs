@@ -58,7 +58,7 @@ namespace CharSheet
         
         public void NavigateTo(string pagePath, NavigationService navService)
         {
-            Dashboard nextPage = new Dashboard();
+            Page nextPage = new Page();
             navService.Navigate(new Uri(pagePath, UriKind.Relative));
         }
 

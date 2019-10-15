@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharSheet.classes.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,11 @@ namespace CharSheet.window
     /// <summary>
     /// Interaction logic for ContactWindow.xaml
     /// </summary>
-    public partial class ContactWindow : Page
+    public partial class ContactWindow : Window
     {
+
+        public Contact result;
+
         public ContactWindow()
         {
             InitializeComponent();

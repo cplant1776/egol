@@ -64,7 +64,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="26"
-                Text="CONTACT NAME" />
+                Text="{Binding CurrentContact.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
             <Button
                 Grid.Column="2"
@@ -86,6 +86,7 @@
         <!--  Title/XP/Deadline  -->
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -95,18 +96,25 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                FontSize="36"
+                FontSize="20"
                 Text="Title" />
 
             <TextBlock
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                FontSize="36"
+                FontSize="20"
                 Text="XP Value" />
 
             <TextBlock
                 Grid.Column="2"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                FontSize="20"
+                Text="Reputation Gain" />
+
+            <TextBlock
+                Grid.Column="3"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 FontSize="36"
@@ -115,6 +123,7 @@
 
         <Grid Grid.Row="4" Grid.Column="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -124,7 +133,7 @@
                 x:Name="QuestTitle"
                 Grid.Column="0"
                 Margin="10"
-                FontSize="36" />
+                FontSize="20" />
 
             <ComboBox
                 x:Name="QuestXPValue"
@@ -133,7 +142,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 HorizontalContentAlignment="Center"
-                FontSize="36">
+                FontSize="20">
                 <ComboBoxItem IsSelected="True">1</ComboBoxItem>
                 <ComboBoxItem>2</ComboBoxItem>
                 <ComboBoxItem>3</ComboBoxItem>
@@ -151,9 +160,11 @@
                 <ComboBoxItem>987</ComboBoxItem>
             </ComboBox>
 
+            <ComboBox x:Name="QuestReputationValue" Grid.Column="2" />
+
             <DatePicker
                 Name="QuestDeadline"
-                Grid.Column="2"
+                Grid.Column="3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" />
         </Grid>
@@ -167,7 +178,10 @@
             FontSize="36"
             Text="Description" />
 
-        <TextBox Grid.Row="6" Grid.Column="1" />
+        <TextBox
+            x:Name="QuestDescription"
+            Grid.Row="6"
+            Grid.Column="1" />
 
         <!--  Submit/Cancel Buttons  -->
         <Grid Grid.Row="7" Grid.Column="1">

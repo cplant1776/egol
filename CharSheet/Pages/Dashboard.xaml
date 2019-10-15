@@ -155,7 +155,7 @@
                     Grid.Row="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Click="FullHistory_Click"
+                    Click="CompleteHistory_Click"
                     Content="Full History"
                     FontSize="14" />
                 <Button
@@ -174,10 +174,10 @@
                 Grid.Column="2"
                 HorizontalAlignment="Center"
                 FontSize="20"
-                Text="Current Quests" />
+                Text="Active Quests" />
 
             <ScrollViewer Grid.Row="1" Grid.Column="2">
-                <StackPanel x:Name="QuestStack" />
+                <ListView x:Name="QuestList" />
             </ScrollViewer>
 
             <!--  Current Quests Buttons  -->
