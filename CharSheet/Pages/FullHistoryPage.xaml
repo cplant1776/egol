@@ -52,15 +52,7 @@
                 Text="Event History" />
 
             <ScrollViewer Grid.Row="1" Grid.Column="1">
-                <StackPanel x:Name="FullHistoryStack">
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                    <TextBlock FontSize="20" Text="1337" />
-                </StackPanel>
+                <StackPanel x:Name="FullHistoryStack" />
             </ScrollViewer>
         </Grid>
 

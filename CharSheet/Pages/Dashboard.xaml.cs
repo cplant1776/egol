@@ -57,9 +57,9 @@ namespace CharSheet.Pages
 
         private void GenerateHistory()
         {
-            foreach(HistoryEntry e in MainWindow.CurrentCharacter.EventHistory)
+            foreach(EventRecord e in MainWindow.CurrentCharacter.EventHistory)
             {
-                HistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
+                HistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
             }
         }
 
@@ -110,9 +110,9 @@ namespace CharSheet.Pages
             DialogWindow popup = new DialogWindow();
             if(popup.ShowDialog() == true)
             {
-                HistoryEntry newEntry = popup.result;
-                MainWindow.CurrentCharacter.Add(newEntry);
-                MainWindow.CurrentCharacter.AttributeValue[newEntry.primarySkill] += newEntry.value;
+                Milestone newMilestone = popup.result;
+                MainWindow.CurrentCharacter.EventHistory.Add(newMilestone);
+                MainWindow.CurrentCharacter.AttributeValue[newMilestone.AttributeId] += newMilestone.Value;
             }
             RefreshPage();
         }
@@ -154,6 +154,7 @@ namespace CharSheet.Pages
 
             // Update XP
             MainWindow.UpdateXP(targetQuest.XPValue);
+            RefreshPage();
         }
 
         private void QuestLog_Click(object sender, RoutedEventArgs e)

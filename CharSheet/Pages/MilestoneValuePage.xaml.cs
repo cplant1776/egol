@@ -45,11 +45,10 @@ namespace CharSheet.Pages
         {
             var dialogWindow = Application.Current.Windows.OfType<DialogWindow>().SingleOrDefault(w => w.IsActive);
             dialogWindow.DialogResult = true;
-            dialogWindow.result = new HistoryEntry(
+            dialogWindow.result = new Milestone(
                                                     description : this.description,
-                                                    isMilestone : true,
                                                     value : Convert.ToInt32(SelectedValue.Text),
-                                                    primarySkill : DataHandler.attributeIdDict[SelectedAttribute.Text]
+                                                    attributeId : DataHandler.attributeIdDict[SelectedAttribute.Text]
                                                     );
             dialogWindow.Close();
         }

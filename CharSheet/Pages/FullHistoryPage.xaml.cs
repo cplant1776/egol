@@ -40,9 +40,9 @@ namespace CharSheet.Pages
 
         private void GenerateHistory()
         {
-            foreach (HistoryEntry e in mainWindow.CurrentCharacter.EventHistory)
+            foreach (EventRecord e in mainWindow.CurrentCharacter.EventHistory)
             {
-                FullHistoryStack.Children.Add(e.GenerateHistoryEntryTextBlock());
+                FullHistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
             }
         }
 

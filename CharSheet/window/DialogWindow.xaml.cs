@@ -21,7 +21,7 @@ namespace CharSheet
     public partial class DialogWindow : Window
     {
 
-        public HistoryEntry result;
+        public Milestone result;
 
         public DialogWindow()
         {

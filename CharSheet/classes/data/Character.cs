@@ -20,7 +20,7 @@ namespace CharSheet.classes.data
         [DataMember]
         public Dictionary<int, int> _skillValue = new Dictionary<int, int> { }; // (Skill ID: Value)
         [DataMember]
-        public List<HistoryEntry> _eventHistory = new List<HistoryEntry> { };
+        public List<EventRecord> _eventHistory = new List<EventRecord> { };
         [DataMember]
         private List<Quest> _quests = new List<Quest> { };
         [DataMember]
@@ -55,7 +55,7 @@ namespace CharSheet.classes.data
             }
         }
 
-        public List<HistoryEntry> EventHistory
+        public List<EventRecord> EventHistory
         {
             get { return _eventHistory; }
             set
@@ -161,11 +161,6 @@ namespace CharSheet.classes.data
             {
                 this.SkillValue.Add(key, 0);
             }
-        }
-
-        public void Add(HistoryEntry entry)
-        {
-            EventHistory.Add(entry);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

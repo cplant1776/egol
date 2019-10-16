@@ -69,7 +69,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\data\CharacterDummy.cs" />
-    <Compile Include="classes\data\InotifyPropertyChanged.cs" />
     <Compile Include="classes\display\MyConverters.cs" />
     <Compile Include="Pages\CompleteHistoryPage.xaml.cs">
       <DependentUpon>CompleteHistoryPage.xaml</DependentUpon>
@@ -153,8 +152,7 @@
     <Compile Include="classes\AppSettings.cs" />
     <Compile Include="classes\data\Character.cs" />
     <Compile Include="classes\data\Contact.cs" />
-    <Compile Include="classes\data\HistoryEntry.cs" />
-    <Compile Include="classes\data\Milestone.cs" />
+    <Compile Include="classes\data\EventRecord.cs" />
     <Compile Include="classes\data\Quest.cs" />
     <Compile Include="classes\display\MyPlotter.cs" />
     <Compile Include="classes\data\XmlHelper.cs" />

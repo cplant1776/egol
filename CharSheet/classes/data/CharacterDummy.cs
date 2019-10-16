@@ -15,6 +15,8 @@ namespace CharSheet.classes.data
         {
             this.Name = "Example Steve";
             this.CurrentXP = 1060;
+            this.ImgName = AppSettings.ContactImageFullPath + "dog.png";
+
             this.CharacterContacts = GenerateContacts();
             this.Quests = GenerateQuests();
             this.SkillValue = GenerateSkills();
@@ -127,112 +129,99 @@ namespace CharSheet.classes.data
             return questList;
         }
 
-        private List<HistoryEntry> GenerateEventHistory()
+        private List<EventRecord> GenerateEventHistory()
         {
-            List<HistoryEntry> result = new List<HistoryEntry> { };
+            List<EventRecord> result = new List<EventRecord> { };
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description : "Lorem ipsum dolor sit amet",
-                    isMilestone : false,
                     value : 15,
                     primarySkill : 1,
                     timestamp : new DateTime(2008, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Blandit volutpat maecenas volutpat blandit aliquam etiam",
-                    isMilestone: false,
                     value: 26,
                     primarySkill: 2,
                     timestamp: new DateTime(2009, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Lobortis elementum nibh tellus molestie nunc",
-                    isMilestone: false,
                     value: 10,
                     primarySkill: 3,
                     timestamp: new DateTime(2010, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Libero volutpat sed cras ornare",
-                    isMilestone: false,
                     value: 20,
-                    primarySkill: 4,
                     timestamp: new DateTime(2011, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new Milestone(
                     description: "Molestie at elementum eu facilisis sed odio morbi quis commodo",
-                    isMilestone: false,
                     value: 30,
-                    primarySkill: 5,
+                    attributeId: 2,
                     timestamp: new DateTime(2012, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Ut morbi tincidunt augue interdum velit euismod",
-                    isMilestone: false,
                     value: 40,
                     primarySkill: 6,
                     timestamp: new DateTime(2013, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Purus viverra accumsan in nisl nisi",
-                    isMilestone: false,
                     value: 50,
                     primarySkill: 7,
                     timestamp: new DateTime(2014, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat",
-                    isMilestone: false,
                     value: 60,
                     primarySkill: 8,
                     timestamp: new DateTime(2015, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Morbi tristique senectus et netus et",
-                    isMilestone: false,
                     value: 70,
                     primarySkill: 9,
                     timestamp: new DateTime(2016, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Amet volutpat consequat mauris nunc congue nisi",
-                    isMilestone: false,
                     value: 80,
                     primarySkill: 10,
                     timestamp: new DateTime(2017, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Erat pellentesque adipiscing commodo elit at. Duis tristique sollicitudin nibh sit",
-                    isMilestone: false,
                     value: 90,
                     primarySkill: 11,
                     timestamp: new DateTime(2018, 5, 1, 8, 30, 52)
                     )
                 );
 
-            result.Add(new HistoryEntry(
+            result.Add(new XPEvent(
                     description: "Vitae auctor eu augue ut lectus arcu bibendum",
-                    isMilestone: false,
                     value: 110,
                     primarySkill: 12,
                     timestamp: new DateTime(2019, 5, 1, 8, 30, 52)

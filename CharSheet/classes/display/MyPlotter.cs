@@ -19,7 +19,7 @@ namespace CharSheet.classes
             this.points = new List<DataPoint> { };
         }
 
-        public void PlotXPHistory(List<HistoryEntry> entries)
+        public void PlotXPHistory(List<EventRecord> entries)
         {
             this.MyModel = new PlotModel
             {
@@ -31,12 +31,12 @@ namespace CharSheet.classes
             int dayDifference;
             DataPoint newPoint;
 
-            foreach (HistoryEntry entry in entries)
+            foreach (EventRecord entry in entries)
             {
-                if (!entry.isMilestone)
+                if (entry.GetType() == typeof(XPEvent))
                 {
-                    dayDifference = (today - entry.timestamp).Days;
-                    newPoint = new DataPoint(dayDifference, entry.value);
+                    dayDifference = (today - entry.Timestamp).Days;
+                    newPoint = new DataPoint(dayDifference, entry.Value);
                     this.points.Add(newPoint);
                 }
 
