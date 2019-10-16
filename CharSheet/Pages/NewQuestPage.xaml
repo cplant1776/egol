@@ -19,7 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -53,11 +53,24 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Image
-                x:Name="ContactImage"
-                Grid.Column="0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center" />
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Image
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Stretch"
+                    Source="{Binding CurrentContact.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                <TextBlock
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Text="{Binding CurrentContact.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+            </Grid>
+
             <TextBlock
                 x:Name="ContactName"
                 Grid.Column="1"
@@ -69,7 +82,7 @@
             <Button
                 Grid.Column="2"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Bottom"
                 Click="NewContact_Click"
                 Content="New"
                 FontSize="26" />
@@ -77,7 +90,7 @@
             <Button
                 Grid.Column="3"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                VerticalAlignment="Bottom"
                 Click="ExistingContact_Click"
                 Content="Existing"
                 FontSize="26" />

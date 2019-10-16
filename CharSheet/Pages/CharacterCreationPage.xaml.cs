@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,14 +23,26 @@ namespace CharSheet
     /// <summary>
     /// Interaction logic for CharacterCreation.xaml
     /// </summary>
-    public partial class CharacterCreation : Page
+    public partial class CharacterCreation : Page, INotifyPropertyChanged
     {
 
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+        private string _imgName;
+
+        public string ImgName
+        {
+            get { return _imgName; }
+            set
+            {
+                _imgName = value;
+                OnPropertyChanged(() => ImgName);
+            }
+        }
 
         public CharacterCreation()
         {
             InitializeComponent();
+            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
 
             GenerateAttributeRows();
             GenerateSkillRows();
@@ -118,6 +132,12 @@ namespace CharSheet
             }
         }
 
+        private void AddImage_Click(object sender, RoutedEventArgs e)
+        {
+            this.ImgName = mainWindow.LoadImage();
+            mainWindow.CurrentCharacter.ImgName = this.ImgName;
+        }
+
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.NavigateTo(AppSettings.pagePaths["Start"], this.NavigationService);
@@ -156,6 +176,19 @@ namespace CharSheet
 
             // Go to dashboard
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], this.NavigationService);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+        // Just so we can call it via lambda which is nicer
+        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
+        {
+            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
         }
     }
 }

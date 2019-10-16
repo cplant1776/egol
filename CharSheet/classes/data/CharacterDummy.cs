@@ -33,7 +33,6 @@ namespace CharSheet.classes.data
                 name: "Fuzzy Dunlop",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas integer eget aliquet nibh praesent tristique magna sit. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Commodo ullamcorper a lacus vestibulum sed arcu. Euismod elementum nisi quis eleifend quam adipiscing. Ullamcorper sit amet risus nullam. Facilisis sed odio morbi quis commodo. Platea dictumst vestibulum rhoncus est. Fames ac turpis egestas sed tempus urna et pharetra pharetra. At quis risus sed vulputate odio. Amet consectetur adipiscing elit duis.",
                 reputation: 27,
-                imgName: "default.png",
                 id : 2847
                     )
                 );
@@ -42,7 +41,6 @@ namespace CharSheet.classes.data
                 name: "Earnest Adrian",
                 description: "Malesuada fames ac turpis egestas maecenas pharetra convallis. Posuere morbi leo urna molestie at. At erat pellentesque adipiscing commodo. Sed augue lacus viverra vitae congue eu consequat. In metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh. Erat nam at lectus urna duis convallis. Venenatis urna cursus eget nunc. Bibendum enim facilisis gravida neque convallis a. Ullamcorper eget nulla facilisi etiam dignissim diam quis enim lobortis. Pulvinar mattis nunc sed blandit libero volutpat. Ultrices dui sapien eget mi proin sed libero enim. Hac habitasse platea dictumst quisque sagittis purus sit. Vel eros donec ac odio tempor orci dapibus ultrices. Semper eget duis at tellus. Id aliquet lectus proin nibh nisl. Ultrices eros in cursus turpis massa tincidunt dui. Sed risus pretium quam vulputate dignissim suspendisse. Sed velit dignissim sodales ut eu.",
                 reputation: 0,
-                imgName: "default.png",
                 id : 6923
                     )
                 );
@@ -51,7 +49,6 @@ namespace CharSheet.classes.data
                 name: "Mic 'The Arm' Daley",
                 description: "Mi in nulla posuere sollicitudin aliquam. Auctor elit sed vulputate mi. Amet justo donec enim diam vulputate ut. Lorem donec massa sapien faucibus. Proin libero nunc consequat interdum varius sit. Turpis in eu mi bibendum neque. Porttitor rhoncus dolor purus non enim. Eget mi proin sed libero enim sed faucibus. Tincidunt id aliquet risus feugiat in. Massa sapien faucibus et molestie ac. Donec et odio pellentesque diam volutpat commodo sed egestas.",
                 reputation: 0,
-                imgName: "default.png",
                 id : 12
                     )
                 );
@@ -60,7 +57,7 @@ namespace CharSheet.classes.data
                 name: "Bertha Sheppard",
                 description: "Tincidunt dui ut ornare lectus. At auctor urna nunc id cursus. Nascetur ridiculus mus mauris vitae ultricies. Nibh sed pulvinar proin gravida. Congue eu consequat ac felis donec. Dis parturient montes nascetur ridiculus mus mauris vitae ultricies leo. In metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Arcu cursus euismod quis viverra nibh. Diam quam nulla porttitor massa id neque. Eget felis eget nunc lobortis mattis aliquam faucibus. Lacus sed turpis tincidunt id aliquet.",
                 reputation: 52,
-                imgName: "default.png",
+                imgName: AppSettings.ContactImageFullPath + "tester.png",
                 id : 7927
                     )
                 );

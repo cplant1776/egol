@@ -28,11 +28,11 @@
         <!--  Attribute Row  -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="6*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <!--  Attribute Grid  -->
@@ -46,36 +46,77 @@
             </ScrollViewer>
 
             <!--  Name/Description  -->
-            <Grid Grid.Column="4">
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="4*" />
                 </Grid.RowDefinitions>
 
-                <!--  Name  -->
-                <TextBlock
-                    Grid.Row="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Text="Name" />
-                <TextBox
-                    x:Name="CharacterName"
-                    Grid.Row="1"
-                    Margin="10" />
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Name  -->
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Text="Name" />
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <TextBox
+                            x:Name="CharacterName"
+                            Height="20"
+                            Margin="10"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            FontSize="20" />
+                        <Button
+                            HorizontalAlignment="Center"
+                            Click="AddImage_Click"
+                            Content="Add Image" />
+                    </StackPanel>
+
+                    <Image
+                        x:Name="CharacterImage"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Source="{Binding ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+
+                </Grid>
+
+
+
+
 
                 <!--  Description  -->
-                <TextBlock
-                    Grid.Row="2"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Bottom"
-                    Text="Description" />
-                <TextBox
-                    x:Name="CharacterDescription"
-                    Grid.Row="3"
-                    Margin="10"
-                    TextWrapping="Wrap" />
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="4*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        FontSize="20"
+                        Text="Description" />
+                    <TextBox
+                        x:Name="CharacterDescription"
+                        Grid.Row="1"
+                        Margin="10"
+                        TextWrapping="Wrap" />
+                </Grid>
+
             </Grid>
         </Grid>
 

@@ -59,7 +59,7 @@ namespace CharSheet.classes.data
             this.Name = "";
             this.Description = "";
             this.Reputation = 0;
-            this.ImgName = "";
+            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
         }
 
         public Contact(String name, String description, int reputation=0, String imgName = "", int id=-1)
@@ -71,7 +71,11 @@ namespace CharSheet.classes.data
             // Image path
             if (imgName != "")
             {
-                this.ImgName = AppSettings.ContactImagePath + imgName;
+                this.ImgName = imgName;
+            }
+            else
+            {
+                this.ImgName = AppSettings.ContactImageFullPath + "default.png";
             }
 
             // Id

@@ -38,9 +38,11 @@
 
             <!--  Contact Image  -->
             <Image
-                x:Name="ContactImage"
                 Grid.Row="0"
-                Grid.Column="0" />
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch"
+                Source="{Binding ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
 
             <!--  Contact Reputation  -->
             <Grid Grid.Row="1" Grid.Column="0">

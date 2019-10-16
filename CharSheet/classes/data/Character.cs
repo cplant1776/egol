@@ -142,7 +142,7 @@ namespace CharSheet.classes.data
             SetDefaultAttributeValues();
             SetDefaultSkillValues();
             this.CurrentXP = 0;
-            this.ImgName = AppSettings.ContactImagePath + "default.png";
+            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
         }
 
         private void SetDefaultAttributeValues()

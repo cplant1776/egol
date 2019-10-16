@@ -60,6 +60,7 @@ namespace CharSheet.Pages
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], NavigationService.GetNavigationService(this));
         }
 
+
         public void DebugCharacter_Click(object sender, RoutedEventArgs e)
         {
             Character debugChar = new Character();

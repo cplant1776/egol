@@ -107,6 +107,28 @@ namespace CharSheet
             }
         }
 
+        public String LoadImage()
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                // Set filter for file extension and default file extension 
+                DefaultExt = ".png",
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+            };
+
+            // Get the selected file name and load a character with it
+            if (dlg.ShowDialog() == true)
+            {
+                string source = dlg.FileName;
+                string destination = AppSettings.ContactImageFullPath + System.IO.Path.GetFileName(source);
+                // Copy file to resources
+                System.IO.File.Copy(source, destination, true);
+                return destination;
+            }
+            return "";
+        }
+
         public void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));

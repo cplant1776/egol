@@ -124,8 +124,7 @@ namespace CharSheet.Pages
 
         private void AddQuest_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow.NavigateTo(AppSettings.pagePaths["NewQuest"], this.NavigationService);
-            MainWindow.Save(AppSettings.SaveDestination);
+            MainWindow.NavigateTo(AppSettings.pagePaths["NewQuest"], this.NavigationService);
         }
 
         private void CompleteSelected_Click(object sender, RoutedEventArgs e)

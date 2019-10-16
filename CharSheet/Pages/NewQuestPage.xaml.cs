@@ -42,8 +42,11 @@ namespace CharSheet.Pages
         public NewQuestPage()
         {
             InitializeComponent();
-            List<int> reputationRange = Enumerable.Range(-100, 100).ToList();
+            // Populate reputation combobox
+            List<int> reputationRange = Enumerable.Range(-100, 200).ToList();
             QuestReputationValue.ItemsSource = reputationRange;
+            // Initialize Contact so default image shows up
+            this.CurrentContact = new Contact();
         }
 
         private void NewContact_Click(object sender, RoutedEventArgs e)
@@ -63,6 +66,11 @@ namespace CharSheet.Pages
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
+            // Add quest contact to character's contact list
+            Random rnd = new Random();
+            this.CurrentContact.Id = rnd.Next(1, 60000); // generate random id
+            mainWindow.CurrentCharacter.CharacterContacts.Add(this.CurrentContact);
+
             // Create new quest
             Quest newQuest = new Quest(
                 title: QuestTitle.Text,
@@ -75,10 +83,6 @@ namespace CharSheet.Pages
 
             // Add quest to character's quest list
             mainWindow.CurrentCharacter.Quests.Add(newQuest);
-            // Add quest contact to character's contact list
-            Random rnd = new Random();
-            this.CurrentContact.Id = rnd.Next(1, 60000); // generate random id
-            mainWindow.CurrentCharacter.CharacterContacts.Add(this.CurrentContact);
 
             // Return to dashboard
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], this.NavigationService);
