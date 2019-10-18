@@ -16,11 +16,11 @@ namespace CharSheet.classes.data
     public partial class Character : INotifyPropertyChanged
     {
         [DataMember]
-        public Dictionary<int, int> _attributeValue = new Dictionary<int, int> { }; // (Attribute ID: Value)
+        private Dictionary<int, int> _attributeValue = new Dictionary<int, int> { }; // (Attribute ID: Value)
         [DataMember]
-        public Dictionary<int, int> _skillValue = new Dictionary<int, int> { }; // (Skill ID: Value)
+        private Dictionary<int, int> _skillValue = new Dictionary<int, int> { }; // (Skill ID: Value)
         [DataMember]
-        public List<EventRecord> _eventHistory = new List<EventRecord> { };
+        private List<EventRecord> _eventHistory = new List<EventRecord> { };
         [DataMember]
         private List<Quest> _quests = new List<Quest> { };
         [DataMember]
@@ -64,16 +64,6 @@ namespace CharSheet.classes.data
                 OnPropertyChanged(() => EventHistory);
             }
         }
-
-        //public List<Milestone> Milestones
-        //{
-        //    get { return _milestones; }
-        //    set
-        //    {
-        //        _milestones = value;
-        //        OnPropertyChanged(() => Milestones);
-        //    }
-        //}
 
         public String Name
         {
@@ -152,6 +142,9 @@ namespace CharSheet.classes.data
             {
                 this.AttributeValue.Add(key, 0);
             }
+
+            //debugging
+            this.AttributeValue[2] = 1;
         }
 
         private void SetDefaultSkillValues()

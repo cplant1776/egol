@@ -14,8 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CharSheet.classes;
-using static CharSheet.classes.AttributeRow;
-using static CharSheet.classes.SkillRow;
+using CharSheet.classes.display;
 
 namespace CharSheet
 {
@@ -31,6 +30,8 @@ namespace CharSheet
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
         private int _numOfLevels;
+        private Dictionary<int, int> AttributeValue;
+        private Dictionary<int, int> SkillValue;
 
         public int NumOfLevels
         {
@@ -64,102 +65,49 @@ namespace CharSheet
             var levelUpWindow = Application.Current.Windows.OfType<LevelUpWindow>().SingleOrDefault(w => w.IsActive);
             this.NumOfLevels = levelUpWindow.numOfLevels;
 
-            GenerateAttributeRows();
-            GenerateSkillRows();
-            SetButtonEvents();
+            this.AttributeValue = levelUpWindow.AttributeValue;
+            this.SkillValue = levelUpWindow.SkillValue;
+
+            AttributeControl.ItemsSource = this.AttributeValue;
+            SkillControl.ItemsSource = this.SkillValue;
             
-        }
-
-        private void GenerateAttributeRows()
-        {
-            foreach (KeyValuePair<int, int> entry in mainWindow.CurrentCharacter.AttributeValue)
-            {
-                // Create row from current character's values
-                var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
-                AttributeStack.Children.Add(newRow.GenerateAttributeRow());
-            };
-        }
-
-        private void GenerateSkillRows()
-        {
-            foreach (KeyValuePair<int, int> entry in mainWindow.CurrentCharacter.SkillValue)
-            {
-                // Create row from current character's values
-                var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
-                SkillStack.Children.Add(newRow.GenerateSkillRow());
-            };
-        }
-
-        private void SetButtonEvents()
-        {
-            BindAttributeButtons();
-            BindSkillButtons();
-        }
-
-        private void BindAttributeButtons()
-        {
-            // Iterate through each row
-            foreach (Grid g in AttributeStack.Children)
-            {
-
-                // Find plus and minus buttons
-                AttributeModifierButton plusBtn = g.Children.OfType<AttributeModifierButton>().Where(i => Grid.GetColumn(i) == 3).FirstOrDefault();
-                AttributeModifierButton minusBtn = g.Children.OfType<AttributeModifierButton>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
-
-                // Set starting values
-                int attributeValue = Convert.ToInt32(g.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault().Text);
-                plusBtn.StartingValue = attributeValue;
-                minusBtn.StartingValue = attributeValue;
-
-                // Bind their click event
-                plusBtn.Click += Plus_Click;
-                minusBtn.Click += Minus_Click;
-            }
-        }
-
-        private void BindSkillButtons()
-        {
-            // Iterate through each row
-            foreach (Grid g in SkillStack.Children)
-            {
-
-                // Find plus and minus buttons
-                SkillModifierButton plusBtn = g.Children.OfType<SkillModifierButton>().Where(i => Grid.GetColumn(i) == 3).FirstOrDefault();
-                SkillModifierButton minusBtn = g.Children.OfType<SkillModifierButton>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
-
-                // Set starting values
-                int skillValue = Convert.ToInt32(g.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault().Text);
-                plusBtn.StartingValue = skillValue;
-                minusBtn.StartingValue = skillValue;
-
-                // Bind their click event
-                plusBtn.Click += Plus_Click;
-                minusBtn.Click += Minus_Click;
-            }
         }
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
             Grid sendingGrid = (sender as Button).Parent as Grid;
             TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
+            int iElementValue = Convert.ToInt32(elementValue.Text);
+            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
+
 
             // Attribute button pressed
-            if (sender.GetType() == typeof(AttributeModifierButton))
+            if (sendingGrid.Name == "AttributeValueGrid")
             {
                 if (this.DistributedAttributePoints < this.NumOfLevels * AppSettings.AttributePointsPerLevel)
                 {
-                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
+                    // Update attribute value
+                    int attributeId = DataHandler.getAttributeId(elementName.Text);
+                    this.AttributeValue[attributeId]++;
                     this.DistributedAttributePoints++;
+
+                    //Update displayed value
+                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
                 }
             }
 
             // Skill button pressed
-            if (sender.GetType() == typeof(SkillModifierButton))
+            if (sendingGrid.Name == "SkillValueGrid")
             {
                 if (this.DistributedSkillPoints < this.NumOfLevels * AppSettings.SkillPointsPerLevel)
                 {
-                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
+                    // Update skill value
+                    int skillId = DataHandler.getSkillId(elementName.Text);
+                    this.SkillValue[skillId]++;
                     this.DistributedSkillPoints++;
+
+                    //Update displayed value
+                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
                 }
             }
 
@@ -170,28 +118,43 @@ namespace CharSheet
             Grid sendingGrid = (sender as Button).Parent as Grid;
             TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
             int iElementValue = Convert.ToInt32(elementValue.Text);
+            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
 
             // Attribute button pressed 
-            if (sender.GetType() == typeof(AttributeModifierButton))
+            if (sendingGrid.Name == "AttributeValueGrid")
             {
-                if (iElementValue > (sender as AttributeModifierButton).StartingValue)
+                var sendingButton = sendingGrid.Children.OfType<Button>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
+
+                if (iElementValue > (sendingButton as AttributeModifierButton).StartingValue)
                 {
-                    elementValue.Text = (iElementValue - 1).ToString();
+                    // Update attribute value
+                    int attributeId = DataHandler.getAttributeId(elementName.Text);
+                    this.AttributeValue[attributeId]--;
                     this.DistributedAttributePoints--;
+
+                    // Update displayed value
+                    elementValue.Text = (iElementValue - 1).ToString();
                 }
             }
 
             // Skill button pressed
-            if (sender.GetType() == typeof(SkillModifierButton))
+            if (sendingGrid.Name == "SkillValueGrid")
             {
-                if (iElementValue > (sender as SkillModifierButton).StartingValue)
+                var sendingButton = sendingGrid.Children.OfType<Button>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
+
+                if (iElementValue > (sendingButton as SkillModifierButton).StartingValue)
                 {
-                    elementValue.Text = (iElementValue - 1).ToString();
+                    // Update skill value
+                    int skillId = DataHandler.getSkillId(elementName.Text);
+                    this.SkillValue[skillId]--;
                     this.DistributedSkillPoints--;
+
+                    // Update displayed value
+                    elementValue.Text = (iElementValue - 1).ToString();
                 }
             }
-
         }
+
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -203,8 +166,8 @@ namespace CharSheet
         private void Done_Click(object sender, RoutedEventArgs e)
         {
             var levelUpWindow = Application.Current.Windows.OfType<LevelUpWindow>().SingleOrDefault(w => w.IsActive);
-            levelUpWindow.attributeStack = AttributeStack;
-            levelUpWindow.skillStack = SkillStack;
+            levelUpWindow.AttributeValue = this.AttributeValue;
+            levelUpWindow.SkillValue = this.SkillValue;
             levelUpWindow.DialogResult = true;
             levelUpWindow.Close();
         }

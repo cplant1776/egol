@@ -160,6 +160,7 @@ namespace CharSheet.classes.data
             result.Add(new XPEvent(
                     description: "Libero volutpat sed cras ornare",
                     value: 20,
+                    primarySkill: 3,
                     timestamp: new DateTime(2011, 5, 1, 8, 30, 52)
                     )
                 );

@@ -28,7 +28,7 @@ namespace CharSheet.Pages
             InitializeComponent();
 
             GenerateExpPlot();
-            GenerateHistory();
+            //GenerateHistory();
         }
 
         private void GenerateExpPlot()
@@ -42,7 +42,7 @@ namespace CharSheet.Pages
         {
             foreach (EventRecord e in mainWindow.CurrentCharacter.EventHistory)
             {
-                FullHistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
+                //FullHistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
             }
         }
 

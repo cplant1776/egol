@@ -20,19 +20,21 @@ namespace CharSheet
     public partial class LevelUpWindow : Window
     {
         public int numOfLevels;
-        public StackPanel attributeStack;
-        public StackPanel skillStack;
+        public Dictionary<int, int> AttributeValue;
+        public Dictionary<int, int> SkillValue;
 
         public LevelUpWindow()
         {
             InitializeComponent();
         }
 
-        public LevelUpWindow(int numOfLevels)
+        public LevelUpWindow(int numOfLevels, Dictionary<int, int> attributeValues, Dictionary<int, int> skillValues)
         {
             InitializeComponent();
 
             this.numOfLevels = numOfLevels;
+            this.AttributeValue = attributeValues;
+            this.SkillValue = skillValues;
         }
     }
 }

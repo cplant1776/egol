@@ -2,6 +2,7 @@
     x:Class="CharSheet.CharacterCreation"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:btns="clr-namespace:CharSheet.classes.display"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CharSheet"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -37,12 +38,112 @@
 
             <!--  Attribute Grid  -->
             <ScrollViewer Grid.Column="1">
-                <StackPanel x:Name="AttributeStack" Grid.Column="1" />
+                <ItemsControl x:Name="AttributeControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                x:Name="AttributeValueGrid"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.4*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="1.4*" />
+                                </Grid.ColumnDefinitions>
+
+
+                                <!--  Attribute Name  -->
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Text="{Binding Key, Converter={StaticResource AttributeIdToAttributeString}}" />
+
+                                <!--  Attribute Value  -->
+                                <TextBlock
+                                    x:Name="AttributeValue"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Text="{Binding Value}" />
+
+                                <!--  Plus Button  -->
+                                <btns:AttributeModifierButton
+                                    Grid.Column="3"
+                                    Margin="5"
+                                    Click="Plus_Click">
+                                    <Image Source="../../media/icons/Add_grey_16xMD.png" />
+                                </btns:AttributeModifierButton>
+                                <!--  Minus Button  -->
+                                <btns:AttributeModifierButton
+                                    Grid.Column="4"
+                                    Margin="5"
+                                    Click="Minus_Click">
+                                    <Image Source="../../media/icons/Subtract_16x.png" />
+                                </btns:AttributeModifierButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
 
             <!--  Skills Grid  -->
             <ScrollViewer Grid.Column="3">
-                <StackPanel x:Name="SkillStack" Grid.Column="1" />
+                <ItemsControl x:Name="SkillControl">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                x:Name="SkillValueGrid"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.4*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="1.4*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  Skill Name  -->
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="16"
+                                    Text="{Binding Key, Converter={StaticResource SkillIdToSkillString}}" />
+
+                                <!--  Skill Value  -->
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Text="{Binding Value}" />
+
+                                <!--  Plus Button  -->
+                                <btns:AttributeModifierButton
+                                    Grid.Column="3"
+                                    Margin="5"
+                                    Click="Plus_Click">
+                                    <Image Source="../../media/icons/Add_grey_16xMD.png" />
+                                </btns:AttributeModifierButton>
+                                <!--  Minus Button  -->
+                                <btns:AttributeModifierButton
+                                    Grid.Column="4"
+                                    Margin="5"
+                                    Click="Minus_Click">
+                                    <Image Source="../../media/icons/Subtract_16x.png" />
+                                </btns:AttributeModifierButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
 
             <!--  Name/Description  -->

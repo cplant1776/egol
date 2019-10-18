@@ -12,6 +12,10 @@
             <cnv:XPToLevelConverter x:Key="XPToLevelConverter" />
             <cnv:XPToProgressConverterString x:Key="XPToProgressConverterString" />
             <cnv:DeadlineDateTimeToStringConverter x:Key="DeadlineDateTimeToStringConverter" />
+            <cnv:AttributeIdToAttributeString x:Key="AttributeIdToAttributeString" />
+            <cnv:SkillIdToSkillString x:Key="SkillIdToSkillString" />
+            <cnv:PlusButtonName x:Key="PlusButtonName" />
+            <cnv:MinusButtonName x:Key="MinusButtonName" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

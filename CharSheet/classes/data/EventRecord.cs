@@ -18,8 +18,7 @@ namespace CharSheet.classes
         [DataMember]
         public DateTime Timestamp { get; set; }
 
-        //Functions as both xp entries and milestones for the moment
-        //TODO: Rewrite as two inherited classes instead
+
         public EventRecord(string description, int value=0, DateTime timestamp=new DateTime())
         {
             this.Description = description;
@@ -33,39 +32,29 @@ namespace CharSheet.classes
                 this.Timestamp = timestamp;
             }
         }
-
-        public TextBlock GenerateEventRecordTextBlock()
-        {
-            TextBlock text = new TextBlock
-            {
-                Text = this.Description,
-                FontSize = 16,
-                VerticalAlignment = System.Windows.VerticalAlignment.Bottom,
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Left
-            };
-
-            return text;
-        }
-
-
     }
 
     public class XPEvent : EventRecord
     {
 
         public int PrimarySkill;
-        public XPEvent(string description, int value = 0, DateTime timestamp = new DateTime(), int primarySkill = -1) : base(description, value, timestamp)
+        public string TextTail { get; set; }
+
+        public XPEvent(string description, int primarySkill, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
         {
             this.PrimarySkill = primarySkill;
+            this.TextTail = "    +" + this.Value + " xp!";
         }
     }
 
     public class Milestone : EventRecord
     {
         public int AttributeId;
-        public Milestone(string description, int value = 0, DateTime timestamp = new DateTime(), int attributeId = -1) : base(description, value, timestamp)
+        public string TextTail { get; set; }
+        public Milestone(string description, int attributeId, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
         {
             this.AttributeId = attributeId;
+            this.TextTail = "    +" + value + " " + DataHandler.getAttributeDesc(attributeId) + "!";
         }
     }
 }

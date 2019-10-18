@@ -69,6 +69,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\data\CharacterDummy.cs" />
+    <Compile Include="classes\display\MyButtons.cs" />
     <Compile Include="classes\display\MyConverters.cs" />
     <Compile Include="Pages\CompleteHistoryPage.xaml.cs">
       <DependentUpon>CompleteHistoryPage.xaml</DependentUpon>
@@ -227,9 +228,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classes\display\AttributeRow.cs" />
     <Compile Include="classes\data\DataHandler.cs" />
-    <Compile Include="classes\display\SkillRow.cs" />
     <Compile Include="Pages\MilestoneValuePage.xaml.cs">
       <DependentUpon>MilestoneValuePage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

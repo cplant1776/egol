@@ -41,10 +41,11 @@ namespace CharSheet.Pages
 
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
 
-            GenerateAttributeRows();
-            GenerateSkillRows();
-            GenerateHistory();
             GenerateCurrentQuests();
+
+            HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory;
+            AttributeControl.ItemsSource = this.MainWindow.CurrentCharacter.AttributeValue;
+            SkillControl.ItemsSource = this.MainWindow.CurrentCharacter.SkillValue;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,35 +54,6 @@ namespace CharSheet.Pages
             var handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void GenerateHistory()
-        {
-            foreach(EventRecord e in MainWindow.CurrentCharacter.EventHistory)
-            {
-                HistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
-            }
-        }
-
-        private void GenerateAttributeRows()
-        {
-            foreach (KeyValuePair<int, int> entry in MainWindow.CurrentCharacter.AttributeValue)
-            {
-                // Create row from current character's values
-                var newRow = new AttributeRow(DataHandler.getAttributeDesc(entry.Key), entry.Value);
-                AttributeStack.Children.Add(newRow.GenerateAttributeDisplayRow());
-            };
-        }
-
-        private void GenerateSkillRows()
-        {
-            // Iterate through skill dictionary
-            foreach (KeyValuePair<int, int> entry in MainWindow.CurrentCharacter.SkillValue)
-            {
-                // Create row from current character's values
-                var newRow = new SkillRow(DataHandler.getSkillDesc(entry.Key), entry.Value);
-                SkillStack.Children.Add(newRow.GenerateSkillDisplayRow());
-            };
         }
 
         private void GenerateCurrentQuests()
