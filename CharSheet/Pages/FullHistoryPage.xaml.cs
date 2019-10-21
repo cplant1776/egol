@@ -21,34 +21,27 @@ namespace CharSheet.Pages
     /// </summary>
     public partial class FullHistoryPage : Page
     {
-        public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+        public MainWindow MainWindow = (MainWindow)Application.Current.MainWindow;
 
         public FullHistoryPage()
         {
             InitializeComponent();
 
             GenerateExpPlot();
-            //GenerateHistory();
+            // Show n most recent entries entries
+            HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory;
         }
-
+        
         private void GenerateExpPlot()
         {
             MyPlotter myPlotter = new MyPlotter();
-            myPlotter.PlotXPHistory(mainWindow.CurrentCharacter.EventHistory);
+            myPlotter.PlotXPHistory(MainWindow.CurrentCharacter.EventHistory);
             ExpPlot.Model = myPlotter.MyModel;
-        }
-
-        private void GenerateHistory()
-        {
-            foreach (EventRecord e in mainWindow.CurrentCharacter.EventHistory)
-            {
-                //FullHistoryStack.Children.Add(e.GenerateEventRecordTextBlock());
-            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], NavigationService.GetNavigationService(this));
+            MainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], NavigationService.GetNavigationService(this));
         }
     }
 }

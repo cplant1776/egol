@@ -41,11 +41,13 @@ namespace CharSheet.Pages
 
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
 
-            GenerateCurrentQuests();
-
-            HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory;
             AttributeControl.ItemsSource = this.MainWindow.CurrentCharacter.AttributeValue;
             SkillControl.ItemsSource = this.MainWindow.CurrentCharacter.SkillValue;
+            // Show n most recent entries entries
+            HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory.Skip(
+                this.MainWindow.CurrentCharacter.EventHistory.Count - AppSettings.NumOfRecentEvents);
+
+            GenerateCurrentQuests();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

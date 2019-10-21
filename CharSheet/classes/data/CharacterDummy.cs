@@ -99,7 +99,6 @@ namespace CharSheet.classes.data
                 xpValue: 125,
                 contactId: 6923,
                 reputationValue: 6,
-                deadline: new DateTime(2010, 5, 1, 8, 30, 52),
                 status: (int)Quest.QuestStatus.CURRENT
                 )
             );
@@ -110,7 +109,6 @@ namespace CharSheet.classes.data
                 xpValue: 10,
                 contactId: 12,
                 reputationValue: -10,
-                deadline: new DateTime(2011, 5, 1, 8, 30, 52),
                 status: (int)Quest.QuestStatus.COMPLETED
                 )
             );
@@ -121,7 +119,6 @@ namespace CharSheet.classes.data
                 xpValue: 42,
                 contactId: 7927,
                 reputationValue: -19,
-                deadline: new DateTime(2012, 5, 1, 8, 30, 52),
                 status: (int)Quest.QuestStatus.ACCEPTED
                 )
             );

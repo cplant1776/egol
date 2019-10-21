@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CharSheet.Pages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:oxy="http://oxyplot.org/wpf"
     Title="FullHistoryPage"
@@ -14,65 +15,93 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="4*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="6*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="9*" />
         </Grid.RowDefinitions>
 
-
-        <!--  XP Graph  -->
-        <Grid Grid.Row="1">
+        <!--  HEADER  -->
+        <Grid Grid.Row="0" Background="{StaticResource HeaderBackgroundColor}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <oxy:PlotView x:Name="ExpPlot" Grid.Column="1" />
+            <!--  BACK BUTTON  -->
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                BorderThickness="0"
+                Click="Back_Click"
+                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Stretch"
+                    Foreground="White"
+                    Kind="KeyboardBackspace" />
+            </Button>
+
+            <!--  TEXT  -->
+            <TextBlock
+                Grid.Column="1"
+                Style="{StaticResource MaterialDesignDisplay1TextBlock}"
+                Text="{StaticResource AppName}" />
         </Grid>
 
-        <!--  Event History  -->
-        <Grid Grid.Row="3" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="6*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <!--  CONTENT  -->
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                FontSize="20"
-                Text="Event History" />
+            <!--  XP GRAPH  -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <ScrollViewer Grid.Row="1" Grid.Column="1">
-                <StackPanel x:Name="FullHistoryStack" />
-            </ScrollViewer>
+                <oxy:PlotView
+                    x:Name="ExpPlot"
+                    Grid.Column="1"
+                    Margin="0,20,0,10" />
+            </Grid>
+
+            <!--  EVENT HISTORY  -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="1">
+                    <ItemsControl x:Name="HistoryControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel>
+                                    <TextBlock
+                                        FontSize="16"
+                                        Foreground="White"
+                                        Text="{Binding Description}" />
+                                    <TextBlock
+                                        FontSize="16"
+                                        Foreground="White"
+                                        Text="{Binding TextTail}" />
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+
         </Grid>
 
-        <!--  Back Button  -->
-        <Grid Grid.Row="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Button
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Click="Back_Click"
-                Content="Back"
-                FontSize="26" />
-
-        </Grid>
 
     </Grid>
+
+
+
 </Page>

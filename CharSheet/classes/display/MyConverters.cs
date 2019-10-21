@@ -63,8 +63,15 @@ namespace CharSheet.classes.display
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string attributeName = DataHandler.getAttributeDesc((int)value);
-            return attributeName;
+            DateTime deadline = (DateTime)value;
+            if (deadline == DateTime.MinValue) // no deadline given
+            {
+                return "N/A";
+            }
+            else
+            {
+                return deadline.ToString();
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

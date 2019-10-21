@@ -21,6 +21,7 @@ namespace CharSheet.classes
         public static string SaveDestination;
         public static string ContactImagePath;
         public static string ContactImageFullPath;
+        public static int NumOfRecentEvents;
 
         public static void InitializeSettings()
         {
@@ -56,6 +57,9 @@ namespace CharSheet.classes
             // Absolute path for contact images ContactImageFullPath
             jToken = jObject.GetValue("ContactImageFullPath");
             ContactImageFullPath = (string)jToken.ToObject(typeof(string));
+
+            jToken = jObject.GetValue("NumOfRecentEvents");
+            NumOfRecentEvents = (int)jToken.ToObject(typeof(int));
         }
     }
 }
