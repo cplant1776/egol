@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <!--  HEADER  -->
-        <Grid Grid.Row="0" Background="{StaticResource HeaderBackgroundColor}">
+        <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
             <TextBlock Style="{StaticResource MaterialDesignDisplay1TextBlock}" Text="{StaticResource AppName}" />
         </Grid>
 

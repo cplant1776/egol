@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\data\CharacterDummy.cs" />
+    <Compile Include="classes\display\MyRows.cs" />
     <Compile Include="classes\display\MyButtons.cs" />
     <Compile Include="classes\display\MyConverters.cs" />
     <Compile Include="Pages\CompleteHistoryPage.xaml.cs">

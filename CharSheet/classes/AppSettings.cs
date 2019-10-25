@@ -22,6 +22,7 @@ namespace CharSheet.classes
         public static string ContactImagePath;
         public static string ContactImageFullPath;
         public static int NumOfRecentEvents;
+        public static List<int> XPSelectableValues;
 
         public static void InitializeSettings()
         {
@@ -58,8 +59,13 @@ namespace CharSheet.classes
             jToken = jObject.GetValue("ContactImageFullPath");
             ContactImageFullPath = (string)jToken.ToObject(typeof(string));
 
+            // Number of displayed recent events on Dashboard
             jToken = jObject.GetValue("NumOfRecentEvents");
             NumOfRecentEvents = (int)jToken.ToObject(typeof(int));
+
+            // Selectable XP values
+            jToken = jObject.GetValue("XPSelectableValues");
+            XPSelectableValues = (List<int>)jToken.ToObject(typeof(List<int>));
         }
     }
 }

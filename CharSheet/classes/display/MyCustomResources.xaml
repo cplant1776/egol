@@ -10,9 +10,13 @@
 
     <!--  COLORS  -->
     <SolidColorBrush x:Key="HeaderBackgroundColor" Color="#673AB7" />
-    <!--<SolidColorBrush x:Key="HeaderBackgroundColor" Color="#FF5722" />-->
     <SolidColorBrush x:Key="WindowBackgroundColor" Color="#303030" />
+    <SolidColorBrush x:Key="AccentedWindowBackgroundColor" Color="#424242" />
     <SolidColorBrush x:Key="LightFontColor" Color="#FFFFFF" />
+
+    <!--  IMAGE SOURCES  -->
+    <system:String x:Key="PlusIconPath">../../media/icons/Add_grey_16xMD.png</system:String>
+    <system:String x:Key="MinusIconPath">../../media/icons/Subtract_16x.png</system:String>
 
     <!--  GUI LAYOUT  -->
     <Grid x:Key="guiLayout">
@@ -29,7 +33,7 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{StaticResource LightFontColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource LightFontColor}" />
     </Style>
 
     <!--  Sub Header TextBlock Style  -->
@@ -39,7 +43,7 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{StaticResource LightFontColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource LightFontColor}" />
     </Style>
 
 

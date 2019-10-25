@@ -85,7 +85,7 @@ namespace CharSheet.classes.data
             questList.Add(new Quest(
                 title: "Do A Backflip",
                 description: "At risus viverra adipiscing at in. Sit amet porttitor eget dolor morbi non arcu risus. Diam ut venenatis tellus in metus vulputate eu scelerisque. Elementum pulvinar etiam non quam lacus. Iaculis at erat pellentesque adipiscing commodo. Enim tortor at auctor urna nunc id cursus metus. Augue eget arcu dictum varius duis at consectetur lorem donec. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Est placerat in egestas erat imperdiet sed euismod nisi. Neque vitae tempus quam pellentesque nec nam. Dignissim suspendisse in est ante. Velit aliquet sagittis id consectetur purus ut faucibus pulvinar. Cras tincidunt lobortis feugiat vivamus. Viverra ipsum nunc aliquet bibendum. Natoque penatibus et magnis dis parturient montes nascetur ridiculus mus. Ornare aenean euismod elementum nisi.",
-                xpValue: 17,
+                xpValue: 13,
                 contactId: 2847,
                 reputationValue: 76,
                 deadline: new DateTime(2009, 5, 1, 8, 30, 52),
@@ -96,7 +96,7 @@ namespace CharSheet.classes.data
             questList.Add(new Quest(
                 title: "Bowl a 300",
                 description: "Montes nascetur ridiculus mus mauris vitae ultricies. Nisi vitae suscipit tellus mauris a. Phasellus vestibulum lorem sed risus ultricies. Purus faucibus ornare suspendisse sed nisi lacus. Nullam ac tortor vitae purus faucibus ornare. Aliquam ut porttitor leo a diam sollicitudin tempor id eu. Bibendum ut tristique et egestas quis ipsum suspendisse. Morbi tristique senectus et netus. Suspendisse interdum consectetur libero id. Mi eget mauris pharetra et. Leo duis ut diam quam nulla porttitor. Lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Ullamcorper eget nulla facilisi etiam dignissim diam quis enim. Leo a diam sollicitudin tempor id. Aliquam ut porttitor leo a diam sollicitudin tempor id.",
-                xpValue: 125,
+                xpValue: 89,
                 contactId: 6923,
                 reputationValue: 6,
                 status: (int)Quest.QuestStatus.CURRENT
@@ -106,9 +106,9 @@ namespace CharSheet.classes.data
             questList.Add(new Quest(
                 title: "Cook a Filet Mignon",
                 description: "Eu sem integer vitae justo eget magna fermentum iaculis eu. Sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Velit scelerisque in dictum non consectetur a erat nam at. Ultrices sagittis orci a scelerisque. Diam volutpat commodo sed egestas egestas fringilla. Porttitor leo a diam sollicitudin. Adipiscing bibendum est ultricies integer quis auctor elit. Sit amet consectetur adipiscing elit. Justo eget magna fermentum iaculis eu non. Eu lobortis elementum nibh tellus. Interdum velit laoreet id donec ultrices tincidunt arcu non sodales. Sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum. Vitae congue eu consequat ac felis donec et. Vel pretium lectus quam id leo in vitae. Lacus laoreet non curabitur gravida. Erat imperdiet sed euismod nisi porta lorem mollis aliquam. Odio tempor orci dapibus ultrices in iaculis nunc sed.",
-                xpValue: 10,
+                xpValue: 21,
                 contactId: 12,
-                reputationValue: -10,
+                reputationValue: 10,
                 status: (int)Quest.QuestStatus.COMPLETED
                 )
             );
@@ -116,9 +116,9 @@ namespace CharSheet.classes.data
             questList.Add(new Quest(
                 title: "Run a Marathon",
                 description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
-                xpValue: 42,
+                xpValue: 55,
                 contactId: 7927,
-                reputationValue: -19,
+                reputationValue: 19,
                 status: (int)Quest.QuestStatus.ACCEPTED
                 )
             );

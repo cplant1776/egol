@@ -13,6 +13,9 @@ namespace CharSheet.classes
     {
         [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
+        public string TextTail { get; set; }
         [DataMember]
         public int Value { get; set; }
         [DataMember]
@@ -38,7 +41,6 @@ namespace CharSheet.classes
     {
 
         public int PrimarySkill;
-        public string TextTail { get; set; }
 
         public XPEvent(string description, int primarySkill, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
         {
@@ -50,7 +52,6 @@ namespace CharSheet.classes
     public class Milestone : EventRecord
     {
         public int AttributeId;
-        public string TextTail { get; set; }
         public Milestone(string description, int attributeId, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
         {
             this.AttributeId = attributeId;

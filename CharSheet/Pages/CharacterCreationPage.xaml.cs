@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CharSheet.classes;
+using CharSheet.classes.display;
 
 namespace CharSheet
 {
@@ -25,8 +26,8 @@ namespace CharSheet
     {
 
         private MainWindow _mainWindow;
-        private Dictionary<int, int> AttributeValue;
-        private Dictionary<int, int> SkillValue;
+        private List<AttributeRow> _attributeRows = new List<AttributeRow> { };
+        private List<SkillRow> _skillRows = new List<SkillRow> { };
         private string _imgName;
 
         public MainWindow MainWindow
@@ -49,68 +50,146 @@ namespace CharSheet
             }
         }
 
+        public List<AttributeRow> AttributeRows
+        {
+            get { return _attributeRows; }
+            set
+            {
+                _attributeRows = value;
+                OnPropertyChanged("AttributeRows");
+            }
+        }
+
+        public List<SkillRow> SkillRows
+        {
+            get { return _skillRows; }
+            set
+            {
+                _skillRows = value;
+                OnPropertyChanged("SkillRows");
+            }
+        }
+
+
         public CharacterCreation()
         {
             InitializeComponent();
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
-            this.AttributeValue = this.MainWindow.CurrentCharacter.AttributeValue;
-            this.SkillValue = this.MainWindow.CurrentCharacter.SkillValue;
+            GenerateAttributeRows();
+            GenerateSkillRows();
             this.ImgName = AppSettings.ContactImageFullPath + "default.png";
 
-            AttributeControl.ItemsSource = MainWindow.CurrentCharacter.AttributeValue;
-            SkillControl.ItemsSource = MainWindow.CurrentCharacter.SkillValue;
+            AttributeList.ItemsSource = this.AttributeRows;
+            SkillList.ItemsSource = this.SkillRows;
         }
 
-        private void Plus_Click(object sender, RoutedEventArgs e)
+        private void GenerateAttributeRows()
         {
-            Grid sendingGrid = (sender as Button).Parent as Grid;
-            TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
-            int iElementValue = Convert.ToInt32(elementValue.Text);
-            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
-
-            if (sendingGrid.Name == "AttributeValueGrid") //Attribute button clicked
+            foreach(KeyValuePair<int, int> entry in this.MainWindow.CurrentCharacter.AttributeValue)
             {
-                int attributeId = DataHandler.getAttributeId(elementName.Text);
-                AttributeValue[attributeId]++;
+                AttributeRows.Add(new AttributeRow(name: DataHandler.getAttributeDesc(entry.Key), value: entry.Value));
             }
-            else if (sendingGrid.Name == "SkillValueGrid") //Skill button clicked
-            {
-                int skillId = DataHandler.getSkillId(elementName.Text);
-                SkillValue[skillId]++;
-            }
-
-            // Increment displayed value
-            // TODO: look into implementing ObservableCollection w/ dictionary functionality
-            elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
-
         }
 
-        private void Minus_Click(object sender, RoutedEventArgs e)
+        private void GenerateSkillRows()
         {
-            Grid sendingGrid = (sender as Button).Parent as Grid;
-            TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
-            int iElementValue = Convert.ToInt32(elementValue.Text);
-            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
-
-            // Decrement displayed value (cant go below 0)
-            if (iElementValue > 0)
+            foreach (KeyValuePair<int, int> entry in this.MainWindow.CurrentCharacter.SkillValue)
             {
-                if (sendingGrid.Name == "AttributeValueGrid") //Attribute button clicked
-                {
-                    int attributeId = DataHandler.getAttributeId(elementName.Text);
-                    AttributeValue[attributeId]--;
-                }
-                else if (sendingGrid.Name == "SkillValueGrid") //Skill button clicked
-                {
-                    int skillId = DataHandler.getSkillId(elementName.Text);
-                    SkillValue[skillId]--;
-                }
-
-                // Udate displayed text
-                elementValue.Text = (iElementValue - 1).ToString();
+                SkillRows.Add(new SkillRow(name: DataHandler.getSkillDesc(entry.Key), value: entry.Value));
             }
         }
 
+        private void PlusAttribute_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    AttributeRow tar = (AttributeRow)row.Item;
+                    //Find target attribute in current character
+                    foreach (AttributeRow r in this.AttributeRows)
+                    {
+                        if (r.AttributeName == tar.AttributeName)
+                        {
+                            r.AttributeValue++; //Update attribute value
+                            break;
+                        }
+                    }
+                    break;
+                }
+        }
+
+        private void MinusAttribute_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    AttributeRow tar = (AttributeRow)row.Item;
+                    // Value cant go below zero
+                    if (tar.AttributeValue > 0)
+                    {
+                        //Find target attribute in current character
+                        foreach (AttributeRow r in this.AttributeRows)
+                        {
+                            if (r.AttributeName == tar.AttributeName)
+                            {
+                                r.AttributeValue--; //Update attribute value
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+        }
+
+        private void PlusSkill_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    SkillRow tar = (SkillRow)row.Item;
+                    //Find target attribute in current character
+                    foreach (SkillRow r in this.SkillRows)
+                    {
+                        if (r.SkillName == tar.SkillName)
+                        {
+                            r.SkillValue++; //Update attribute value
+                            break;
+                        }
+                    }
+                    break;
+                }
+        }
+
+        private void MinusSkill_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    SkillRow tar = (SkillRow)row.Item;
+                    // Value cant go below zero
+                    if (tar.SkillValue > 0)
+                    {
+                        //Find target attribute in current character
+                        foreach (SkillRow r in this.SkillRows)
+                        {
+                            if (r.SkillName == tar.SkillName)
+                            {
+                                r.SkillValue--; //Update attribute value
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+        }
         private void AddImage_Click(object sender, RoutedEventArgs e)
         {
             this.ImgName = this.MainWindow.LoadImage();
@@ -124,9 +203,11 @@ namespace CharSheet
 
         private void Done_Click(object sender, RoutedEventArgs e)
         {
-            // Set Attributes/Skill
-            this.MainWindow.CurrentCharacter.AttributeValue = this.AttributeValue;
-            this.MainWindow.CurrentCharacter.SkillValue = this.SkillValue;
+            // Set Attributes/Skills
+            foreach(AttributeRow r in this.AttributeRows)
+                this.MainWindow.CurrentCharacter.AttributeValue[DataHandler.getAttributeId(r.AttributeName)] = r.AttributeValue;
+            foreach (SkillRow r in this.SkillRows)
+                this.MainWindow.CurrentCharacter.SkillValue[DataHandler.getSkillId(r.SkillName)] = r.SkillValue;
 
             // Set name
             this.MainWindow.CurrentCharacter.Name = CharacterName.Text;

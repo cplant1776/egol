@@ -58,7 +58,10 @@
                 FontSize="20"
                 Text="Event History" />
 
-            <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <ScrollViewer
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalScrollBarVisibility="Auto">
                 <StackPanel x:Name="FullHistoryStack">
                     <TextBlock FontSize="20" Text="1337" />
                     <TextBlock FontSize="20" Text="1337" />

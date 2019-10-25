@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CharSheet.classes.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,6 @@ using System.Windows.Data;
 namespace CharSheet.classes.display
 {
     public class XPToLevelConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return (int)value / 100;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value;
-        }
-    }
-
-    public class TesterConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -70,7 +58,7 @@ namespace CharSheet.classes.display
             }
             else
             {
-                return deadline.ToString();
+                return deadline.ToString("MM-dd-yyyy");
             }
         }
 
@@ -135,4 +123,33 @@ namespace CharSheet.classes.display
             return value;
         }
     }
+
+    public class EventRecordToString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string desc = (value as EventRecord).Description;
+            string tail = (value as EventRecord).TextTail;
+            return desc + tail;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+    public class CharacterContactToNameString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string contactName = (value as Contact).Name;
+            return contactName;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
 }

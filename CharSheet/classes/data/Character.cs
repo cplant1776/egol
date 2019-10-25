@@ -156,6 +156,17 @@ namespace CharSheet.classes.data
             }
         }
 
+        public Contact GetCharacterContact(int id)
+        {
+            foreach(Contact c in this.CharacterContacts)
+            {
+                if (c.Id == id)
+                    return c;
+            }
+            // Contact not found with that id
+            return new Contact();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)

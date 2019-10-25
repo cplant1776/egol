@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
 
         <!--  HEADER  -->
-        <Grid Grid.Row="0" Background="{StaticResource HeaderBackgroundColor}">
+        <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -51,49 +51,123 @@
         <!--  CONTENT  -->
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
             <!--  XP GRAPH  -->
-            <Grid>
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <oxy:PlotView
-                    x:Name="ExpPlot"
+                <GroupBox
                     Grid.Column="1"
-                    Margin="0,20,0,10" />
+                    Margin="0,20,0,20"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <oxy:PlotView
+                            x:Name="ExpPlot"
+                            Grid.Row="0"
+                            Margin="0,0,0,0" />
+                        <materialDesign:ColorZone Grid.Row="1" Mode="PrimaryMid">
+                            <StackPanel
+                                Margin="2"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <RadioButton
+                                    Margin="4"
+                                    Content="1 Week"
+                                    IsChecked="True"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}" />
+                                <RadioButton
+                                    Margin="4"
+                                    Content="2 Weeks"
+                                    IsChecked="False"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}" />
+                                <RadioButton
+                                    Margin="4"
+                                    Content="1 Month"
+                                    IsChecked="False"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}" />
+                                <RadioButton
+                                    Margin="4"
+                                    Content="1 Year"
+                                    IsChecked="False"
+                                    Style="{StaticResource MaterialDesignTabRadioButton}" />
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                    </Grid>
+
+                </GroupBox>
+
+
             </Grid>
 
             <!--  EVENT HISTORY  -->
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ScrollViewer Grid.Column="1">
-                    <ItemsControl x:Name="HistoryControl">
-                        <ItemsControl.ItemTemplate>
+                <GroupBox
+                    Grid.Column="1"
+                    Margin="16,0,0,16"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                    BorderThickness="3"
+                    Header="Recent Events">
+
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Width="26"
+                                    Height="26"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    Kind="Recent" />
+                                <TextBlock
+                                    Margin="8,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                    Text="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <ListView
+                        x:Name="HistoryControl"
+                        HorizontalContentAlignment="Stretch"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectionMode="Single">
+                        <ListView.ItemTemplate>
                             <DataTemplate>
-                                <WrapPanel>
+                                <WrapPanel Margin="0" Orientation="Horizontal">
                                     <TextBlock
-                                        FontSize="16"
+                                        FontSize="14"
                                         Foreground="White"
-                                        Text="{Binding Description}" />
+                                        Text="{Binding Description}"
+                                        TextWrapping="Wrap" />
                                     <TextBlock
-                                        FontSize="16"
+                                        FontSize="14"
                                         Foreground="White"
-                                        Text="{Binding TextTail}" />
+                                        Text="{Binding TextTail}"
+                                        TextWrapping="Wrap" />
                                 </WrapPanel>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </GroupBox>
             </Grid>
 
 

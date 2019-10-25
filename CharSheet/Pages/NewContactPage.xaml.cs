@@ -42,6 +42,8 @@ namespace CharSheet.Pages
         public NewContact()
         {
             InitializeComponent();
+
+            // Set default image
             this.ImgName = AppSettings.ContactImageFullPath + "default.png";
         }
 
@@ -57,15 +59,15 @@ namespace CharSheet.Pages
             this.ImgName = mainWindow.LoadImage();
         }
 
-        private void AddContact_Click(object sender, RoutedEventArgs e)
+        private void Done_Click(object sender, RoutedEventArgs e)
         {
             var contactWindow = Application.Current.Windows.OfType<ContactWindow>().SingleOrDefault(w => w.IsActive);
             contactWindow.DialogResult = true;
 
             contactWindow.result = new Contact(
-                name : ContactName.Text,
-                description : ContactDescription.Text,
-                reputation : (int)ContactReputation.Value,
+                name : NameInput.Text,
+                description : DescriptionInput.Text,
+                reputation : (int)ReputationSlider.Value,
                 imgName: this.ImgName
                 );
 

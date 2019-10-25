@@ -27,6 +27,11 @@ namespace CharSheet.Pages
     {
 
         private Contact _currentContact = new Contact();
+
+        private List<string> _contactList = new List<string> { };
+
+        private List<string> _questList = new List<string> { };
+
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
         public Contact CurrentContact
@@ -39,12 +44,44 @@ namespace CharSheet.Pages
             }
         }
 
+        public List<string> ContactList
+        {
+            get { return _contactList; }
+            set
+            {
+                _contactList = value;
+                OnPropertyChanged(() => ContactList);
+            }
+        }
+
+        public List<string> QuestList
+        {
+            get { return _questList; }
+            set
+            {
+                _questList = value;
+                OnPropertyChanged(() => QuestList);
+            }
+        }
+
         public NewQuestPage()
         {
             InitializeComponent();
             // Populate reputation combobox
-            List<int> reputationRange = Enumerable.Range(-100, 200).ToList();
-            QuestReputationValue.ItemsSource = reputationRange;
+            List<int> reputationRange = Enumerable.Range(0, 100).ToList();
+            ReputationValue.ItemsSource = reputationRange;
+            // Populate XP combobox
+            XPValue.ItemsSource = AppSettings.XPSelectableValues;
+
+            // Populate character contacts
+            this.ContactList = mainWindow.CurrentCharacter.CharacterContacts.Select(o => o.Name).ToList();
+            ContactInput.ItemsSource = this.ContactList;
+            // Populate past quest titles
+            this.QuestList = mainWindow.CurrentCharacter.Quests.Select(o => o.Title).ToList();
+            this.QuestList = this.QuestList.Distinct().ToList(); //remove duplicates
+            this.QuestList.Sort(); //sort alphabetically
+            TitleInput.ItemsSource = this.QuestList;
+
             // Initialize Contact so default image shows up
             this.CurrentContact = new Contact();
         }
@@ -56,29 +93,32 @@ namespace CharSheet.Pages
             {
                 // Set new contact for this quest
                 this.CurrentContact = popup.result;
+                this.mainWindow.CurrentCharacter.CharacterContacts.Add(popup.result);
+                ContactInput.Text = popup.result.Name;
             }
-        }
-
-        private void ExistingContact_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void Create_Click(object sender, RoutedEventArgs e)
         {
-            // Add quest contact to character's contact list
-            Random rnd = new Random();
-            this.CurrentContact.Id = rnd.Next(1, 60000); // generate random id
-            mainWindow.CurrentCharacter.CharacterContacts.Add(this.CurrentContact);
+            // Check if contact already exists in contact list
+            List<Contact> idOverlap = this.mainWindow.CurrentCharacter.CharacterContacts.Where(i => i.Id == this.CurrentContact.Id).ToList();
+            if (!idOverlap.Any())
+            {
+                // Add quest contact to character's contact list
+                Random rnd = new Random();
+                this.CurrentContact.Id = rnd.Next(1, 60000); // generate random id
+                mainWindow.CurrentCharacter.CharacterContacts.Add(this.CurrentContact);
+            }
+
 
             // Create new quest
             Quest newQuest = new Quest(
-                title: QuestTitle.Text,
-                description: QuestDescription.Text,
-                xpValue: Convert.ToInt32(QuestXPValue.Text),
+                title: TitleInput.Text,
+                description: DescriptionInput.Text,
+                xpValue: Convert.ToInt32(XPValue.Text),
                 contactId: this.CurrentContact.Id,
-                reputationValue: Convert.ToInt32(QuestReputationValue.Text),
-                deadline: DateTime.UtcNow
+                reputationValue: Convert.ToInt32(ReputationValue.Text),
+                deadline: DateTime.UtcNow  //TODO: Set from input
                 );
 
             // Add quest to character's quest list
@@ -86,6 +126,7 @@ namespace CharSheet.Pages
 
             // Return to dashboard
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], this.NavigationService);
+            
         }
 
 
@@ -105,6 +146,33 @@ namespace CharSheet.Pages
         public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
         {
             OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
+        }
+
+        private void TitleInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string targetTitle = (sender as ComboBox).SelectedItem as string;
+            if (QuestList.Contains(targetTitle))
+            {
+                // Locate quest object associated with title
+                foreach(Quest q in mainWindow.CurrentCharacter.Quests)
+                {
+                    if (targetTitle == q.Title)
+                    {
+                        // Set values to target quest values
+                        this.CurrentContact = mainWindow.CurrentCharacter.GetCharacterContact(q.ContactId);
+                        XPValue.Text = q.XPValue.ToString();
+                        ReputationValue.Text = q.ReputationValue.ToString();
+                        ContactInput.Text = this.CurrentContact.Name;
+                    }
+                }
+            }
+        }
+
+        private void ContactInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string targetName = (sender as ComboBox).SelectedItem as string;
+            Contact targetContact = this.mainWindow.CurrentCharacter.CharacterContacts.Find(i => i.Name == targetName);
+            this.CurrentContact = targetContact;
         }
     }
 }

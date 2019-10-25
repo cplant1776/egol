@@ -23,15 +23,15 @@ namespace CharSheet
     /// </summary>
     /// 
 
-       
     public partial class LevelUpPage : Page, INotifyPropertyChanged
     {
 
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
 
         private int _numOfLevels;
-        private Dictionary<int, int> AttributeValue;
-        private Dictionary<int, int> SkillValue;
+
+        private List<AttributeRow> _attributeRows = new List<AttributeRow> { };
+        private List<SkillRow> _skillRows = new List<SkillRow> { };
 
         public int NumOfLevels
         {
@@ -43,6 +43,26 @@ namespace CharSheet
                     +" attribute points and " + (value * AppSettings.SkillPointsPerLevel).ToString()
                     + " skill points.";
                 OnPropertyChanged("DisplayNumOfLevels");
+            }
+        }
+
+        public List<AttributeRow> AttributeRows
+        {
+            get { return _attributeRows; }
+            set
+            {
+                _attributeRows = value;
+                OnPropertyChanged("AttributeRows");
+            }
+        }
+
+        public List<SkillRow> SkillRows
+        {
+            get { return _skillRows; }
+            set
+            {
+                _skillRows = value;
+                OnPropertyChanged("SkillRows");
             }
         }
 
@@ -62,99 +82,136 @@ namespace CharSheet
         {
             InitializeComponent();
 
-            var levelUpWindow = Application.Current.Windows.OfType<LevelUpWindow>().SingleOrDefault(w => w.IsActive);
+            LevelUpWindow levelUpWindow = Application.Current.Windows.OfType<LevelUpWindow>().SingleOrDefault(w => w.IsActive);
             this.NumOfLevels = levelUpWindow.numOfLevels;
 
-            this.AttributeValue = levelUpWindow.AttributeValue;
-            this.SkillValue = levelUpWindow.SkillValue;
+            GenerateAttributeRows(levelUpWindow);
+            GenerateSkillRows(levelUpWindow);
 
-            AttributeControl.ItemsSource = this.AttributeValue;
-            SkillControl.ItemsSource = this.SkillValue;
+            AttributeControl.ItemsSource = this.AttributeRows;
+            SkillControl.ItemsSource = this.SkillRows;
             
         }
 
-        private void Plus_Click(object sender, RoutedEventArgs e)
+        private void GenerateAttributeRows(LevelUpWindow w)
         {
-            Grid sendingGrid = (sender as Button).Parent as Grid;
-            TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
-            int iElementValue = Convert.ToInt32(elementValue.Text);
-            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
-
-
-            // Attribute button pressed
-            if (sendingGrid.Name == "AttributeValueGrid")
+            foreach (KeyValuePair<int, int> entry in w.AttributeValue)
             {
-                if (this.DistributedAttributePoints < this.NumOfLevels * AppSettings.AttributePointsPerLevel)
-                {
-                    // Update attribute value
-                    int attributeId = DataHandler.getAttributeId(elementName.Text);
-                    this.AttributeValue[attributeId]++;
-                    this.DistributedAttributePoints++;
-
-                    //Update displayed value
-                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
-                }
-            }
-
-            // Skill button pressed
-            if (sendingGrid.Name == "SkillValueGrid")
-            {
-                if (this.DistributedSkillPoints < this.NumOfLevels * AppSettings.SkillPointsPerLevel)
-                {
-                    // Update skill value
-                    int skillId = DataHandler.getSkillId(elementName.Text);
-                    this.SkillValue[skillId]++;
-                    this.DistributedSkillPoints++;
-
-                    //Update displayed value
-                    elementValue.Text = (Convert.ToInt32(elementValue.Text) + 1).ToString();
-                }
-            }
-
-        }
-
-        private void Minus_Click(object sender, RoutedEventArgs e)
-        {
-            Grid sendingGrid = (sender as Button).Parent as Grid;
-            TextBlock elementValue = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 2).FirstOrDefault();
-            int iElementValue = Convert.ToInt32(elementValue.Text);
-            TextBlock elementName = sendingGrid.Children.OfType<TextBlock>().Where(i => Grid.GetColumn(i) == 1).FirstOrDefault();
-
-            // Attribute button pressed 
-            if (sendingGrid.Name == "AttributeValueGrid")
-            {
-                var sendingButton = sendingGrid.Children.OfType<Button>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
-
-                if (iElementValue > (sendingButton as AttributeModifierButton).StartingValue)
-                {
-                    // Update attribute value
-                    int attributeId = DataHandler.getAttributeId(elementName.Text);
-                    this.AttributeValue[attributeId]--;
-                    this.DistributedAttributePoints--;
-
-                    // Update displayed value
-                    elementValue.Text = (iElementValue - 1).ToString();
-                }
-            }
-
-            // Skill button pressed
-            if (sendingGrid.Name == "SkillValueGrid")
-            {
-                var sendingButton = sendingGrid.Children.OfType<Button>().Where(i => Grid.GetColumn(i) == 4).FirstOrDefault();
-
-                if (iElementValue > (sendingButton as SkillModifierButton).StartingValue)
-                {
-                    // Update skill value
-                    int skillId = DataHandler.getSkillId(elementName.Text);
-                    this.SkillValue[skillId]--;
-                    this.DistributedSkillPoints--;
-
-                    // Update displayed value
-                    elementValue.Text = (iElementValue - 1).ToString();
-                }
+                AttributeRows.Add(new AttributeRow(name: DataHandler.getAttributeDesc(entry.Key), value: entry.Value));
             }
         }
 
+        private void GenerateSkillRows(LevelUpWindow w)
+        {
+            foreach (KeyValuePair<int, int> entry in w.SkillValue)
+            {
+                SkillRows.Add(new SkillRow(name: DataHandler.getSkillDesc(entry.Key), value: entry.Value));
+            }
+        }
+
+        private void PlusAttribute_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if max points has already been distributed 
+            if (this.DistributedAttributePoints < this.NumOfLevels * AppSettings.AttributePointsPerLevel)
+            {
+
+                // Find Sending Row
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow row)
+                    {
+                        // Get sent attribute
+                        AttributeRow tar = (AttributeRow)row.Item;
+                        //Find target attribute in current character
+                        foreach (AttributeRow r in this.AttributeRows)
+                        {
+                            if (r.AttributeName == tar.AttributeName)
+                            {
+                                r.AttributeValue++; //Update attribute value
+                                this.DistributedAttributePoints++;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void MinusAttribute_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    AttributeRow tar = (AttributeRow)row.Item;
+                    // Value cant go below zero or starting value
+                    if (tar.AttributeValue > 0 && tar.AttributeValue > tar.StartingValue)
+                    {
+                        //Find target attribute in current character
+                        foreach (AttributeRow r in this.AttributeRows)
+                        {
+                            if (r.AttributeName == tar.AttributeName)
+                            {
+                                r.AttributeValue--; //Update attribute value
+                                this.DistributedAttributePoints--;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+        }
+
+        private void PlusSkill_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DistributedSkillPoints < this.NumOfLevels * AppSettings.SkillPointsPerLevel)
+            {
+                // Find Sending Row
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow row)
+                    {
+                        // Get sent attribute
+                        SkillRow tar = (SkillRow)row.Item;
+                        //Find target attribute in current character
+                        foreach (SkillRow r in this.SkillRows)
+                        {
+                            if (r.SkillName == tar.SkillName)
+                            {
+                                r.SkillValue++; //Update attribute value
+                                this.DistributedSkillPoints++;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void MinusSkill_Click(object sender, RoutedEventArgs e)
+        {
+            // Find Sending Row
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow row)
+                {
+                    // Get sent attribute
+                    SkillRow tar = (SkillRow)row.Item;
+                    // Value cant go below zero or starting value
+                    if (tar.SkillValue > 0 && tar.SkillValue > tar.StartingValue)
+                    {
+                        //Find target attribute in current character
+                        foreach (SkillRow r in this.SkillRows)
+                        {
+                            if (r.SkillName == tar.SkillName)
+                            {
+                                r.SkillValue--; //Update attribute value
+                                this.DistributedAttributePoints--;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+        }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -166,8 +223,11 @@ namespace CharSheet
         private void Done_Click(object sender, RoutedEventArgs e)
         {
             var levelUpWindow = Application.Current.Windows.OfType<LevelUpWindow>().SingleOrDefault(w => w.IsActive);
-            levelUpWindow.AttributeValue = this.AttributeValue;
-            levelUpWindow.SkillValue = this.SkillValue;
+            // Set Attributes/Skills
+            foreach (AttributeRow r in this.AttributeRows)
+                levelUpWindow.AttributeValue[DataHandler.getAttributeId(r.AttributeName)] = r.AttributeValue;
+            foreach (SkillRow r in this.SkillRows)
+                levelUpWindow.SkillValue[DataHandler.getSkillId(r.SkillName)] = r.SkillValue;
             levelUpWindow.DialogResult = true;
             levelUpWindow.Close();
         }

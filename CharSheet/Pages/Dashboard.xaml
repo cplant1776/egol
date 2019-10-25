@@ -6,10 +6,9 @@
     xmlns:local="clr-namespace:CharSheet.Pages"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:oxy="http://oxyplot.org/wpf"
     Title="Dashboard"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="770"
+    d:DesignWidth="1170"
     mc:Ignorable="d">
 
 
@@ -22,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!--  HEADER  -->
-        <Grid Grid.Row="0" Background="{StaticResource HeaderBackgroundColor}">
+        <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -40,7 +39,7 @@
                     Width="50"
                     Height="50"
                     HorizontalAlignment="Stretch"
-                    Foreground="White"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                     Kind="HamburgerMenu" />
             </Button>
 
@@ -58,7 +57,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
                 <RowDefinition Height="20*" />
             </Grid.RowDefinitions>
 
@@ -75,101 +73,122 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="7*" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="7*" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Style="{StaticResource MaterialDesignTitleTextBlock}"
-                        Text="Attributes" />
-
-                    <TextBlock
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Style="{StaticResource MaterialDesignTitleTextBlock}"
-                        Text="Skills" />
 
                     <!--  Attribute Scroll  -->
-                    <ScrollViewer Grid.Row="1">
-                        <ItemsControl x:Name="AttributeControl">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                    <GroupBox
+                        Grid.Row="1"
+                        Margin="16"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Background="{DynamicResource AccentedWindowBackgroundColor}"
+                        Header="Attributes"
+                        Style="{DynamicResource MaterialDesignGroupBox}">
 
-                                        <!--  Attribute Name  -->
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Foreground="White"
-                                            Text="{Binding Key, Converter={StaticResource AttributeIdToAttributeString}}" />
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="32"
+                                        Height="32"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        Kind="Bacteria" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <DataGrid
+                            x:Name="AttributeList"
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Center"
+                            materialDesign:DataGridAssist.CellPadding="2 2 2 2"
+                            AutoGenerateColumns="False"
+                            Background="{StaticResource AccentedWindowBackgroundColor}"
+                            CanUserAddRows="False"
+                            FontSize="16"
+                            Foreground="White"
+                            HeadersVisibility="None"
+                            HorizontalGridLinesBrush="{DynamicResource WindowBackgroundColor}"
+                            SelectionMode="Single"
+                            SelectionUnit="Cell"
+                            VerticalScrollBarVisibility="Auto">
 
-                                        <!--  Attribute Value  -->
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Foreground="White"
-                                            Text="{Binding Value}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="200"
+                                    Binding="{Binding AttributeName}"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Width="60"
+                                    Binding="{Binding AttributeValue}"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
 
 
                     <!--  Skill Scroll  -->
-                    <ScrollViewer Grid.Row="1" Grid.Column="2">
-                        <ItemsControl x:Name="SkillControl">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
+                    <GroupBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="16"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Background="{DynamicResource AccentedWindowBackgroundColor}"
+                        Header="Skills"
+                        Style="{DynamicResource MaterialDesignGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="32"
+                                        Height="32"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        Kind="Ethereum" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <DataGrid
+                            x:Name="SkillList"
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Center"
+                            materialDesign:DataGridAssist.CellPadding="2 2 2 2"
+                            AutoGenerateColumns="False"
+                            Background="{DynamicResource AccentedWindowBackgroundColor}"
+                            CanUserAddRows="False"
+                            FontSize="16"
+                            Foreground="White"
+                            HeadersVisibility="None"
+                            HorizontalGridLinesBrush="{StaticResource WindowBackgroundColor}"
+                            SelectionMode="Single"
+                            SelectionUnit="Cell"
+                            VerticalScrollBarVisibility="Auto">
 
-                                        <!--  Skill Name  -->
-                                        <TextBlock
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Foreground="White"
-                                            Text="{Binding Key, Converter={StaticResource SkillIdToSkillString}}" />
-
-                                        <!--  Skill Value  -->
-                                        <TextBlock
-                                            Grid.Column="2"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Foreground="White"
-                                            Text="{Binding Value}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="200"
+                                    Binding="{Binding SkillName}"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Width="60"
+                                    Binding="{Binding SkillValue}"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
 
                 </Grid>
 
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
                         <RowDefinition Height="7*" />
                         <RowDefinition Height="3*" />
                     </Grid.RowDefinitions>
@@ -179,42 +198,66 @@
                     </Grid.ColumnDefinitions>
 
                     <!--  RECENT EVENTS  -->
-                    <TextBlock
+                    <GroupBox
                         Grid.Row="0"
                         Grid.Column="0"
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource MaterialDesignTitleTextBlock}"
-                        Text="Recent Events" />
+                        Margin="16,0,0,0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        BorderThickness="3"
+                        Header="Recent Events">
 
-                    <ScrollViewer Grid.Row="1" Grid.Column="0">
-                        <ItemsControl x:Name="HistoryControl">
-                            <ItemsControl.ItemTemplate>
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="26"
+                                        Height="26"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        Kind="Recent" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        FontSize="16"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <ListView
+                            x:Name="HistoryControl"
+                            HorizontalContentAlignment="Stretch"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            SelectionMode="Single">
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <WrapPanel>
+                                    <WrapPanel Margin="0" Orientation="Horizontal">
                                         <TextBlock
-                                            FontSize="16"
+                                            FontSize="14"
                                             Foreground="White"
-                                            Text="{Binding Description}" />
+                                            Text="{Binding Description}"
+                                            TextWrapping="Wrap" />
                                         <TextBlock
-                                            FontSize="16"
+                                            FontSize="14"
                                             Foreground="White"
-                                            Text="{Binding TextTail}" />
+                                            Text="{Binding TextTail}"
+                                            TextWrapping="Wrap" />
                                     </WrapPanel>
                                 </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </GroupBox>
 
-                    <Grid Grid.Row="2" Grid.Column="0">
+                    <Grid Grid.Row="1" Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Button
-                            Grid.Row="4"
+                            Grid.Row="3"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             materialDesign:ButtonAssist.CornerRadius="10"
@@ -236,27 +279,50 @@
 
                             <TextBlock Text="Quest Log" />
                         </Button>
-
-
                     </Grid>
 
 
                     <!--  ACTIVE QUESTS  -->
-                    <TextBlock
+                    <GroupBox
                         Grid.Row="0"
                         Grid.Column="1"
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Style="{StaticResource MaterialDesignTitleTextBlock}"
-                        Text="Active Quests" />
+                        Margin="16,0,0,0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        BorderThickness="0"
+                        Header="Active Quests"
+                        Style="{DynamicResource MaterialDesignGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon
+                                        Grid.Column="0"
+                                        Width="24"
+                                        Height="24"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                        Kind="FormatListNumbered" />
+                                    <TextBlock
+                                        Grid.ColumnSpan="2"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </Grid>
 
-                    <ScrollViewer Grid.Row="1" Grid.Column="1">
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
                         <ListView
                             x:Name="QuestList"
-                            Foreground="White"
-                            ItemsSource="{Binding}" />
-                    </ScrollViewer>
+                            HorizontalContentAlignment="Stretch"
+                            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            SelectionMode="Single" />
+                    </GroupBox>
 
                     <Button
                         Grid.Row="2"
@@ -278,59 +344,83 @@
             <!--  RIGHT SIDE  -->
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="6*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="4*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
 
-                <!--  NAME  -->
-                <TextBlock
-                    Grid.Row="0"
-                    Style="{StaticResource MaterialDesignTitleTextBlock}"
-                    Text="{Binding MainWindow.CurrentCharacter.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                <!--  NAME/IMAGE/PROGRESS  -->
+                <StackPanel>
+                    <GroupBox
+                        Grid.Row="0"
+                        Margin="16"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        BorderThickness="3"
+                        Header="{Binding MainWindow.CurrentCharacter.Name, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}">
 
-                <!--  IMAGE  -->
-                <Image Grid.Row="1" Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel>
+                            <Image Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="5*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                    Text="{Binding MainWindow.CurrentCharacter.CurrentXP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Converter={StaticResource XPToLevelConverter}}" />
 
-                <!--  LEVEL/PROGRESS BAR  -->
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="5*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
+                                <ProgressBar
+                                    Grid.Column="1"
+                                    Margin="0,0,20,0"
+                                    Foreground="{DynamicResource SecondaryAccentBrush}"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding MainWindow.CurrentCharacter.CurrentXP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Converter={StaticResource XPToProgressConverter}}" />
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <Button
+                        Margin="0,5,0,0"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="20"
-                        Text="{Binding MainWindow.CurrentCharacter.CurrentXP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Converter={StaticResource XPToLevelConverter}}" />
-
-                    <ProgressBar
-                        Grid.Column="1"
-                        Margin="0,0,20,0"
-                        Maximum="100"
-                        Minimum="0"
-                        Value="{Binding MainWindow.CurrentCharacter.CurrentXP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Converter={StaticResource XPToProgressConverter}}" />
-                </Grid>
-
-
-                <Button
-                    Grid.Row="3"
-                    Margin="0,5,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Top"
-                    materialDesign:ButtonAssist.CornerRadius="10"
-                    Click="AddMilestone_Click"
-                    FontSize="16"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}">
-
-                    <TextBlock Text="Add Milestone" />
-                </Button>
+                        VerticalAlignment="Top"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Click="AddMilestone_Click"
+                        FontSize="16"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="26"
+                                Height="26"
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                Kind="Hiking" />
+                            <TextBlock Text="Add Milestone" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
 
                 <Button
-                    Grid.Row="4"
+                    Grid.Row="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     materialDesign:ButtonAssist.CornerRadius="10"

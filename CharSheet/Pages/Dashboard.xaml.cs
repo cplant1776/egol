@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CharSheet.classes;
 using CharSheet.classes.data;
+using CharSheet.classes.display;
 
 namespace CharSheet.Pages
 {
@@ -24,6 +25,8 @@ namespace CharSheet.Pages
     public partial class Dashboard : Page, INotifyPropertyChanged
     {
         private MainWindow _mainWindow;
+        private List<AttributeRow> _attributeRows = new List<AttributeRow> { };
+        private List<SkillRow> _skillRows = new List<SkillRow> { };
 
         public MainWindow MainWindow
         {
@@ -35,19 +38,58 @@ namespace CharSheet.Pages
             }
         }
 
+        public List<AttributeRow> AttributeRows
+        {
+            get { return _attributeRows; }
+            set
+            {
+                _attributeRows = value;
+                OnPropertyChanged("AttributeRows");
+            }
+        }
+
+        public List<SkillRow> SkillRows
+        {
+            get { return _skillRows; }
+            set
+            {
+                _skillRows = value;
+                OnPropertyChanged("SkillRows");
+            }
+        }
+
         public Dashboard()
         {
             InitializeComponent();
 
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
+            GenerateAttributeRows();
+            GenerateSkillRows();
 
-            AttributeControl.ItemsSource = this.MainWindow.CurrentCharacter.AttributeValue;
-            SkillControl.ItemsSource = this.MainWindow.CurrentCharacter.SkillValue;
+            AttributeList.ItemsSource = this.AttributeRows;
+            SkillList.ItemsSource = this.SkillRows;
+
             // Show n most recent entries entries
             HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory.Skip(
                 this.MainWindow.CurrentCharacter.EventHistory.Count - AppSettings.NumOfRecentEvents);
 
             GenerateCurrentQuests();
+        }
+
+        private void GenerateAttributeRows()
+        {
+            foreach (KeyValuePair<int, int> entry in this.MainWindow.CurrentCharacter.AttributeValue)
+            {
+                AttributeRows.Add(new AttributeRow(name: DataHandler.getAttributeDesc(entry.Key), value: entry.Value));
+            }
+        }
+
+        private void GenerateSkillRows()
+        {
+            foreach (KeyValuePair<int, int> entry in this.MainWindow.CurrentCharacter.SkillValue)
+            {
+                SkillRows.Add(new SkillRow(name: DataHandler.getSkillDesc(entry.Key), value: entry.Value));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

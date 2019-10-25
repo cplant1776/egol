@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CharSheet.classes;
+using System.Collections.ObjectModel;
 
 namespace CharSheet.Pages
 {
@@ -55,33 +56,48 @@ namespace CharSheet.Pages
         {
             InitializeComponent();
 
+            //TODO: Implement this using HierarchicalDataTemplate
+            // https://docs.microsoft.com/en-us/dotnet/api/system.windows.hierarchicaldatatemplate?view=netframework-4.8
             GenerateQuestsLists();
         }
 
         private void GenerateQuestsLists()
         {
-            TextBlock questDisplay = new TextBlock();
-            foreach(Quest q in mainWindow.CurrentCharacter.Quests)
+            List<QuestMenuCategory> questListRoot = new List<QuestMenuCategory>
             {
-                questDisplay = new TextBlock()
+                new QuestMenuCategory() {Title = "Active Quests"},
+                new QuestMenuCategory() {Title = "Accepted Quests"},
+                new QuestMenuCategory() {Title = "Completed Quests"},
+            };
+
+            foreach (Quest q in mainWindow.CurrentCharacter.Quests)
+            {
+                TreeViewItem newItem = new TreeViewItem
                 {
-                    Text = q.Title
+                    Header = q.Title,
+                    Foreground = (Brush)FindResource("PrimaryHueMidForegroundBrush"),
                 };
+
+                newItem.MouseLeftButtonUp += new MouseButtonEventHandler(UpdateSelectedQuest);
 
                 if (q.Status == (int)Quest.QuestStatus.CURRENT)
                 {
-                    CurrentQuestsList.Items.Add(questDisplay);
+                    //questListRoot[0].AddQuest(new QuestMenuItem() { Title = q.Title });
+                    ActiveQuestsItem.Items.Add(newItem);
                 }
                 else if (q.Status == (int)Quest.QuestStatus.ACCEPTED)
                 {
-                    AcceptedQuestsList.Items.Add(questDisplay);
+                    //questListRoot[1].AddQuest(new QuestMenuItem() { Title = q.Title });
+                    AcceptedQuestsItem.Items.Add(newItem);
                 }
                 else if (q.Status == (int)Quest.QuestStatus.COMPLETED)
                 {
-                    CompleteQuestsList.Items.Add(questDisplay);
+                    //questListRoot[2].AddQuest(new QuestMenuItem() { Title = q.Title });
+                    CompletedQuestsItem.Items.Add(newItem);
                 }
             }
         }
+
 
         private void Complete_Click(object sender, RoutedEventArgs e)
         {
@@ -111,16 +127,17 @@ namespace CharSheet.Pages
             this.NavigationService.Refresh();
         }
 
-        private void UpdateSelectedQuest(object sender, SelectionChangedEventArgs args)
+        private void UpdateSelectedQuest(object sender, MouseButtonEventArgs args)
         {
-            if ((sender as ListView).SelectedItems.Count > 0)
-            {
-                TextBlock questTitle = (TextBlock)(sender as ListView).SelectedItems[0];
-
+            // Find clicked quest's name
+            var targetSender = (TreeViewItem)sender;
+            string targetTitle = targetSender.Header.ToString();
+            
+            
                 // Locate selected quest object
                 foreach (Quest q in mainWindow.CurrentCharacter.Quests)
                 {
-                    if (q.Title == questTitle.Text)
+                    if (q.Title == targetTitle)
                     {
                         this.SelectedQuest = q;
                     }
@@ -133,13 +150,41 @@ namespace CharSheet.Pages
                         this.SelectedContact = c;
                     }
                 }
+
+            // Make selected quest content visible if not currently shown
+            if(SelectedQuestInfo.Visibility.Equals(Visibility.Hidden))
+            {
+                SelectedQuestInfo.Visibility = Visibility.Visible;
             }
 
+            // Hide/show due date
+            if(SelectedQuest.Deadline == DateTime.MinValue) //no deadline
+            {
+                DeadlineGrid.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                DeadlineGrid.Visibility = Visibility.Visible;
+            }
+            
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], this.NavigationService);
+        }
+
+        private void QuestCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+            (sender as TreeViewItem).IsExpanded = true;
+            /*
+            //Toggle menu expansion on click
+            if ((sender as TreeViewItem).IsExpanded)
+                (sender as TreeViewItem).IsExpanded = false;
+            else
+                (sender as TreeViewItem).IsExpanded = true;
+                */
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -158,6 +203,32 @@ namespace CharSheet.Pages
         private void ListView_MouseLeave(object sender, MouseEventArgs e)
         {
             (sender as ListView).UnselectAll();
+        }
+    }
+
+    public class QuestMenuItem
+    {
+        public string Title { get; set; }
+
+        public QuestMenuItem()
+        {
+            
+        }
+    }
+
+    public class QuestMenuCategory
+    {
+        public string Title { get; set; }
+        public List<QuestMenuItem> Quests = new List<QuestMenuItem> { };
+
+        public QuestMenuCategory()
+        {
+
+        }
+
+        public void AddQuest(QuestMenuItem q)
+        {
+            this.Quests.Add(q);
         }
     }
 }
