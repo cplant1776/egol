@@ -89,6 +89,9 @@ namespace CharSheet
                 this.CurrentCharacter.AttributeValue = popup.AttributeValue;
                 this.CurrentCharacter.SkillValue = popup.SkillValue;
             }
+
+            // Refresh page
+            NavigationService.GetNavigationService((this.Content as Frame).Content as Page).Refresh();
         }
 
         public String LoadImage()

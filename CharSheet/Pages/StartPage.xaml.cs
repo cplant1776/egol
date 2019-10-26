@@ -20,7 +20,7 @@ namespace CharSheet.Pages
     /// <summary>
     /// Interaction logic for StartPage.xaml
     /// </summary>
-    public partial class StartPage : Page
+    public partial class StartPage : MyBasePage
     {
 
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;

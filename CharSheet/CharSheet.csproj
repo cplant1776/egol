@@ -83,9 +83,14 @@
     <Compile Include="classes\display\MyRows.cs" />
     <Compile Include="classes\display\MyButtons.cs" />
     <Compile Include="classes\display\MyConverters.cs" />
+    <Compile Include="classes\display\QuickMenuActions.cs" />
     <Compile Include="Pages\CompleteHistoryPage.xaml.cs">
       <DependentUpon>CompleteHistoryPage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Pages\MyBasePage.cs" />
+    <Compile Include="Pages\NewMilestonePage.xaml.cs">
+      <DependentUpon>NewMilestonePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="window\ContactWindow.xaml.cs">
       <DependentUpon>ContactWindow.xaml</DependentUpon>
@@ -103,11 +108,6 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Pages\ContactPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
     <Page Include="Pages\FullHistoryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +117,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Pages\NewMilestonePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NewQuestPage.xaml">
       <SubType>Designer</SubType>
@@ -173,10 +177,6 @@
     <Compile Include="classes\data\Quest.cs" />
     <Compile Include="classes\display\MyPlotter.cs" />
     <Compile Include="classes\data\XmlHelper.cs" />
-    <Compile Include="Pages\ContactPage.xaml.cs">
-      <DependentUpon>ContactPage.xaml</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Pages\FullHistoryPage.xaml.cs">
       <DependentUpon>FullHistoryPage.xaml</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

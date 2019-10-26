@@ -23,6 +23,7 @@ namespace CharSheet.classes
         public static string ContactImageFullPath;
         public static int NumOfRecentEvents;
         public static List<int> XPSelectableValues;
+        public static string SaveLocation;
 
         public static void InitializeSettings()
         {
@@ -66,6 +67,16 @@ namespace CharSheet.classes
             // Selectable XP values
             jToken = jObject.GetValue("XPSelectableValues");
             XPSelectableValues = (List<int>)jToken.ToObject(typeof(List<int>));
+        }
+
+        public static void ResetSaveLocation()
+        {
+            SaveLocation = null;
+        }
+
+        public static void UpdateSaveLocation(string path)
+        {
+            SaveLocation = path;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Page
+﻿<local:MyBasePage
     x:Class="CharSheet.Pages.StartPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -94,15 +94,13 @@
                     FontSize="30"
                     Style="{StaticResource MaterialDesignRaisedButton}">
 
-                    <TextBlock Text="Debug Character" />
+                    <TextBlock Text="Tester" />
                 </Button>
             </Grid>
-
-
 
         </Grid>
 
     </Grid>
 
 
-</Page>
+</local:MyBasePage>

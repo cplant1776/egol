@@ -16,17 +16,20 @@ using System.Windows.Shapes;
 using CharSheet.classes;
 using CharSheet.classes.data;
 using CharSheet.classes.display;
+using MaterialDesignThemes.Wpf;
 
 namespace CharSheet.Pages
 {
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Dashboard : Page, INotifyPropertyChanged
+    public partial class Dashboard : MyBasePage, INotifyPropertyChanged
     {
         private MainWindow _mainWindow;
         private List<AttributeRow> _attributeRows = new List<AttributeRow> { };
         private List<SkillRow> _skillRows = new List<SkillRow> { };
+        private List<Quest> _quests = new List<Quest> { };
+        private List<EventRecord> _eventRecords = new List<EventRecord> { };
 
         public MainWindow MainWindow
         {
@@ -58,6 +61,26 @@ namespace CharSheet.Pages
             }
         }
 
+        public List<Quest> Quests
+        {
+            get { return _quests; }
+            set
+            {
+                _quests = value;
+                OnPropertyChanged("Quests");
+            }
+        }
+
+        public List<EventRecord> EventRecords
+        {
+            get { return _eventRecords; }
+            set
+            {
+                _eventRecords = value;
+                OnPropertyChanged("EventRecords");
+            }
+        }
+
         public Dashboard()
         {
             InitializeComponent();
@@ -69,11 +92,29 @@ namespace CharSheet.Pages
             AttributeList.ItemsSource = this.AttributeRows;
             SkillList.ItemsSource = this.SkillRows;
 
-            // Show n most recent entries entries
-            HistoryControl.ItemsSource = this.MainWindow.CurrentCharacter.EventHistory.Skip(
-                this.MainWindow.CurrentCharacter.EventHistory.Count - AppSettings.NumOfRecentEvents);
+            // Show n most recent entries 
+            int startingIndex = Math.Max(0, this.MainWindow.CurrentCharacter.EventHistory.Count() - AppSettings.NumOfRecentEvents);
+            int endingIndex = this.MainWindow.CurrentCharacter.EventHistory.Count();
+            for (int i = startingIndex; i < endingIndex; i++)
+                this.EventRecords.Add(this.MainWindow.CurrentCharacter.EventHistory[i]);
 
-            GenerateCurrentQuests();
+            // Filter quests such that only Active ones appear
+            QuestList.ItemsSource = this.MainWindow.CurrentCharacter.Quests;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(QuestList.ItemsSource);
+            view.Filter = QuestFilter;
+        }
+
+        // Ensure only active quests are displayed
+        private bool QuestFilter(object item)
+        {
+            if((item as Quest).Status == (int)Quest.QuestStatus.CURRENT)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void GenerateAttributeRows()
@@ -100,37 +141,16 @@ namespace CharSheet.Pages
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void GenerateCurrentQuests()
-        {
-            foreach(Quest quest in MainWindow.CurrentCharacter.Quests)
-            {
-                if (quest.Status == (int)Quest.QuestStatus.CURRENT)
-                {
-                    TextBlock newQuest = new TextBlock()
-                    {
-                        Text = quest.Title
-                    };
-
-                    QuestList.Items.Add(newQuest);
-                }
-                else
-                {
-                    ;
-                }
-
-            }
-        }
-
         private void AddMilestone_Click(object sender, RoutedEventArgs e)
         {
             DialogWindow popup = new DialogWindow();
             if(popup.ShowDialog() == true)
             {
                 Milestone newMilestone = popup.result;
-                MainWindow.CurrentCharacter.EventHistory.Add(newMilestone);
-                MainWindow.CurrentCharacter.AttributeValue[newMilestone.AttributeId] += newMilestone.Value;
+                AddNewRecord(newMilestone);
+                RefreshPage();
+                ScrollToBottomOfEvents();
             }
-            RefreshPage();
         }
 
         private void CompleteHistory_Click(object sender, RoutedEventArgs e)
@@ -151,8 +171,8 @@ namespace CharSheet.Pages
             {
                 if (q.Status == (int)Quest.QuestStatus.CURRENT)
                 {
-                    TextBlock selectedQuest = (TextBlock)QuestList.SelectedItems[0];
-                    if (q.Title == selectedQuest.Text)
+                    Quest selectedQuest = (Quest)QuestList.SelectedItems[0];
+                    if (q.Title == selectedQuest.Title)
                     {
                         q.Status = (int)Quest.QuestStatus.COMPLETED;
                         targetQuest = q;
@@ -170,7 +190,47 @@ namespace CharSheet.Pages
 
             // Update XP
             MainWindow.UpdateXP(targetQuest.XPValue);
-            RefreshPage();
+            
+
+            // Add new event record
+            XPEvent newRecord = new XPEvent(
+                description : "Completed " + targetQuest.Title + ".",
+                primarySkill: -1,
+                value: targetQuest.XPValue
+                );
+
+            AddNewRecord(newRecord);
+            ScrollToBottomOfEvents();
+
+            // Refresh quest filter
+            CollectionViewSource.GetDefaultView(QuestList.ItemsSource).Refresh();
+        }
+
+        private void AddNewRecord(XPEvent e)
+        {
+            // Update character's event history
+            this.MainWindow.CurrentCharacter.EventHistory.Add(e);
+            // Update event history display
+            this.EventRecords.RemoveAt(0);
+            this.EventRecords.Add(e);
+            HistoryControl.Items.Refresh();
+        }
+
+        private void AddNewRecord(Milestone e)
+        {
+            // Update character
+            this.MainWindow.CurrentCharacter.EventHistory.Add(e);
+            this.MainWindow.CurrentCharacter.AttributeValue[e.AttributeId] += e.Value;
+            // Update event history display
+            this.EventRecords.RemoveAt(0);
+            this.EventRecords.Add(e);
+            HistoryControl.Items.Refresh();
+        }
+
+        private void ScrollToBottomOfEvents()
+        {
+            HistoryControl.SelectedIndex = HistoryControl.Items.Count - 1;
+            HistoryControl.ScrollIntoView(HistoryControl.SelectedItem);
         }
 
         private void QuestLog_Click(object sender, RoutedEventArgs e)
@@ -178,9 +238,5 @@ namespace CharSheet.Pages
             MainWindow.NavigateTo(AppSettings.pagePaths["QuestLog"], this.NavigationService);
         }
 
-        private void RefreshPage()
-        {
-            this.NavigationService.Refresh();
-        }
     }
 }

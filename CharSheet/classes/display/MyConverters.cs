@@ -151,5 +151,4 @@ namespace CharSheet.classes.display
             return value;
         }
     }
-
 }

@@ -32,4 +32,6 @@
         NavigationUIVisibility="Hidden"
         Source="Pages/StartPage.xaml" />
 
+
+
 </Window>

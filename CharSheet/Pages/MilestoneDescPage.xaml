@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:CharSheet.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MilestoneDescPage"
-    d:DesignHeight="300"
+    d:DesignHeight="600"
     d:DesignWidth="600"
     mc:Ignorable="d">
 

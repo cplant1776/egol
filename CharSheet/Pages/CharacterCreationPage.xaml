@@ -110,7 +110,7 @@
                             HorizontalGridLinesBrush="{DynamicResource WindowBackgroundColor}"
                             SelectionMode="Single"
                             SelectionUnit="Cell"
-                            VerticalScrollBarVisibility="Visible">
+                            VerticalScrollBarVisibility="Auto">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn
@@ -201,7 +201,7 @@
                             HorizontalGridLinesBrush="{StaticResource WindowBackgroundColor}"
                             SelectionMode="Single"
                             SelectionUnit="Cell"
-                            VerticalScrollBarVisibility="Visible">
+                            VerticalScrollBarVisibility="Auto">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn

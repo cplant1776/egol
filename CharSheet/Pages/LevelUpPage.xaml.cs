@@ -204,7 +204,7 @@ namespace CharSheet
                             if (r.SkillName == tar.SkillName)
                             {
                                 r.SkillValue--; //Update attribute value
-                                this.DistributedAttributePoints--;
+                                this.DistributedSkillPoints--;
                                 break;
                             }
                         }
