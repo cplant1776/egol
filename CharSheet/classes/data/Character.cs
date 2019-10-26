@@ -167,6 +167,26 @@ namespace CharSheet.classes.data
             return new Contact();
         }
 
+        public Quest GetQuest(string targetTitle)
+        {
+            foreach (Quest q in this.Quests)
+                if (q.Title == targetTitle) //Change this to ID
+                    return q;
+            return new Quest();
+        }
+
+        public Contact GetContact(int targetId)
+        {
+            foreach (Contact c in this.CharacterContacts)
+            {
+                if (c.Id == targetId)
+                {
+                    return c;
+                }
+            }
+            return new Contact();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)

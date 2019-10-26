@@ -12,6 +12,7 @@ namespace CharSheet.classes
 {
     public static class AppSettings
     {
+        /* Set in json */
         public static string json;
         public static Dictionary<String, String> pagePaths;
         public static Dictionary<int, String> Attributes;
@@ -23,7 +24,10 @@ namespace CharSheet.classes
         public static string ContactImageFullPath;
         public static int NumOfRecentEvents;
         public static List<int> XPSelectableValues;
+
+        /* Changed during runtime */
         public static string SaveLocation;
+        public static string DefaultSelectedQuest;
 
         public static void InitializeSettings()
         {
@@ -77,6 +81,16 @@ namespace CharSheet.classes
         public static void UpdateSaveLocation(string path)
         {
             SaveLocation = path;
+        }
+
+        public static void UpdateDefaultSelectedQuest(string title)
+        {
+            DefaultSelectedQuest = title;
+        }
+
+        public static void ResetDefaultSelectedQuest()
+        {
+            DefaultSelectedQuest = null;
         }
     }
 }

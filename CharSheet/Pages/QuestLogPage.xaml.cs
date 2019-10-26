@@ -55,11 +55,18 @@ namespace CharSheet.Pages
         public QuestLogPage()
         {
             InitializeComponent();
+            this.Loaded += new RoutedEventHandler(QuestLogPage_Loaded);
 
             //TODO: Implement this using HierarchicalDataTemplate
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.hierarchicaldatatemplate?view=netframework-4.8
             GenerateQuestsLists();
         }
+
+        void QuestLogPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetSelectedQuest();
+        }
+
 
         private void GenerateQuestsLists()
         {
@@ -82,20 +89,64 @@ namespace CharSheet.Pages
 
                 if (q.Status == (int)Quest.QuestStatus.CURRENT)
                 {
-                    //questListRoot[0].AddQuest(new QuestMenuItem() { Title = q.Title });
                     ActiveQuestsItem.Items.Add(newItem);
                 }
                 else if (q.Status == (int)Quest.QuestStatus.ACCEPTED)
                 {
-                    //questListRoot[1].AddQuest(new QuestMenuItem() { Title = q.Title });
                     AcceptedQuestsItem.Items.Add(newItem);
                 }
                 else if (q.Status == (int)Quest.QuestStatus.COMPLETED)
                 {
-                    //questListRoot[2].AddQuest(new QuestMenuItem() { Title = q.Title });
                     CompletedQuestsItem.Items.Add(newItem);
                 }
             }
+        }
+
+        private void SetSelectedQuest()
+        {
+            Quest selectedQuest = new Quest();
+            if(AppSettings.DefaultSelectedQuest == null) // Default quest IS NOT set
+            {
+                // Default to first Active quest
+                if (!ActiveQuestsItem.Items.IsEmpty) 
+                {
+                    TreeViewItem item = (TreeViewItem)ActiveQuestsItem.Items[0];
+                    selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: item.Header.ToString());
+                }
+            }
+            else // Default quest IS set
+            {
+                bool questLocated = false;
+                // Search active quests
+                foreach(TreeViewItem i in ActiveQuestsItem.Items)
+                {
+                    // Find corresponding quest in treeview
+                    if (i.Header.ToString() == AppSettings.DefaultSelectedQuest) 
+                    {
+                        selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: i.Header.ToString());
+                        questLocated = true;
+                        break;
+                    }
+                }
+                // If not found in active quests, search completed quests
+                if (!questLocated)
+                {
+                    foreach (TreeViewItem i in CompletedQuestsItem.Items)
+                    {
+                        if (i.Header.ToString() == AppSettings.DefaultSelectedQuest) // Find corresponding quest in treeview
+                        {
+                            selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: i.Header.ToString());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Update displayed quest and contact
+            this.SelectedQuest = selectedQuest;
+            this.SelectedContact = this.mainWindow.CurrentCharacter.GetContact(targetId: selectedQuest.ContactId);
+            AppSettings.ResetDefaultSelectedQuest();
+            UpdateVisibility();
         }
 
 
@@ -132,33 +183,24 @@ namespace CharSheet.Pages
             // Find clicked quest's name
             var targetSender = (TreeViewItem)sender;
             string targetTitle = targetSender.Header.ToString();
-            
-            
-                // Locate selected quest object
-                foreach (Quest q in mainWindow.CurrentCharacter.Quests)
-                {
-                    if (q.Title == targetTitle)
-                    {
-                        this.SelectedQuest = q;
-                    }
-                }
-                // Set contact
-                foreach (Contact c in mainWindow.CurrentCharacter.CharacterContacts)
-                {
-                    if (c.Id == this.SelectedQuest.ContactId)
-                    {
-                        this.SelectedContact = c;
-                    }
-                }
 
+            // Set selected quest & contact
+            this.SelectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: targetTitle);
+            this.SelectedContact = this.mainWindow.CurrentCharacter.GetContact(targetId: this.SelectedQuest.ContactId);
+            UpdateVisibility();
+            
+        }
+
+        private void UpdateVisibility()
+        {
             // Make selected quest content visible if not currently shown
-            if(SelectedQuestInfo.Visibility.Equals(Visibility.Hidden))
+            if (SelectedQuestInfo.Visibility.Equals(Visibility.Hidden))
             {
                 SelectedQuestInfo.Visibility = Visibility.Visible;
             }
 
             // Hide/show due date
-            if(SelectedQuest.Deadline == DateTime.MinValue) //no deadline
+            if (SelectedQuest.Deadline == DateTime.MinValue) //no deadline
             {
                 DeadlineGrid.Visibility = Visibility.Hidden;
             }
@@ -166,7 +208,6 @@ namespace CharSheet.Pages
             {
                 DeadlineGrid.Visibility = Visibility.Visible;
             }
-            
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -176,15 +217,8 @@ namespace CharSheet.Pages
 
         private void QuestCategory_Click(object sender, RoutedEventArgs e)
         {
-
+            // Expand quest category
             (sender as TreeViewItem).IsExpanded = true;
-            /*
-            //Toggle menu expansion on click
-            if ((sender as TreeViewItem).IsExpanded)
-                (sender as TreeViewItem).IsExpanded = false;
-            else
-                (sender as TreeViewItem).IsExpanded = true;
-                */
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -202,6 +236,7 @@ namespace CharSheet.Pages
 
         private void ListView_MouseLeave(object sender, MouseEventArgs e)
         {
+            // Unhighlight selected quest in tree view
             (sender as ListView).UnselectAll();
         }
     }

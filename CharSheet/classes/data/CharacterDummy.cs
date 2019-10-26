@@ -211,7 +211,7 @@ namespace CharSheet.classes.data
                 );
 
             result.Add(new XPEvent(
-                    description: "Erat pellentesque adipiscing commodo elit at. Duis tristique sollicitudin nibh sit",
+                    description: "Cook a Filet Mignon",
                     value: 90,
                     primarySkill: 11,
                     timestamp: new DateTime(2018, 5, 1, 8, 30, 52)

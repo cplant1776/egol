@@ -166,13 +166,12 @@ namespace CharSheet.Pages
         private void CompleteSelected_Click(object sender, RoutedEventArgs e)
         {
             // Find quest and mark as completed
-            Quest targetQuest = new Quest();
-            foreach(Quest q in MainWindow.CurrentCharacter.Quests)
+            Quest targetQuest = (Quest)QuestList.SelectedItems[0];
+            foreach (Quest q in MainWindow.CurrentCharacter.Quests)
             {
                 if (q.Status == (int)Quest.QuestStatus.CURRENT)
                 {
-                    Quest selectedQuest = (Quest)QuestList.SelectedItems[0];
-                    if (q.Title == selectedQuest.Title)
+                    if (q.Title == targetQuest.Title)
                     {
                         q.Status = (int)Quest.QuestStatus.COMPLETED;
                         targetQuest = q;
@@ -238,5 +237,23 @@ namespace CharSheet.Pages
             MainWindow.NavigateTo(AppSettings.pagePaths["QuestLog"], this.NavigationService);
         }
 
+        private void QuestList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Find selected quest
+            Quest selectedQuest = (Quest)QuestList.SelectedItems[0];
+            // Update default quest displayed when opening quest log
+            AppSettings.UpdateDefaultSelectedQuest(selectedQuest.Title);
+            NavigateToPage("QuestLog");
+        }
+
+        private void HistoryControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Find quest associated with entry
+            EventRecord selectedEvent = (EventRecord)HistoryControl.SelectedItems[0];
+            Quest targetQuest = this.MainWindow.CurrentCharacter.GetQuest(selectedEvent.Description);
+            // Update default quest displayed when opening quest log
+            AppSettings.UpdateDefaultSelectedQuest(targetQuest.Title);
+            NavigateToPage("QuestLog");
+        }
     }
 }
