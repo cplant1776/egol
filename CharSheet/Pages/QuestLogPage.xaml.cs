@@ -64,12 +64,17 @@ namespace CharSheet.Pages
 
         void QuestLogPage_Loaded(object sender, RoutedEventArgs e)
         {
-            SetSelectedQuest();
+            UpdateSelectedQuest();
         }
 
 
         private void GenerateQuestsLists()
         {
+            // Clear out previous list
+            ActiveQuestsItem.Items.Clear();
+            AcceptedQuestsItem.Items.Clear();
+            CompletedQuestsItem.Items.Clear();
+
             List<QuestMenuCategory> questListRoot = new List<QuestMenuCategory>
             {
                 new QuestMenuCategory() {Title = "Active Quests"},
@@ -102,7 +107,7 @@ namespace CharSheet.Pages
             }
         }
 
-        private void SetSelectedQuest()
+        private void UpdateSelectedQuest()
         {
             Quest selectedQuest = new Quest();
             if(AppSettings.DefaultSelectedQuest == null) // Default quest IS NOT set
@@ -146,6 +151,8 @@ namespace CharSheet.Pages
             this.SelectedQuest = selectedQuest;
             this.SelectedContact = this.mainWindow.CurrentCharacter.GetContact(targetId: selectedQuest.ContactId);
             AppSettings.ResetDefaultSelectedQuest();
+
+            SetQuestStatus();
             UpdateVisibility();
         }
 
@@ -187,8 +194,32 @@ namespace CharSheet.Pages
             // Set selected quest & contact
             this.SelectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: targetTitle);
             this.SelectedContact = this.mainWindow.CurrentCharacter.GetContact(targetId: this.SelectedQuest.ContactId);
+
+            SetQuestStatus();
             UpdateVisibility();
             
+        }
+
+        private void SetQuestStatus()
+        {
+            if(this.SelectedQuest.Status == (int)Quest.QuestStatus.CURRENT)
+            {
+                ActiveButton.IsChecked = true;
+                AcceptedButton.IsChecked = false;
+                CompletedButton.IsChecked = false;
+            }
+            else if (this.SelectedQuest.Status == (int)Quest.QuestStatus.ACCEPTED)
+            {
+                ActiveButton.IsChecked = false;
+                AcceptedButton.IsChecked = true;
+                CompletedButton.IsChecked = false;
+            }
+            else if (this.SelectedQuest.Status == (int)Quest.QuestStatus.COMPLETED)
+            {
+                ActiveButton.IsChecked = false;
+                AcceptedButton.IsChecked = false;
+                CompletedButton.IsChecked = true;
+            }
         }
 
         private void UpdateVisibility()
@@ -238,6 +269,68 @@ namespace CharSheet.Pages
         {
             // Unhighlight selected quest in tree view
             (sender as ListView).UnselectAll();
+        }
+
+        private void QuestStatusRadio_Checked(object sender, RoutedEventArgs e)
+        {
+            string typeOfButton = (sender as RadioButton).Tag.ToString();
+            switch(typeOfButton)
+            {
+                case "Active":
+                    break;
+                case "Accepted":
+                    break;
+                case "Completed":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void SetActiveAccept_Click(object sender, RoutedEventArgs e)
+        {
+            this.SelectedQuest.Status = (int)Quest.QuestStatus.CURRENT;
+            GenerateQuestsLists();
+        }
+
+        private void SetAcceptedAccept_Click(object sender, RoutedEventArgs e)
+        {
+            this.SelectedQuest.Status = (int)Quest.QuestStatus.ACCEPTED;
+            GenerateQuestsLists();
+        }
+
+        private void SetCompletedAccept_Click(object sender, RoutedEventArgs e)
+        {
+            this.SelectedQuest.Status = (int)Quest.QuestStatus.COMPLETED;
+
+            // Update contact reputation
+            foreach (Contact c in this.mainWindow.CurrentCharacter.CharacterContacts)
+            {
+                if (c.Id == this.SelectedQuest.ContactId)
+                {
+                    c.Reputation += this.SelectedQuest.ReputationValue;
+                }
+            }
+
+            // Update XP
+            this.mainWindow.UpdateXP(this.SelectedQuest.XPValue);
+
+
+            // Add new event record
+            XPEvent newRecord = new XPEvent(
+                description: "Completed " + this.SelectedQuest.Title + ".",
+                primarySkill: -1,
+                value: this.SelectedQuest.XPValue
+                );
+
+            this.mainWindow.CurrentCharacter.EventHistory.Add(newRecord);
+            GenerateQuestsLists();
+        }
+
+        private void StatusChangeCancel_Button(object sender, RoutedEventArgs e)
+        {
+            // Reset radio button
+            SetQuestStatus();
         }
     }
 
