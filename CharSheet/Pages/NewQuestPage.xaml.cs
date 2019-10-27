@@ -121,6 +121,12 @@ namespace CharSheet.Pages
                 deadline: DateTime.UtcNow  //TODO: Set from input
                 );
 
+            // Set status to active if checked
+            if (IsActiveToggle.IsChecked ?? true)
+            {
+                newQuest.Status = (int)Quest.QuestStatus.CURRENT;
+            }
+
             // Add quest to character's quest list
             mainWindow.CurrentCharacter.Quests.Add(newQuest);
 

@@ -210,7 +210,10 @@ namespace CharSheet.Pages
             // Update character's event history
             this.MainWindow.CurrentCharacter.EventHistory.Add(e);
             // Update event history display
-            this.EventRecords.RemoveAt(0);
+            if(this.EventRecords.Count >= AppSettings.NumOfRecentEvents)
+            {
+                this.EventRecords.RemoveAt(0);
+            }
             this.EventRecords.Add(e);
             HistoryControl.Items.Refresh();
         }
