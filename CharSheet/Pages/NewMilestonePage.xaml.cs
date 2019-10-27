@@ -48,8 +48,12 @@ namespace CharSheet.Pages
         {
             var dialogWindow = Application.Current.Windows.OfType<DialogWindow>().SingleOrDefault(w => w.IsActive);
             dialogWindow.DialogResult = true;
+            // Generate Id
+            Random rnd = new Random();
+            int newId = rnd.Next(1, 600000); // generate random id
             dialogWindow.result = new Milestone(
                                                 description: this.DescriptionInput.Text,
+                                                eventId: newId,
                                                 attributeId: DataHandler.getAttributeId(AttributeInput.Text),
                                                 value: Convert.ToInt32(ValueInput.Text)
                                              );

@@ -526,11 +526,19 @@
                             <ListView
                                 x:Name="QuestList"
                                 HorizontalContentAlignment="Stretch"
-                                DisplayMemberPath="Title"
                                 Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 MouseDoubleClick="QuestList_MouseDoubleClick"
-                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                SelectionMode="Single" />
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                SelectionMode="Single">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </GroupBox>
 
                         <Button

@@ -170,7 +170,15 @@ namespace CharSheet.classes.data
         public Quest GetQuest(string targetTitle)
         {
             foreach (Quest q in this.Quests)
-                if (q.Title == targetTitle) //Change this to ID
+                if (q.Title == targetTitle)
+                    return q;
+            return new Quest();
+        }
+
+        public Quest GetQuest(int  targetId)
+        {
+            foreach (Quest q in this.Quests)
+                if (q.Id == targetId) 
                     return q;
             return new Quest();
         }

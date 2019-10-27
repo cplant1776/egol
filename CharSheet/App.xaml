@@ -17,6 +17,8 @@
             <cnv:SkillIdToSkillString x:Key="SkillIdToSkillString" />
             <cnv:PlusButtonName x:Key="PlusButtonName" />
             <cnv:MinusButtonName x:Key="MinusButtonName" />
+            <cnv:ContactIdToStringConverter x:Key="ContactIdToStringConverter" />
+            <cnv:QuestCreatedDateTimeToStringConverter x:Key="QuestCreatedDateTimeToStringConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Light"

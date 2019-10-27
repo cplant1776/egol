@@ -22,13 +22,16 @@ namespace CharSheet.classes
         [DataMember]
         public int Value { get; set; }
         [DataMember]
+        public int AssociatedEventId { get; set; }
+        [DataMember]
         public DateTime Timestamp { get; set; }
 
 
-        public EventRecord(string description, int value=0, DateTime timestamp=new DateTime())
+        public EventRecord(string description, int eventId, int value=0, DateTime timestamp=new DateTime())
         {
             this.Description = description;
             this.Value = value;
+            this.AssociatedEventId = eventId;
             if (timestamp == DateTime.MinValue) // No timestamp passed
             {
                 this.Timestamp = DateTime.UtcNow;
@@ -59,7 +62,7 @@ namespace CharSheet.classes
         [DataMember]
         public int PrimarySkill;
 
-        public XPEvent(string description, int primarySkill, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
+        public XPEvent(string description, int primarySkill, int eventId, int value = 0, DateTime timestamp = new DateTime()) : base(description, eventId, value, timestamp)
         {
             this.PrimarySkill = primarySkill;
             this.TextTail = "    +" + this.Value + " xp!";
@@ -71,10 +74,13 @@ namespace CharSheet.classes
     {
         [DataMember]
         public int AttributeId;
-        public Milestone(string description, int attributeId, int value = 0, DateTime timestamp = new DateTime()) : base(description, value, timestamp)
+        public Milestone(string description, int eventId, int attributeId, int value = 0, DateTime timestamp = new DateTime()) : base(description, eventId, value, timestamp)
         {
             this.AttributeId = attributeId;
             this.TextTail = "    +" + value + " " + DataHandler.getAttributeDesc(attributeId) + "!";
+            // Generate Id
+            Random rnd = new Random();
+            this.AssociatedEventId = rnd.Next(1, 600000); // generate random id
         }
     }
 }

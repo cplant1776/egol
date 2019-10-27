@@ -67,6 +67,21 @@ namespace CharSheet.classes.data
             return contactList;
         }
 
+        private enum GeneratedQuestsId
+        {
+            ONE = 1,
+            TWO = 2,
+            THREE = 3,
+            FOUR = 4,
+            FIVE = 5,
+            SIX = 6,
+            SEVEN = 7,
+            EIGHT = 8,
+            NINE = 9,
+            TEN = 10,
+            ELEVEN = 11
+        }
+
         private List<Quest> GenerateQuests()
         {
             List<Quest> questList = new List<Quest> { };
@@ -78,7 +93,8 @@ namespace CharSheet.classes.data
                 contactId : 2847,
                 reputationValue : 13,
                 deadline: new DateTime(2008, 5, 1, 8, 30, 52),
-                status : (int)Quest.QuestStatus.COMPLETED
+                status : (int)Quest.QuestStatus.COMPLETED,
+                id: (int)GeneratedQuestsId.ONE
                 )
             );
 
@@ -89,7 +105,8 @@ namespace CharSheet.classes.data
                 contactId: 2847,
                 reputationValue: 76,
                 deadline: new DateTime(2009, 5, 1, 8, 30, 52),
-                status: (int)Quest.QuestStatus.CURRENT
+                status: (int)Quest.QuestStatus.COMPLETED,
+                id: (int)GeneratedQuestsId.TWO
                 )
             );
 
@@ -99,7 +116,8 @@ namespace CharSheet.classes.data
                 xpValue: 89,
                 contactId: 6923,
                 reputationValue: 6,
-                status: (int)Quest.QuestStatus.CURRENT
+                status: (int)Quest.QuestStatus.COMPLETED,
+                id: (int)GeneratedQuestsId.THREE
                 )
             );
 
@@ -109,7 +127,8 @@ namespace CharSheet.classes.data
                 xpValue: 21,
                 contactId: 12,
                 reputationValue: 10,
-                status: (int)Quest.QuestStatus.COMPLETED
+                status: (int)Quest.QuestStatus.COMPLETED,
+                id: (int)GeneratedQuestsId.FOUR
                 )
             );
 
@@ -119,7 +138,74 @@ namespace CharSheet.classes.data
                 xpValue: 55,
                 contactId: 7927,
                 reputationValue: 19,
-                status: (int)Quest.QuestStatus.ACCEPTED
+                status: (int)Quest.QuestStatus.COMPLETED,
+                id: (int)GeneratedQuestsId.FIVE
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Spell 'Bananas'",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACCEPTED,
+                id: (int)GeneratedQuestsId.SIX
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Read Ulysses",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACCEPTED,
+                id: (int)GeneratedQuestsId.SEVEN
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Clean Your Room",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACTIVE,
+                id: (int)GeneratedQuestsId.EIGHT
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Rescue Your Father From the Underworld",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACTIVE,
+                id: (int)GeneratedQuestsId.NINE
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Slay the Dragon",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACTIVE,
+                id: (int)GeneratedQuestsId.TEN
+                )
+            );
+
+            questList.Add(new Quest(
+                title: "Infiltrate the Belly of the Beast",
+                description: "Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Tristique risus nec feugiat in fermentum posuere urna nec tincidunt. Mauris sit amet massa vitae tortor condimentum lacinia quis. Nulla pellentesque dignissim enim sit amet venenatis. Faucibus in ornare quam viverra orci sagittis eu volutpat. Eros in cursus turpis massa tincidunt dui. Malesuada pellentesque elit eget gravida cum sociis natoque penatibus. Quis viverra nibh cras pulvinar mattis nunc sed. Eu nisl nunc mi ipsum faucibus vitae aliquet. Nisi scelerisque eu ultrices vitae auctor eu. Faucibus in ornare quam viverra orci sagittis. Mi eget mauris pharetra et. Egestas erat imperdiet sed euismod nisi porta lorem mollis aliquam. Turpis massa tincidunt dui ut ornare lectus sit. Vulputate dignissim suspendisse in est ante in nibh. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Orci phasellus egestas tellus rutrum tellus pellentesque eu. Bibendum ut tristique et egestas quis ipsum.",
+                xpValue: 55,
+                contactId: 7927,
+                reputationValue: 19,
+                status: (int)Quest.QuestStatus.ACCEPTED,
+                id: (int)GeneratedQuestsId.ELEVEN
                 )
             );
 
@@ -131,7 +217,8 @@ namespace CharSheet.classes.data
             List<EventRecord> result = new List<EventRecord> { };
 
             result.Add(new XPEvent(
-                    description : "Lorem ipsum dolor sit amet",
+                    description : "Completed Create Your First Quest",
+                    eventId: (int)GeneratedQuestsId.ONE,
                     value : 15,
                     primarySkill : 1,
                     timestamp : new DateTime(2008, 5, 1, 8, 30, 52)
@@ -139,7 +226,8 @@ namespace CharSheet.classes.data
                 );
 
             result.Add(new XPEvent(
-                    description: "Blandit volutpat maecenas volutpat blandit aliquam etiam",
+                    description: "Completed Do A Backflip",
+                    eventId: (int)GeneratedQuestsId.TWO,
                     value: 26,
                     primarySkill: 2,
                     timestamp: new DateTime(2009, 5, 1, 8, 30, 52)
@@ -147,7 +235,8 @@ namespace CharSheet.classes.data
                 );
 
             result.Add(new XPEvent(
-                    description: "Lobortis elementum nibh tellus molestie nunc",
+                    description: "Completed Bowl a 300",
+                    eventId: (int)GeneratedQuestsId.THREE,
                     value: 10,
                     primarySkill: 3,
                     timestamp: new DateTime(2010, 5, 1, 8, 30, 52)
@@ -155,15 +244,21 @@ namespace CharSheet.classes.data
                 );
 
             result.Add(new XPEvent(
-                    description: "Libero volutpat sed cras ornare",
+                    description: "Completed Cook a Filet Mignon",
+                    eventId: (int)GeneratedQuestsId.FOUR,
                     value: 20,
                     primarySkill: 3,
                     timestamp: new DateTime(2011, 5, 1, 8, 30, 52)
                     )
                 );
 
+            //Generate random id for milestone
+            Random rnd = new Random();
+            int newId = rnd.Next(1, 600000); // generate random id
+
             result.Add(new Milestone(
-                    description: "Molestie at elementum eu facilisis sed odio morbi quis commodo",
+                    description: "Moved to a new city",
+                    eventId: newId,
                     value: 30,
                     attributeId: 2,
                     timestamp: new DateTime(2012, 5, 1, 8, 30, 52)
@@ -171,58 +266,11 @@ namespace CharSheet.classes.data
                 );
 
             result.Add(new XPEvent(
-                    description: "Ut morbi tincidunt augue interdum velit euismod",
+                    description: "Completed Run a Marathon",
+                    eventId: (int)GeneratedQuestsId.FIVE,
                     value: 40,
                     primarySkill: 6,
                     timestamp: new DateTime(2013, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Purus viverra accumsan in nisl nisi",
-                    value: 50,
-                    primarySkill: 7,
-                    timestamp: new DateTime(2014, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat",
-                    value: 60,
-                    primarySkill: 8,
-                    timestamp: new DateTime(2015, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Morbi tristique senectus et netus et",
-                    value: 70,
-                    primarySkill: 9,
-                    timestamp: new DateTime(2016, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Amet volutpat consequat mauris nunc congue nisi",
-                    value: 80,
-                    primarySkill: 10,
-                    timestamp: new DateTime(2017, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Cook a Filet Mignon",
-                    value: 90,
-                    primarySkill: 11,
-                    timestamp: new DateTime(2018, 5, 1, 8, 30, 52)
-                    )
-                );
-
-            result.Add(new XPEvent(
-                    description: "Vitae auctor eu augue ut lectus arcu bibendum",
-                    value: 110,
-                    primarySkill: 12,
-                    timestamp: new DateTime(2019, 5, 1, 8, 30, 52)
                     )
                 );
 

@@ -113,7 +113,20 @@
                                 Foreground="{DynamicResource SecondaryHueLightBrush}"
                                 IsEditable="True"
                                 SelectionChanged="TitleInput_SelectionChanged"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <TextBlock Text="{Binding Title}" />
+                                            <TextBlock Text=" - " />
+                                            <TextBlock Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Text="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}" />
+                                            <TextBlock Foreground="Red" Text=" (" />
+                                            <TextBlock Foreground="Red" Text="{Binding Created, Converter={StaticResource QuestCreatedDateTimeToStringConverter}}" />
+                                            <TextBlock Foreground="Red" Text=")" />
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                         </Grid>
 

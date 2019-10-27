@@ -107,7 +107,7 @@ namespace CharSheet.Pages
         // Ensure only active quests are displayed
         private bool QuestFilter(object item)
         {
-            if((item as Quest).Status == (int)Quest.QuestStatus.CURRENT)
+            if((item as Quest).Status == (int)Quest.QuestStatus.ACTIVE)
             {
                 return true;
             }
@@ -169,9 +169,9 @@ namespace CharSheet.Pages
             Quest targetQuest = (Quest)QuestList.SelectedItems[0];
             foreach (Quest q in MainWindow.CurrentCharacter.Quests)
             {
-                if (q.Status == (int)Quest.QuestStatus.CURRENT)
+                if (q.Status == (int)Quest.QuestStatus.ACTIVE)
                 {
-                    if (q.Title == targetQuest.Title)
+                    if (q.Id == targetQuest.Id)
                     {
                         q.Status = (int)Quest.QuestStatus.COMPLETED;
                         targetQuest = q;
@@ -194,6 +194,7 @@ namespace CharSheet.Pages
             // Add new event record
             XPEvent newRecord = new XPEvent(
                 description : "Completed " + targetQuest.Title + ".",
+                eventId: targetQuest.Id,
                 primarySkill: -1,
                 value: targetQuest.XPValue
                 );
@@ -245,7 +246,7 @@ namespace CharSheet.Pages
             // Find selected quest
             Quest selectedQuest = (Quest)QuestList.SelectedItems[0];
             // Update default quest displayed when opening quest log
-            AppSettings.UpdateDefaultSelectedQuest(selectedQuest.Title);
+            AppSettings.UpdateDefaultSelectedQuest(selectedQuest.Id);
             NavigateToPage("QuestLog");
         }
 
@@ -253,9 +254,9 @@ namespace CharSheet.Pages
         {
             // Find quest associated with entry
             EventRecord selectedEvent = (EventRecord)HistoryControl.SelectedItems[0];
-            Quest targetQuest = this.MainWindow.CurrentCharacter.GetQuest(selectedEvent.Description);
+            Quest targetQuest = this.MainWindow.CurrentCharacter.GetQuest(targetId: selectedEvent.AssociatedEventId);
             // Update default quest displayed when opening quest log
-            AppSettings.UpdateDefaultSelectedQuest(targetQuest.Title);
+            AppSettings.UpdateDefaultSelectedQuest(targetQuest.Id);
             NavigateToPage("QuestLog");
         }
     }

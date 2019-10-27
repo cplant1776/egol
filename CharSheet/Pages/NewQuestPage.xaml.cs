@@ -30,9 +30,10 @@ namespace CharSheet.Pages
 
         private List<string> _contactList = new List<string> { };
 
-        private List<string> _questList = new List<string> { };
+        private List<Quest> _questList = new List<Quest> { };
 
         public MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+
 
         public Contact CurrentContact
         {
@@ -54,7 +55,7 @@ namespace CharSheet.Pages
             }
         }
 
-        public List<string> QuestList
+        public List<Quest> QuestList
         {
             get { return _questList; }
             set
@@ -77,9 +78,10 @@ namespace CharSheet.Pages
             this.ContactList = mainWindow.CurrentCharacter.CharacterContacts.Select(o => o.Name).ToList();
             ContactInput.ItemsSource = this.ContactList;
             // Populate past quest titles
-            this.QuestList = mainWindow.CurrentCharacter.Quests.Select(o => o.Title).ToList();
-            this.QuestList = this.QuestList.Distinct().ToList(); //remove duplicates
-            this.QuestList.Sort(); //sort alphabetically
+            foreach(Quest q in this.mainWindow.CurrentCharacter.Quests)
+            {
+                this.QuestList.Add(q);
+            }
             TitleInput.ItemsSource = this.QuestList;
 
             // Initialize Contact so default image shows up
@@ -124,7 +126,7 @@ namespace CharSheet.Pages
             // Set status to active if checked
             if (IsActiveToggle.IsChecked ?? true)
             {
-                newQuest.Status = (int)Quest.QuestStatus.CURRENT;
+                newQuest.Status = (int)Quest.QuestStatus.ACTIVE;
             }
 
             // Add quest to character's quest list
@@ -156,20 +158,17 @@ namespace CharSheet.Pages
 
         private void TitleInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string targetTitle = (sender as ComboBox).SelectedItem as string;
-            if (QuestList.Contains(targetTitle))
+            Quest targetQuest = (sender as ComboBox).SelectedItem as Quest;
+            // Locate quest object associated with title
+            foreach (Quest q in mainWindow.CurrentCharacter.Quests)
             {
-                // Locate quest object associated with title
-                foreach(Quest q in mainWindow.CurrentCharacter.Quests)
+                if (targetQuest.Id == q.Id)
                 {
-                    if (targetTitle == q.Title)
-                    {
-                        // Set values to target quest values
-                        this.CurrentContact = mainWindow.CurrentCharacter.GetCharacterContact(q.ContactId);
-                        XPValue.Text = q.XPValue.ToString();
-                        ReputationValue.Text = q.ReputationValue.ToString();
-                        ContactInput.Text = this.CurrentContact.Name;
-                    }
+                    // Set values to target quest values
+                    this.CurrentContact = mainWindow.CurrentCharacter.GetCharacterContact(q.ContactId);
+                    XPValue.Text = q.XPValue.ToString();
+                    ReputationValue.Text = q.ReputationValue.ToString();
+                    ContactInput.Text = this.CurrentContact.Name;
                 }
             }
         }

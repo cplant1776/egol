@@ -27,7 +27,7 @@ namespace CharSheet.classes
 
         /* Changed during runtime */
         public static string SaveLocation;
-        public static string DefaultSelectedQuest;
+        public static int? DefaultSelectedQuest;
 
         public static void InitializeSettings()
         {
@@ -83,9 +83,9 @@ namespace CharSheet.classes
             SaveLocation = path;
         }
 
-        public static void UpdateDefaultSelectedQuest(string title)
+        public static void UpdateDefaultSelectedQuest(int id)
         {
-            DefaultSelectedQuest = title;
+            DefaultSelectedQuest = id;
         }
 
         public static void ResetDefaultSelectedQuest()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace CharSheet.classes.display
@@ -144,6 +145,35 @@ namespace CharSheet.classes.display
         {
             string contactName = (value as Contact).Name;
             return contactName;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class ContactIdToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow) Application.Current.MainWindow;
+            string contactName = mainWindow.CurrentCharacter.GetContact(targetId: (int)value).Name;
+            return contactName;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class QuestCreatedDateTimeToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            DateTime dateCreated = (DateTime)value;
+            return dateCreated.ToString("MM-dd-yyyy");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

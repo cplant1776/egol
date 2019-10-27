@@ -17,6 +17,8 @@ namespace CharSheet.classes.data
         private DateTime _deadline;
         private DateTime _created;
 
+        public int Id;
+
         public String Title
         {
             get { return _title; }
@@ -54,7 +56,7 @@ namespace CharSheet.classes.data
                 OnPropertyChanged(() => ReputationValue);
             }
         }
-        public int ContactId;
+        public int ContactId { get; set; }
         public DateTime Deadline
         {
             get { return _deadline; }
@@ -77,7 +79,7 @@ namespace CharSheet.classes.data
         public enum QuestStatus
         {
             ACCEPTED = 0,
-            CURRENT = 1,
+            ACTIVE = 1,
             COMPLETED = 2
         }
 
@@ -87,7 +89,7 @@ namespace CharSheet.classes.data
         }
 
         public Quest(String title, String description, int xpValue, int contactId,
-            int reputationValue, DateTime deadline=new DateTime(), int status=-1)
+            int reputationValue, DateTime deadline=new DateTime(), int status=-1, int id=-1)
         {
             this.Title = title;
             this.Description = description;
@@ -104,6 +106,23 @@ namespace CharSheet.classes.data
             {
                 this.Status = status;
             }
+
+            //Generate Id
+            if(id == -1)
+            {
+                Random rnd = new Random();
+                this.Id = rnd.Next(1, 600000); // generate random id
+            }
+            else
+            {
+                this.Id = id;
+            }
+
+        }
+
+        public override string ToString()
+        {
+            return this.Title;
         }
 
 

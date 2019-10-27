@@ -217,21 +217,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\MilestoneValuePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Pages\RemoveMilestonePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Pages\MilestoneDescPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
     <Page Include="Pages\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,18 +230,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\data\DataHandler.cs" />
-    <Compile Include="Pages\MilestoneValuePage.xaml.cs">
-      <DependentUpon>MilestoneValuePage.xaml</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Pages\RemoveMilestonePage.xaml.cs">
-      <DependentUpon>RemoveMilestonePage.xaml</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Pages\MilestoneDescPage.xaml.cs">
-      <DependentUpon>MilestoneDescPage.xaml</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Pages\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

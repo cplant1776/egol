@@ -75,24 +75,18 @@ namespace CharSheet.Pages
             AcceptedQuestsItem.Items.Clear();
             CompletedQuestsItem.Items.Clear();
 
-            List<QuestMenuCategory> questListRoot = new List<QuestMenuCategory>
-            {
-                new QuestMenuCategory() {Title = "Active Quests"},
-                new QuestMenuCategory() {Title = "Accepted Quests"},
-                new QuestMenuCategory() {Title = "Completed Quests"},
-            };
-
             foreach (Quest q in mainWindow.CurrentCharacter.Quests)
             {
                 TreeViewItem newItem = new TreeViewItem
                 {
                     Header = q.Title,
+                    Tag = q.Id,
                     Foreground = (Brush)FindResource("PrimaryHueMidForegroundBrush"),
                 };
 
                 newItem.MouseLeftButtonUp += new MouseButtonEventHandler(UpdateSelectedQuest);
 
-                if (q.Status == (int)Quest.QuestStatus.CURRENT)
+                if (q.Status == (int)Quest.QuestStatus.ACTIVE)
                 {
                     ActiveQuestsItem.Items.Add(newItem);
                 }
@@ -109,6 +103,7 @@ namespace CharSheet.Pages
 
         private void UpdateSelectedQuest()
         {
+            int taggedId = -1;
             Quest selectedQuest = new Quest();
             if(AppSettings.DefaultSelectedQuest == null) // Default quest IS NOT set
             {
@@ -116,7 +111,8 @@ namespace CharSheet.Pages
                 if (!ActiveQuestsItem.Items.IsEmpty) 
                 {
                     TreeViewItem item = (TreeViewItem)ActiveQuestsItem.Items[0];
-                    selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: item.Header.ToString());
+                    taggedId = (int)item.Tag;
+                    selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetId: taggedId);
                 }
             }
             else // Default quest IS set
@@ -125,10 +121,11 @@ namespace CharSheet.Pages
                 // Search active quests
                 foreach(TreeViewItem i in ActiveQuestsItem.Items)
                 {
+                    taggedId = (int)i.Tag;
                     // Find corresponding quest in treeview
-                    if (i.Header.ToString() == AppSettings.DefaultSelectedQuest) 
+                    if (taggedId == AppSettings.DefaultSelectedQuest) 
                     {
-                        selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: i.Header.ToString());
+                        selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetId: taggedId);
                         questLocated = true;
                         break;
                     }
@@ -138,9 +135,10 @@ namespace CharSheet.Pages
                 {
                     foreach (TreeViewItem i in CompletedQuestsItem.Items)
                     {
-                        if (i.Header.ToString() == AppSettings.DefaultSelectedQuest) // Find corresponding quest in treeview
+                        taggedId = (int)i.Tag;
+                        if (taggedId == AppSettings.DefaultSelectedQuest) // Find corresponding quest in treeview
                         {
-                            selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetTitle: i.Header.ToString());
+                            selectedQuest = this.mainWindow.CurrentCharacter.GetQuest(targetId: taggedId);
                             break;
                         }
                     }
@@ -202,7 +200,7 @@ namespace CharSheet.Pages
 
         private void SetQuestStatus()
         {
-            if(this.SelectedQuest.Status == (int)Quest.QuestStatus.CURRENT)
+            if(this.SelectedQuest.Status == (int)Quest.QuestStatus.ACTIVE)
             {
                 ActiveButton.IsChecked = true;
                 AcceptedButton.IsChecked = false;
@@ -289,7 +287,7 @@ namespace CharSheet.Pages
 
         private void SetActiveAccept_Click(object sender, RoutedEventArgs e)
         {
-            this.SelectedQuest.Status = (int)Quest.QuestStatus.CURRENT;
+            this.SelectedQuest.Status = (int)Quest.QuestStatus.ACTIVE;
             GenerateQuestsLists();
         }
 
@@ -319,9 +317,10 @@ namespace CharSheet.Pages
             // Add new event record
             XPEvent newRecord = new XPEvent(
                 description: "Completed " + this.SelectedQuest.Title + ".",
+                eventId: this.SelectedQuest.Id,
                 primarySkill: -1,
                 value: this.SelectedQuest.XPValue
-                );
+                ) ;
 
             this.mainWindow.CurrentCharacter.EventHistory.Add(newRecord);
             GenerateQuestsLists();
@@ -331,32 +330,6 @@ namespace CharSheet.Pages
         {
             // Reset radio button
             SetQuestStatus();
-        }
-    }
-
-    public class QuestMenuItem
-    {
-        public string Title { get; set; }
-
-        public QuestMenuItem()
-        {
-            
-        }
-    }
-
-    public class QuestMenuCategory
-    {
-        public string Title { get; set; }
-        public List<QuestMenuItem> Quests = new List<QuestMenuItem> { };
-
-        public QuestMenuCategory()
-        {
-
-        }
-
-        public void AddQuest(QuestMenuItem q)
-        {
-            this.Quests.Add(q);
         }
     }
 }
