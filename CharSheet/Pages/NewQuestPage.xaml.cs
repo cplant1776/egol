@@ -159,18 +159,22 @@ namespace CharSheet.Pages
         private void TitleInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Quest targetQuest = (sender as ComboBox).SelectedItem as Quest;
-            // Locate quest object associated with title
-            foreach (Quest q in mainWindow.CurrentCharacter.Quests)
+            if(targetQuest != null)
             {
-                if (targetQuest.Id == q.Id)
+                // Locate quest object associated with title
+                foreach (Quest q in mainWindow.CurrentCharacter.Quests)
                 {
-                    // Set values to target quest values
-                    this.CurrentContact = mainWindow.CurrentCharacter.GetCharacterContact(q.ContactId);
-                    XPValue.Text = q.XPValue.ToString();
-                    ReputationValue.Text = q.ReputationValue.ToString();
-                    ContactInput.Text = this.CurrentContact.Name;
+                    if (targetQuest.Id == q.Id)
+                    {
+                        // Set values to target quest values
+                        this.CurrentContact = mainWindow.CurrentCharacter.GetCharacterContact(q.ContactId);
+                        XPValue.Text = q.XPValue.ToString();
+                        ReputationValue.Text = q.ReputationValue.ToString();
+                        ContactInput.Text = this.CurrentContact.Name;
+                    }
                 }
             }
+
         }
 
         private void ContactInput_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -89,9 +89,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Pages\MyBasePage.cs" />
-    <Compile Include="Pages\NewMilestonePage.xaml.cs">
-      <DependentUpon>NewMilestonePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="window\ContactWindow.xaml.cs">
       <DependentUpon>ContactWindow.xaml</DependentUpon>
     </Compile>
@@ -117,10 +114,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Page>
-    <Page Include="Pages\NewMilestonePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\NewQuestPage.xaml">
       <SubType>Designer</SubType>

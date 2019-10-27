@@ -88,6 +88,7 @@ namespace CharSheet.Pages
             this.MainWindow = (MainWindow)Application.Current.MainWindow;
             GenerateAttributeRows();
             GenerateSkillRows();
+            GenerateMilestoneDialogAttributeList();
 
             AttributeList.ItemsSource = this.AttributeRows;
             SkillList.ItemsSource = this.SkillRows;
@@ -133,24 +134,22 @@ namespace CharSheet.Pages
             }
         }
 
+        private void GenerateMilestoneDialogAttributeList()
+        {
+            List<string> attributeNames = new List<string> { };
+            foreach (string val in AppSettings.Attributes.Values)
+            {
+                attributeNames.Add(val);
+            }
+            AttributeInput.ItemsSource = attributeNames;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void AddMilestone_Click(object sender, RoutedEventArgs e)
-        {
-            DialogWindow popup = new DialogWindow();
-            if(popup.ShowDialog() == true)
-            {
-                Milestone newMilestone = popup.result;
-                AddNewRecord(newMilestone);
-                RefreshPage();
-                ScrollToBottomOfEvents();
-            }
         }
 
         private void CompleteHistory_Click(object sender, RoutedEventArgs e)
@@ -258,6 +257,22 @@ namespace CharSheet.Pages
             // Update default quest displayed when opening quest log
             AppSettings.UpdateDefaultSelectedQuest(targetQuest.Id);
             NavigateToPage("QuestLog");
+        }
+
+        private void MilestoneDialogDone_Click(object sender, RoutedEventArgs e)
+        {
+            // Generate Id
+            Random rnd = new Random();
+            int newId = rnd.Next(1, 600000); // generate random id
+            Milestone newMilestone = new Milestone(
+                                                description: this.DescriptionInput.Text,
+                                                eventId: newId,
+                                                attributeId: DataHandler.getAttributeId(AttributeInput.Text),
+                                                value: Convert.ToInt32(ValueInput.Text)
+                                             );
+            this.AddNewRecord(newMilestone);
+            RefreshPage();
+            ScrollToBottomOfEvents();
         }
     }
 }
