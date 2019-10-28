@@ -245,4 +245,68 @@ namespace CharSheet.classes.display
             return value;
         }
     }
+
+    public class RemoveCompletedPrefixConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            string fullDescription = (string)value;
+            if (fullDescription.StartsWith("Completed"))
+            {
+                return fullDescription.Remove(startIndex: 0, count: 9);
+            }
+            else
+                return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class ContactIdToContactImageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            string contactImg = mainWindow.CurrentCharacter.GetContact(targetId: (int)value).ImgName;
+            if (contactImg == AppSettings.ContactImageFullPath + "default.png")
+            {
+                return value;
+            }
+            else
+            {
+                return contactImg;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class ContactIdToContactIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            string contactName = mainWindow.CurrentCharacter.GetContact(targetId:(int)value).Name;
+            // return icon of 1st letter of contact's name
+            if (String.IsNullOrEmpty(contactName))
+            {
+                return value;
+            }
+            else
+            {
+                return AppSettings.PackIconDict[contactName.ToLower()[0]]; // Return icon matching first char in contact's name
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
 }

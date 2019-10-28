@@ -186,7 +186,7 @@
                             Height="200"
                             Margin="20,5,0,0"
                             materialDesign:HintAssist.Foreground="White"
-                            materialDesign:HintAssist.Hint="Enter quest description!"
+                            materialDesign:HintAssist.Hint="Enter contact description!"
                             AcceptsReturn="True"
                             BorderBrush="White"
                             FontSize="16"

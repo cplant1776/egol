@@ -112,7 +112,6 @@ namespace CharSheet.Pages
                 mainWindow.CurrentCharacter.CharacterContacts.Add(this.CurrentContact);
             }
 
-
             // Create new quest
             Quest newQuest = new Quest(
                 title: TitleInput.Text,
@@ -120,7 +119,7 @@ namespace CharSheet.Pages
                 xpValue: Convert.ToInt32(XPValue.Text),
                 contactId: this.CurrentContact.Id,
                 reputationValue: Convert.ToInt32(ReputationValue.Text),
-                deadline: DateTime.UtcNow  //TODO: Set from input
+                deadline: (DateTime)DeadlineInput.SelectedDate  //TODO: Set from input
                 );
 
             // Set status to active if checked

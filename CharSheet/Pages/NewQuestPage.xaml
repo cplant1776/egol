@@ -67,10 +67,12 @@
                     Grid.Row="0"
                     Margin="16"
                     VerticalAlignment="Stretch"
+                    materialDesign:ColorZoneAssist.Mode="PrimaryDark"
                     materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                    Background="{DynamicResource PrimaryHueDarkBrush}"
+                    Background="{DynamicResource PrimaryHueMidBrush}"
                     BorderThickness="3"
                     Header="Details">
+
                     <GroupBox.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
@@ -106,20 +108,22 @@
                                 x:Name="TitleInput"
                                 Grid.Column="0"
                                 Margin="16,0,0,0"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 materialDesign:HintAssist.Hint="Title"
                                 materialDesign:HintAssist.HintOpacity=".5"
-                                FontSize="20"
-                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 IsEditable="True"
                                 SelectionChanged="TitleInput_SelectionChanged"
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBox.ItemTemplate>
+
                                     <DataTemplate>
                                         <WrapPanel>
                                             <TextBlock Text="{Binding Title}" />
                                             <TextBlock Text=" - " />
-                                            <TextBlock Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Text="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}" />
+                                            <TextBlock Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Text="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}" />
                                             <TextBlock Foreground="Red" Text=" (" />
                                             <TextBlock Foreground="Red" Text="{Binding Created, Converter={StaticResource QuestCreatedDateTimeToStringConverter}}" />
                                             <TextBlock Foreground="Red" Text=")" />
@@ -140,11 +144,12 @@
                                 x:Name="ContactInput"
                                 Grid.Column="0"
                                 Margin="16,0,0,0"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 materialDesign:HintAssist.Hint="Contact"
                                 materialDesign:HintAssist.HintOpacity=".5"
-                                FontSize="20"
-                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 IsEditable="True"
                                 SelectionChanged="ContactInput_SelectionChanged"
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -157,14 +162,14 @@
                                 VerticalAlignment="Center"
                                 materialDesign:ButtonAssist.CornerRadius="10"
                                 Click="NewContact_Click"
-                                Style="{StaticResource MaterialDesignRaisedLightButton}">
+                                Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                ToolTip="Add New Contact">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon
                                         Width="20"
                                         Height="20"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Foreground="Black"
                                         Kind="UserMultipleAdd" />
                                 </StackPanel>
                             </Button>
@@ -190,10 +195,11 @@
                                 MinWidth="100"
                                 Margin="16,0,0,0"
                                 HorizontalAlignment="Center"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 materialDesign:HintAssist.Hint="XP"
-                                FontSize="20"
-                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 SelectedValue="0"
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBox.ItemsPanel>
@@ -210,10 +216,11 @@
                                 MinWidth="100"
                                 Margin="16,0,0,0"
                                 HorizontalAlignment="Center"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 materialDesign:HintAssist.Hint="Rep"
-                                FontSize="20"
-                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 SelectedValue="0"
                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                                 <ComboBox.ItemsPanel>
@@ -227,10 +234,11 @@
                             <DatePicker
                                 x:Name="DeadlineInput"
                                 Grid.Column="2"
-                                materialDesign:HintAssist.Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 materialDesign:HintAssist.Hint="Deadline"
-                                FontSize="20"
-                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
 
 
@@ -325,8 +333,8 @@
                                 Margin="20,20,20,10"
                                 Foreground="{DynamicResource SecondaryAccentBrush}"
                                 Maximum="100"
-                                Minimum="-100"
-                                Value="50" />
+                                Minimum="0"
+                                Value="{Binding CurrentContact.Reputation, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>

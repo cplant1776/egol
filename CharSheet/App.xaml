@@ -22,9 +22,12 @@
             <cnv:EventIdToContactNameConverter x:Key="EventIdToContactNameConverter" />
             <cnv:EventIdToContactImageConverter x:Key="EventIdToContactImageConverter" />
             <cnv:EventIdToContactIconConverter x:Key="EventIdToContactIconConverter" />
+            <cnv:RemoveCompletedPrefixConverter x:Key="RemoveCompletedPrefixConverter" />
+            <cnv:ContactIdToContactIconConverter x:Key="ContactIdToContactIconConverter" />
+            <cnv:ContactIdToContactImageConverter x:Key="ContactIdToContactImageConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
-                    BaseTheme="Light"
+                    BaseTheme="Dark"
                     PrimaryColor="DeepPurple"
                     SecondaryColor="Amber" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />

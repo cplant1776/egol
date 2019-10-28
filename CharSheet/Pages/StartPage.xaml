@@ -35,8 +35,9 @@
             <!--  IMAGE  -->
             <Image
                 Grid.Row="0"
-                Margin="20"
-                Source="../media/splash.png" />
+                Margin="0,30,0,0"
+                Source="../media/HerosJourney.png" />
+
 
             <!--  BUTTONS  -->
             <Grid Grid.Row="1">

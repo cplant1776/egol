@@ -258,7 +258,7 @@
                 <!--  CONTENT  -->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -398,8 +398,8 @@
                                 <RowDefinition Height="3*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="7*" />
+                                <ColumnDefinition Width="4*" />
                             </Grid.ColumnDefinitions>
 
                             <!--  RECENT EVENTS  -->
@@ -433,7 +433,6 @@
                                 <ListView
                                     x:Name="HistoryControl"
                                     HorizontalContentAlignment="Stretch"
-                                    ItemsSource="{Binding EventRecords, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
                                     MouseDoubleClick="HistoryControl_MouseDoubleClick"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -446,7 +445,7 @@
                                                     Background="{DynamicResource SecondaryHueMidBrush}"
                                                     Content="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactNameConverter}}">
                                                     <materialDesign:Chip.Icon>
-                                                        <Grid>
+                                                        <Grid Margin="0" Background="{DynamicResource SecondaryHueMidForegroundBrush}">
                                                             <materialDesign:PackIcon
                                                                 Width="30"
                                                                 Height="30"
@@ -458,13 +457,19 @@
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
-                                                    Foreground="White"
-                                                    Text="{Binding Description}"
+                                                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                                    Text="Completed  "
                                                     TextWrapping="Wrap" />
                                                 <TextBlock
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
-                                                    Foreground="White"
+                                                    Foreground="{DynamicResource SecondaryHueMidBrush}"
+                                                    Text="{Binding Description, Converter={StaticResource RemoveCompletedPrefixConverter}}"
+                                                    TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Foreground="{DynamicResource SecondaryHueLightBrush}"
                                                     Text="{Binding TextTail}"
                                                     TextWrapping="Wrap" />
                                             </WrapPanel>
@@ -550,7 +555,28 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel>
-                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                                <Button
+                                                    Margin="0,0,10,0"
+                                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                                    ToolTip="Bob">
+                                                    <Grid>
+                                                        <materialDesign:PackIcon
+                                                            Width="30"
+                                                            Height="30"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+                                                            Kind="{Binding ContactId, Converter={StaticResource ContactIdToContactIconConverter}}" />
+                                                        <Image Source="{Binding ContactId, Converter={StaticResource ContactIdToContactImageConverter}}" />
+
+                                                    </Grid>
+
+                                                </Button>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{Binding Title}"
+                                                    TextWrapping="Wrap" />
                                             </WrapPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>

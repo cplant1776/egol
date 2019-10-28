@@ -98,11 +98,16 @@ namespace CharSheet.Pages
             int endingIndex = this.MainWindow.CurrentCharacter.EventHistory.Count();
             for (int i = startingIndex; i < endingIndex; i++)
                 this.EventRecords.Add(this.MainWindow.CurrentCharacter.EventHistory[i]);
+            HistoryControl.ItemsSource = this.EventRecords;
+            // Sort recent events by date
+            CollectionView eventsView = (CollectionView)CollectionViewSource.GetDefaultView(HistoryControl.ItemsSource);
+            eventsView.SortDescriptions.Add(new SortDescription("Timestamp", ListSortDirection.Ascending));
 
             // Filter quests such that only Active ones appear
             QuestList.ItemsSource = this.MainWindow.CurrentCharacter.Quests;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(QuestList.ItemsSource);
             view.Filter = QuestFilter;
+
         }
 
         // Ensure only active quests are displayed
@@ -164,8 +169,17 @@ namespace CharSheet.Pages
 
         private void CompleteSelected_Click(object sender, RoutedEventArgs e)
         {
-            // Find quest and mark as completed
-            Quest targetQuest = (Quest)QuestList.SelectedItems[0];
+            Quest targetQuest;
+
+            try
+            {
+                targetQuest = (Quest)QuestList.SelectedItems[0];
+            }
+            catch (ArgumentOutOfRangeException) //No quest was selected
+            {
+                return;
+            }
+
             foreach (Quest q in MainWindow.CurrentCharacter.Quests)
             {
                 if (q.Status == (int)Quest.QuestStatus.ACTIVE)
@@ -242,8 +256,18 @@ namespace CharSheet.Pages
 
         private void QuestList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            Quest selectedQuest = new Quest();
             // Find selected quest
-            Quest selectedQuest = (Quest)QuestList.SelectedItems[0];
+            try
+            {
+                selectedQuest = (Quest)QuestList.SelectedItems[0];
+
+            }
+            catch (ArgumentOutOfRangeException) // Clicks were on icon (whose event is not implemented yet)
+            {
+                return;
+            }
+
             // Update default quest displayed when opening quest log
             AppSettings.UpdateDefaultSelectedQuest(selectedQuest.Id);
             NavigateToPage("QuestLog");
