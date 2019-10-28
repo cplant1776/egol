@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,9 @@ namespace CharSheet.classes
         /* Changed during runtime */
         public static string SaveLocation;
         public static int? DefaultSelectedQuest;
+
+        /*Created at runtime*/
+        public static Dictionary<char, PackIconKind> PackIconDict;
 
         public static void InitializeSettings()
         {
@@ -71,6 +75,41 @@ namespace CharSheet.classes
             // Selectable XP values
             jToken = jObject.GetValue("XPSelectableValues");
             XPSelectableValues = (List<int>)jToken.ToObject(typeof(List<int>));
+
+            GeneratePackIconDict();
+        }
+
+        public static void GeneratePackIconDict()
+        {
+            PackIconDict = new Dictionary<char, PackIconKind>
+            {
+                {'a', PackIconKind.AlphabetA },
+                {'b', PackIconKind.AlphabetB },
+                {'c', PackIconKind.AlphabetC },
+                {'d', PackIconKind.AlphabetD },
+                {'e', PackIconKind.AlphabetE },
+                {'f', PackIconKind.AlphabetF },
+                {'g', PackIconKind.AlphabetG },
+                {'h', PackIconKind.AlphabetH },
+                {'i', PackIconKind.AlphabetI },
+                {'j', PackIconKind.AlphabetJ },
+                {'k', PackIconKind.AlphabetK },
+                {'l', PackIconKind.AlphabetL },
+                {'m', PackIconKind.AlphabetM },
+                {'n', PackIconKind.AlphabetN },
+                {'o', PackIconKind.AlphabetO },
+                {'p', PackIconKind.AlphabetP },
+                {'q', PackIconKind.AlphabetQ},
+                {'r', PackIconKind.AlphabetR},
+                {'s', PackIconKind.AlphabetS},
+                {'t', PackIconKind.AlphabetT},
+                {'u', PackIconKind.AlphabetU},
+                {'v', PackIconKind.AlphabetV},
+                {'w', PackIconKind.AlphabetW},
+                {'x', PackIconKind.AlphabetX},
+                {'y', PackIconKind.AlphabetY},
+                {'z', PackIconKind.AlphabetZ},
+            };
         }
 
         public static void ResetSaveLocation()

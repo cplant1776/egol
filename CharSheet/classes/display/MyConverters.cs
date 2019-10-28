@@ -1,4 +1,5 @@
 ﻿using CharSheet.classes.data;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -174,6 +175,69 @@ namespace CharSheet.classes.display
         {
             DateTime dateCreated = (DateTime)value;
             return dateCreated.ToString("MM-dd-yyyy");
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class EventIdToContactNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            Quest targetQuest = mainWindow.CurrentCharacter.GetQuest(targetId: (int)value);
+            string contactName = mainWindow.CurrentCharacter.GetContact(targetId: targetQuest.ContactId).Name;
+            return contactName;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class EventIdToContactImageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            Quest targetQuest = mainWindow.CurrentCharacter.GetQuest(targetId: (int)value);
+            string contactImg = mainWindow.CurrentCharacter.GetContact(targetId: targetQuest.ContactId).ImgName;
+            if (contactImg == AppSettings.ContactImageFullPath + "default.png")
+            {
+                return value;
+            }
+            else
+            {
+                return contactImg;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public class EventIdToContactIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+            Quest targetQuest = mainWindow.CurrentCharacter.GetQuest(targetId: (int)value);
+            string contactName = mainWindow.CurrentCharacter.GetContact(targetId: targetQuest.ContactId).Name;
+            // return icon of 1st letter of contact's name
+            if(String.IsNullOrEmpty(contactName))
+            {
+                return value;
+            }
+            else
+            {
+                return AppSettings.PackIconDict[contactName.ToLower()[0]];
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

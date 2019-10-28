@@ -441,12 +441,28 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel Margin="0" Orientation="Horizontal">
+                                                <materialDesign:Chip
+                                                    Margin="0,0,10,0"
+                                                    Background="{DynamicResource SecondaryHueMidBrush}"
+                                                    Content="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactNameConverter}}">
+                                                    <materialDesign:Chip.Icon>
+                                                        <Grid>
+                                                            <materialDesign:PackIcon
+                                                                Width="30"
+                                                                Height="30"
+                                                                Kind="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactIconConverter}}" />
+                                                            <Image Source="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactImageConverter}}" />
+                                                        </Grid>
+                                                    </materialDesign:Chip.Icon>
+                                                </materialDesign:Chip>
                                                 <TextBlock
+                                                    VerticalAlignment="Center"
                                                     FontSize="14"
                                                     Foreground="White"
                                                     Text="{Binding Description}"
                                                     TextWrapping="Wrap" />
                                                 <TextBlock
+                                                    VerticalAlignment="Center"
                                                     FontSize="14"
                                                     Foreground="White"
                                                     Text="{Binding TextTail}"

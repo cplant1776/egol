@@ -19,6 +19,9 @@
             <cnv:MinusButtonName x:Key="MinusButtonName" />
             <cnv:ContactIdToStringConverter x:Key="ContactIdToStringConverter" />
             <cnv:QuestCreatedDateTimeToStringConverter x:Key="QuestCreatedDateTimeToStringConverter" />
+            <cnv:EventIdToContactNameConverter x:Key="EventIdToContactNameConverter" />
+            <cnv:EventIdToContactImageConverter x:Key="EventIdToContactImageConverter" />
+            <cnv:EventIdToContactIconConverter x:Key="EventIdToContactIconConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Light"
