@@ -63,8 +63,7 @@ namespace CharSheet.Pages
 
         public void DebugCharacter_Click(object sender, RoutedEventArgs e)
         {
-            Character debugChar = new Character();
-            debugChar = debugChar.CharacterDummy(); // Load in-memory dummy data
+            DummyCharacter debugChar = new DummyCharacter();
             mainWindow.CurrentCharacter = debugChar; // Set main window's character to dummy char
             mainWindow.NavigateTo(AppSettings.pagePaths["Dashboard"], NavigationService.GetNavigationService(this));
         }

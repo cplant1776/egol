@@ -443,14 +443,18 @@
                                                 <materialDesign:Chip
                                                     Margin="0,0,10,0"
                                                     Background="{DynamicResource SecondaryHueMidBrush}"
-                                                    Content="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactNameConverter}}">
+                                                    Content="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactNameConverter}}"
+                                                    IconBackground="{DynamicResource SecondaryHueMidForegroundBrush}">
                                                     <materialDesign:Chip.Icon>
-                                                        <Grid Margin="0" Background="{DynamicResource SecondaryHueMidForegroundBrush}">
+                                                        <Grid Margin="0">
                                                             <materialDesign:PackIcon
                                                                 Width="30"
                                                                 Height="30"
                                                                 Kind="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactIconConverter}}" />
-                                                            <Image Source="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactImageConverter}}" />
+                                                            <Image
+                                                                Width="40"
+                                                                Height="40"
+                                                                Source="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactImageConverter}}" />
                                                         </Grid>
                                                     </materialDesign:Chip.Icon>
                                                 </materialDesign:Chip>
@@ -481,11 +485,12 @@
                             <Grid Grid.Row="1" Grid.Column="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
+                                <!--  Full History Button  -->
                                 <Button
                                     Grid.Row="3"
+                                    Grid.Column="0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     materialDesign:ButtonAssist.CornerRadius="10"
@@ -496,17 +501,6 @@
                                     <TextBlock Text="Full History" />
                                 </Button>
 
-                                <Button
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    materialDesign:ButtonAssist.CornerRadius="10"
-                                    Click="QuestLog_Click"
-                                    FontSize="20"
-                                    Style="{StaticResource MaterialDesignRaisedLightButton}">
-
-                                    <TextBlock Text="Quest Log" />
-                                </Button>
                             </Grid>
 
 
@@ -557,8 +551,8 @@
                                             <WrapPanel>
                                                 <Button
                                                     Margin="0,0,10,0"
-                                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                                                    ToolTip="Bob">
+                                                    BorderBrush="Transparent"
+                                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
                                                     <Grid>
                                                         <materialDesign:PackIcon
                                                             Width="30"
@@ -567,7 +561,11 @@
                                                             VerticalAlignment="Center"
                                                             Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
                                                             Kind="{Binding ContactId, Converter={StaticResource ContactIdToContactIconConverter}}" />
-                                                        <Image Source="{Binding ContactId, Converter={StaticResource ContactIdToContactImageConverter}}" />
+                                                        <Image
+                                                            Width="50"
+                                                            Height="50"
+                                                            Margin="-1"
+                                                            Source="{Binding ContactId, Converter={StaticResource ContactIdToContactImageConverter}}" />
 
                                                     </Grid>
 
@@ -603,13 +601,16 @@
                     <!--  RIGHT SIDE  -->
                     <Grid Grid.Row="1" Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="6*" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <!--  NAME/IMAGE/PROGRESS  -->
-                        <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
                             <GroupBox
                                 Grid.Row="0"
                                 Margin="16"
@@ -630,9 +631,21 @@
                                         </StackPanel>
                                     </DataTemplate>
                                 </GroupBox.HeaderTemplate>
-                                <StackPanel>
-                                    <Image Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
-                                    <Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="10*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <!--<Image Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />-->
+                                    <Image
+                                        Grid.Row="0"
+                                        MaxWidth="300"
+                                        MaxHeight="300"
+                                        Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />
+                                    <Grid Grid.Row="1" VerticalAlignment="Bottom">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="5*" />
@@ -653,34 +666,12 @@
                                             Minimum="0"
                                             Value="{Binding MainWindow.CurrentCharacter.CurrentXP, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}, Converter={StaticResource XPToProgressConverter}}" />
                                     </Grid>
-                                </StackPanel>
+                                </Grid>
                             </GroupBox>
-
-
-
-                            <!--<Button
-                                Margin="0,5,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                materialDesign:ButtonAssist.CornerRadius="10"
-                                Click="AddMilestone_Click"
-                                FontSize="16"
-                                Style="{StaticResource MaterialDesignRaisedLightButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon
-                                        Width="26"
-                                        Height="26"
-                                        Margin="0,0,10,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
-                                        Kind="Hiking" />
-                                    <TextBlock Text="Add Milestone" />
-                                </StackPanel>
-                            </Button>-->
 
                             <!--  Add Milestone  -->
                             <Button
+                                Grid.Row="1"
                                 Margin="0,5,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
@@ -689,7 +680,7 @@
                                 FontSize="16"
                                 Style="{StaticResource MaterialDesignRaisedLightButton}">
 
-                                <!--  MIKESTONE DIALOG CONTENTS  -->
+                                <!--  MILESTONE DIALOG CONTENTS  -->
                                 <Button.CommandParameter>
                                     <Grid MinWidth="500">
                                         <Grid.RowDefinitions>
@@ -954,19 +945,45 @@
                                 </StackPanel>
                             </Button>
 
+                        </Grid>
+
+
+
+
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                            <!--  Add Quest Button  -->
+                            <Button
+                                Margin="0,16,0,0"
+                                HorizontalAlignment="Center"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                Click="AddQuest_Click"
+                                FontSize="20"
+                                Style="{StaticResource MaterialDesignRaisedButton}">
+
+                                <TextBlock Text="Add Quest" />
+                            </Button>
+
+
+                            <!--  Daily Quest Dialog  -->
+
+
+                            <!--  Quest Log Button  -->
+                            <Button
+                                Margin="0,16,0,0"
+                                HorizontalAlignment="Center"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                Click="QuestLog_Click"
+                                FontSize="20"
+                                Style="{StaticResource MaterialDesignRaisedLightButton}">
+
+                                <TextBlock Text="Quest Log" />
+                            </Button>
+
+
                         </StackPanel>
 
-                        <Button
-                            Grid.Row="2"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            materialDesign:ButtonAssist.CornerRadius="10"
-                            Click="AddQuest_Click"
-                            FontSize="20"
-                            Style="{StaticResource MaterialDesignRaisedButton}">
 
-                            <TextBlock Text="Add Quest" />
-                        </Button>
+
 
                     </Grid>
 
