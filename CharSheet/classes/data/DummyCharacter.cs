@@ -15,6 +15,7 @@ namespace CharSheet.classes.data
         private int NUM_OF_EVENTS = 15;
         private int MAX_MILESTONE_VALUE = 5;
         private int MAX_REP_GAIN = 100;
+        private int MAX_NUM_LOREM_PARAGRAPHS = 6;
         private DateTime START_DATE = new DateTime(2019, 1, 1);
         private int DATE_RANGE;
         private int NUM_OF_SKILLS = 12;
@@ -37,6 +38,7 @@ namespace CharSheet.classes.data
             this.CharacterContacts = GenerateContacts();
             this.Quests = GenerateQuests();
             this.EventHistory = GenerateEventHistory();
+            this.EventHistory.Sort((x, y) => x.Timestamp.CompareTo(y.Timestamp)); // Sort history by date
             this.AttributeValue = GenerateAttributeValues();
             this.SkillValue = GenerateSkillValues();
 
@@ -221,13 +223,13 @@ namespace CharSheet.classes.data
 
         public string GetRandomDescription()
         {
-            return LoremIpsum(
-                        minWords: 100,
-                        maxWords: 500,
-                        minSentences: 3,
-                        maxSentences: 100,
-                        numParagraphs: 2
-                );
+            string description = "";
+            for(int i=0; i < rnd.Next(1, MAX_NUM_LOREM_PARAGRAPHS); i++)
+            {
+                description += Faker.Lorem.Paragraph();
+                description += "\n\n";
+            }
+            return description;
         }
 
         public int GetRandomId()
@@ -265,40 +267,6 @@ namespace CharSheet.classes.data
             // 1 - Active
             // 2 - Completed
             return rnd.Next(0, 3);
-        }
-
-        static string LoremIpsum(int minWords, int maxWords,
-            int minSentences, int maxSentences,
-            int numParagraphs)
-        {
-
-            var words = new[]{"lorem", "ipsum", "dolor", "sit", "amet", "consectetuer",
-        "adipiscing", "elit", "sed", "diam", "nonummy", "nibh", "euismod",
-        "tincidunt", "ut", "laoreet", "dolore", "magna", "aliquam", "erat"};
-
-            var rand = new Random();
-            int numSentences = rand.Next(maxSentences - minSentences)
-                + minSentences + 1;
-            int numWords = rand.Next(maxWords - minWords) + minWords + 1;
-
-            StringBuilder result = new StringBuilder();
-
-            for (int p = 0; p < numParagraphs; p++)
-            {
-                result.Append("<p>");
-                for (int s = 0; s < numSentences; s++)
-                {
-                    for (int w = 0; w < numWords; w++)
-                    {
-                        if (w > 0) { result.Append(" "); }
-                        result.Append(words[rand.Next(words.Length)]);
-                    }
-                    result.Append(". ");
-                }
-                result.Append("</p>");
-            }
-
-            return result.ToString();
         }
 
         public static class DummyResources

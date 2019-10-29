@@ -252,16 +252,14 @@
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
                         <!--  Description Box  -->
-                        <StackPanel Name="DescirptionBoxStack">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                <TextBlock
-                                    Margin="20,5,0,0"
-                                    FontSize="16"
-                                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                                    Text="{Binding SelectedQuest.Description, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
-                                    TextWrapping="Wrap" />
-                            </ScrollViewer>
-                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock
+                                Margin="20,5,0,0"
+                                FontSize="16"
+                                Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                Text="{Binding SelectedQuest.Description, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}"
+                                TextWrapping="Wrap" />
+                        </ScrollViewer>
                     </GroupBox>
 
                     <!--  Quest Status  -->

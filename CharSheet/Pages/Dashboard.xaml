@@ -552,7 +552,8 @@
                                                 <Button
                                                     Margin="0,0,10,0"
                                                     BorderBrush="Transparent"
-                                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                                    ToolTip="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}">
                                                     <Grid>
                                                         <materialDesign:PackIcon
                                                             Width="30"
