@@ -339,3 +339,32 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /mySkills.txt
+/Engine - Copy
+/Engine - nonfunctional/ViewModels/StartViewModel.cs
+/Engine - nonfunctional/ViewModels/RoutedEventArgs.cs
+/Engine - nonfunctional/ViewModels/QuestLogViewModel.cs
+/Engine - nonfunctional/ViewModels/NewQuestViewModel.cs
+/Engine - nonfunctional/ViewModels/NewContactViewModel.cs
+/Engine - nonfunctional/ViewModels/LevelUpViewModel.cs
+/Engine - nonfunctional/ViewModels/FullHistoryViewModel.cs
+/Engine - nonfunctional/ViewModels/DashboardViewModel.cs
+/Engine - nonfunctional/ViewModels/CharacterCreationViewModel.cs
+/Engine - nonfunctional/ViewModels/BaseViewModel.cs
+/Engine - nonfunctional/ViewModels
+/Engine - nonfunctional/Utils/XmlHelper.cs
+/Engine - nonfunctional/Utils/test/DummyDataResources.json
+/Engine - nonfunctional/Utils/test/DummyCharacter.cs
+/Engine - nonfunctional/Utils/test
+/Engine - nonfunctional/Utils/DataHandler.cs
+/Engine - nonfunctional/Utils/appSettings.json
+/Engine - nonfunctional/Utils/AppSettings.cs
+/Engine - nonfunctional/Utils
+/Engine - nonfunctional/Properties/AssemblyInfo.cs
+/Engine - nonfunctional/Properties
+/Engine - nonfunctional/packages.config
+/Engine - nonfunctional/Models/QuestModel.cs
+/Engine - nonfunctional/Models/MyRowsModel.cs
+/Engine - nonfunctional/Models/EventRecordModel.cs
+/Engine - nonfunctional/Models/ContactModel.cs
+/Engine - nonfunctional/Models/CharacterModel.cs
+/Engine - nonfunctional/Engine.csproj

@@ -208,5 +208,6 @@ namespace CharSheet.classes.data
             OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
         }
 
+
     }
 }
