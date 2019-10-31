@@ -41,7 +41,9 @@ namespace Engine.ViewModels
         #region Constructors
         public CharacterModel()
         {
-
+            SetDefaultAttributeValues();
+            SetDefaultSkillValues();
+            SetDefaultImage();
         }
 
         public CharacterModel(string name, List<StatRow> attributes, List<StatRow> skills, string description)
@@ -198,6 +200,11 @@ namespace Engine.ViewModels
             {
                 this.SkillValue.Add(key, 0);
             }
+        }
+
+        private void SetDefaultImage()
+        {
+            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
         }
         #endregion
 

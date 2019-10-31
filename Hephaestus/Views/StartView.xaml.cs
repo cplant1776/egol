@@ -20,12 +20,13 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for StartViewModel.xaml
     /// </summary>
-    public partial class StartView : Page
+    public partial class StartView : UserControl
     {
         private readonly StartViewModel _viewModel = new StartViewModel();
         public StartView()
         {
             DataContext = _viewModel;
+            InitializeComponent();
         }
     }
 }

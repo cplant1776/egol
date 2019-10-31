@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Engine.ViewModels
 {
-    public class StartViewModel : BaseViewModel
+    public class StartViewModel : BaseViewModel, IPageViewModel
     {
         #region Fields
 
@@ -27,6 +27,11 @@ namespace Engine.ViewModels
         #endregion
 
         #region Public Properties/Commands
+        public string Name
+        {
+            get { return "Start"; }
+        }
+
         public ICommand LoadCharacterCommand
         {
             get
@@ -67,7 +72,7 @@ namespace Engine.ViewModels
                 }
                 return _generateCharacterCommand;
             }
-        } 
+        }
         #endregion
 
         public void NewCharacter()

@@ -70,10 +70,12 @@
     <Compile Include="Utils\DataHandler.cs" />
     <Compile Include="Utils\test\DummyCharacter.cs" />
     <Compile Include="Utils\XmlHelper.cs" />
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CharacterCreationViewModel.cs" />
     <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\FullHistoryViewModel.cs" />
+    <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\LevelUpViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\NewQuestViewModel.cs" />

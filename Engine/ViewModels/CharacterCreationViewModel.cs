@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Engine.ViewModels
 {
-    public class CharacterCreationViewModel : BaseViewModel
+    public class CharacterCreationViewModel : BaseViewModel, IPageViewModel
     {
 
         #region Fields
@@ -33,7 +34,7 @@ namespace Engine.ViewModels
         #region Constructors
         public CharacterCreationViewModel()
         {
-            this.UserCharacter = new DummyCharacter();
+            //this.UserCharacter = new DummyCharacter();
             GenerateStatRows();
             this.ImgName = this.UserCharacter.ImgName;
         }
@@ -48,6 +49,11 @@ namespace Engine.ViewModels
 
         public string CharacterName { get { return _characterName; } set { _characterName = value; } }
         public string CharacterDescription { get { return _characterDescription; } set { _characterDescription = value; } }
+
+        public string Name
+        {
+            get { return "CharacterCreation"; }
+        }
 
         public ICommand DoneCommand
         {
@@ -167,12 +173,22 @@ namespace Engine.ViewModels
                 attributes: AttributeRows,
                 skills: SkillRows
                 );
-            // NAVIGATE TO DASHBOARD
+            NavigateToStart();
+        }
+
+        public void NavigateToStart()
+        {
+            Window mainWindow = (Window)Application.Current.MainWindow;
+            ApplicationViewModel viewModel = (ApplicationViewModel)mainWindow.DataContext;
+            if (viewModel.ChangePageCommand.CanExecute(viewModel.PageViewModels[0]))
+            {
+                viewModel.ChangePageCommand.Execute(viewModel.PageViewModels[0]);
+            }
         }
 
         public void Cancel()
         {
-            // NAVIGATE TO START PAGE
+            NavigateToStart();
         }
 
         public void PlusAttribute(object sender)

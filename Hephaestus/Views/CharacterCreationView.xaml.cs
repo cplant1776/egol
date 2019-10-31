@@ -19,13 +19,14 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for CharacterCreationView.xaml
     /// </summary>
-    public partial class CharacterCreationView : Page
+    public partial class CharacterCreationView : UserControl
     {
         private readonly CharacterCreationViewModel _viewModel = new CharacterCreationViewModel();
 
         public CharacterCreationView()
         {
             DataContext = _viewModel;
+            InitializeComponent();
         }
     }
 }

@@ -7,6 +7,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Engine.ViewModels;assembly=Engine"
+    xmlns:views="clr-namespace:Hephaestus.Views"
     Title="MainWindow"
     Width="1170"
     Height="770"
@@ -23,12 +24,19 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewModels:StartViewModel}">
+                <views:StartView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CharacterCreationViewModel}">
+                <views:CharacterCreationView />
+            </DataTemplate>
         </ResourceDictionary>
+
     </Window.Resources>
 
-    <Frame
-        Name="MainFrame"
-        NavigationUIVisibility="Hidden"
-        Source="Views/StartView.xaml" />
+    <DockPanel>
+        <ContentControl Content="{Binding CurrentPageViewModel}" />
+    </DockPanel>
 </Window>
