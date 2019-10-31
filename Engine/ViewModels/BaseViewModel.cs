@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Engine.ViewModels
 {
-        public class BaseViewModel : INotifyPropertyChanged
+        public class BaseViewModel : MyObservableObject
         {
             private static CharacterModel _userCharacter;
             static BaseViewModel()
@@ -17,17 +18,14 @@ namespace Engine.ViewModels
             protected CharacterModel UserCharacter
             {
                 get { return _userCharacter; }
-                set {
-                        _userCharacter = value;
-                        OnPropertyChanged("UserCharacter");
-                    }
-            }
-
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            public void OnPropertyChanged(string name)
-            {
-                if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
+                set
+                {
+                    if(value != _userCharacter)
+                        {
+                            _userCharacter = value;
+                            OnPropertyChanged("UserCharacter");
+                        }
+                }
             }
         }
 }

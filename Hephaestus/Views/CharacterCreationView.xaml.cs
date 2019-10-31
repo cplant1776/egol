@@ -25,43 +25,7 @@ namespace Hephaestus.Views
 
         public CharacterCreationView()
         {
-            InitializeComponent();
-
             DataContext = _viewModel;
-        }
-
-        public void Done_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.Done_Click(name: CharacterName.Text, description: CharacterDescription.Text);
-        }
-
-        public void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.Cancel_Click();
-        }
-
-        public void AddImage_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.AddImage_Click();
-        }
-
-        public void PlusAttribute_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.PlusAttribute_Click(sender);
-        }
-        public void MinusAttribute_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.MinusAttribute_Click(sender);
-
-        }
-
-        public void PlusSkill_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.PlusSkill_Click(sender);
-        }
-        public void MinusSkill_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.MinusSkill_Click(sender);
         }
     }
 }

@@ -31,7 +31,6 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 BorderThickness="0"
-                Click="Cancel_Click"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <materialDesign:PackIcon
                     Width="50"
@@ -134,7 +133,8 @@
                                                 VerticalAlignment="Center"
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
-                                                Click="PlusAttribute_Click">
+                                                Command="{Binding Path=DataContext.PlusAttributeCommand, ElementName=AttributeList}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                                 <materialDesign:PackIcon
                                                     HorizontalAlignment="Stretch"
                                                     Foreground="White"
@@ -150,7 +150,8 @@
                                             <Button
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
-                                                Click="MinusAttribute_Click">
+                                                Command="{Binding Path=DataContext.MinusAttributeCommand, ElementName=AttributeList}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                                 <materialDesign:PackIcon
                                                     HorizontalAlignment="Stretch"
                                                     Foreground="White"
@@ -224,7 +225,8 @@
                                             <Button
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
-                                                Click="PlusSkill_Click">
+                                                Command="{Binding Path=DataContext.PlusSkillCommand, ElementName=SkillList}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                                 <materialDesign:PackIcon
                                                     HorizontalAlignment="Stretch"
                                                     Foreground="White"
@@ -240,7 +242,8 @@
                                             <Button
                                                 Background="Transparent"
                                                 BorderBrush="Transparent"
-                                                Click="MinusSkill_Click">
+                                                Command="{Binding Path=DataContext.MinusSkillCommand, ElementName=SkillList}"
+                                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                                                 <materialDesign:PackIcon
                                                     HorizontalAlignment="Stretch"
                                                     Foreground="White"
@@ -292,6 +295,7 @@
                             FontSize="16"
                             Foreground="White"
                             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                            Text="{Binding CharacterDescription}"
                             TextWrapping="Wrap"
                             VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
@@ -332,7 +336,7 @@
                     FontSize="20"
                     Foreground="White">
                     <TextBox.Text>
-                        <Binding Path="Name" UpdateSourceTrigger="PropertyChanged" />
+                        <Binding Path="CharacterName" UpdateSourceTrigger="PropertyChanged" />
                     </TextBox.Text>
                 </TextBox>
 
@@ -343,7 +347,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     materialDesign:ButtonAssist.CornerRadius="10"
-                    Click="AddImage_Click"
+                    Command="{Binding AddImageCommand}"
                     FontSize="24"
                     Style="{StaticResource MaterialDesignRaisedLightButton}">
                     <StackPanel Orientation="Horizontal">
@@ -366,7 +370,6 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     materialDesign:ButtonAssist.CornerRadius="10"
-                    Click="Done_Click"
                     FontSize="20"
                     Style="{StaticResource MaterialDesignRaisedButton}">
 

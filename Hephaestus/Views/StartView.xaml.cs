@@ -22,27 +22,10 @@ namespace Hephaestus.Views
     /// </summary>
     public partial class StartView : Page
     {
-        public Class1 class1;
         private readonly StartViewModel _viewModel = new StartViewModel();
         public StartView()
         {
             DataContext = _viewModel;
-        }
-
-
-        public void NewCharacter_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            // NAVIGATE TO NEW CHARACTER PAGE
-        }
-
-        public void LoadCharacter_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.LoadCharacter_Click();
-        }
-
-        public void GeneratedCharacter_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _viewModel.GeneratedCharacter_Click();
         }
     }
 }

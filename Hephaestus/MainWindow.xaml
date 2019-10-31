@@ -30,5 +30,5 @@
     <Frame
         Name="MainFrame"
         NavigationUIVisibility="Hidden"
-        Source="Views/CharacterCreationView.xaml" />
+        Source="Views/StartView.xaml" />
 </Window>

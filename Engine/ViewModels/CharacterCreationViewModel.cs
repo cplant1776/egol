@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Engine.ViewModels
@@ -14,21 +15,134 @@ namespace Engine.ViewModels
     public class CharacterCreationViewModel : BaseViewModel
     {
 
+        #region Fields
         private List<StatRow> _attributeRows = new List<StatRow> { };
         private List<StatRow> _skillRows = new List<StatRow> { };
         private string _imgName;
+        private string _characterName;
+        private string _characterDescription;
+        private ICommand _doneCommand;
+        private ICommand _cancelCommand;
+        private ICommand _plusAttribute;
+        private ICommand _minusAttribute;
+        private ICommand _plusSkill;
+        private ICommand _minusSkill;
+        private ICommand _addImage;
+        #endregion
 
-        public string ImgName { get; set; }
-
-        public List<StatRow> AttributeRows { get { return _attributeRows; } set { _attributeRows = value; } }
-
-        public List<StatRow> SkillRows { get { return _skillRows; } set { _skillRows = value; } }
+        #region Constructors
         public CharacterCreationViewModel()
         {
             this.UserCharacter = new DummyCharacter();
             GenerateStatRows();
             this.ImgName = this.UserCharacter.ImgName;
         }
+        #endregion
+
+        #region Public Properties/Commands
+        public string ImgName { get { return _imgName; } set { _imgName = value; OnPropertyChanged("ImgName"); } }
+
+        public List<StatRow> AttributeRows { get { return _attributeRows; } set { _attributeRows = value; } }
+
+        public List<StatRow> SkillRows { get { return _skillRows; } set { _skillRows = value; } }
+
+        public string CharacterName { get { return _characterName; } set { _characterName = value; } }
+        public string CharacterDescription { get { return _characterDescription; } set { _characterDescription = value; } }
+
+        public ICommand DoneCommand
+        {
+            get
+            {
+                if (_doneCommand == null)
+                {
+                    _doneCommand = new RelayCommand(
+                        param => Done()
+                    );
+                }
+                return _doneCommand;
+            }
+        }
+        public ICommand CancelCommand
+        {
+            get
+            {
+                if (_cancelCommand == null)
+                {
+                    _cancelCommand = new RelayCommand(
+                        param => Cancel()
+                    );
+                }
+                return _cancelCommand;
+            }
+        }
+        public ICommand PlusAttributeCommand
+        {
+            get
+            {
+                if (_plusAttribute == null)
+                {
+                    _plusAttribute = new RelayCommand(
+                        param => PlusAttribute(param)
+                    );
+                }
+                return _plusAttribute;
+            }
+        }
+        public ICommand MinusAttributeCommand
+        {
+            get
+            {
+                if (_minusAttribute == null)
+                {
+                    _minusAttribute = new RelayCommand(
+                        param => MinusAttribute(param)
+                    );
+                }
+                return _minusAttribute;
+            }
+        }
+        public ICommand PlusSkillCommand
+        {
+            get
+            {
+                if (_plusSkill == null)
+                {
+                    _plusSkill = new RelayCommand(
+                        param => PlusSkill(param)
+                    );
+                }
+                return _plusSkill;
+            }
+        }
+        public ICommand MinusSkillCommand
+        {
+            get
+            {
+                if (_minusSkill == null)
+                {
+                    _minusSkill = new RelayCommand(
+                        param => MinusSkill(param)
+                    );
+                }
+                return _minusSkill;
+            }
+        }
+        public ICommand AddImageCommand
+        {
+            get
+            {
+                if (_addImage == null)
+                {
+                    _addImage = new RelayCommand(
+                        param => AddImage()
+                    );
+                }
+                return _addImage;
+            }
+        }
+        #endregion
+
+
 
         private void GenerateStatRows()
         {
@@ -45,23 +159,23 @@ namespace Engine.ViewModels
             }
         }
 
-        public void Done_Click(string name, string description)
+        public void Done()
         {
-            this.UserCharacter = new CharacterModel(
-                name: name,
-                description: description,
-                attributes: this.AttributeRows,
-                skills: this.SkillRows
+            UserCharacter = new CharacterModel(
+                name: CharacterName,
+                description: CharacterDescription,
+                attributes: AttributeRows,
+                skills: SkillRows
                 );
             // NAVIGATE TO DASHBOARD
         }
 
-        public void Cancel_Click()
+        public void Cancel()
         {
             // NAVIGATE TO START PAGE
         }
 
-        public void PlusAttribute_Click(object sender)
+        public void PlusAttribute(object sender)
         {
             // Find Sending Row
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -82,7 +196,7 @@ namespace Engine.ViewModels
                 }
         }
 
-        public void MinusAttribute_Click(object sender)
+        public void MinusAttribute(object sender)
         {
             // Find Sending Row
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -107,7 +221,7 @@ namespace Engine.ViewModels
                 }
         }
 
-        public void PlusSkill_Click(object sender)
+        public void PlusSkill(object sender)
         {
             // Find Sending Row
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -128,7 +242,7 @@ namespace Engine.ViewModels
                 }
         }
 
-        public void MinusSkill_Click(object sender)
+        public void MinusSkill(object sender)
         {
             // Find Sending Row
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -153,9 +267,9 @@ namespace Engine.ViewModels
                 }
         }
 
-        public void AddImage_Click()
+        public void AddImage()
         {
-            this.UserCharacter.SetImage();
+            ImgName = this.UserCharacter.SetImage();
         }
 
     }

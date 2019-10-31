@@ -12,38 +12,9 @@ using System.Threading.Tasks;
 namespace Engine.ViewModels
 {
     [DataContract]
-    public partial class CharacterModel : INotifyPropertyChanged
+    public partial class CharacterModel : MyObservableObject
     {
-        private static CharacterModel _instance;
-
-        public CharacterModel() { }
-
-        public CharacterModel(string name, List<StatRow> attributes, List<StatRow> skills, string description)
-        {
-            // Set Attributes/Skills
-            foreach (StatRow r in attributes)
-                this.AttributeValue[DataHandler.getAttributeId(r.StatName)] = r.StatValue;
-            foreach (StatRow r in skills)
-                this.SkillValue[DataHandler.getSkillId(r.StatName)] = r.StatValue;
-
-            // Set name
-            this.Name = name;
-            // Description
-            this.Description = description;
-
-        }
-
-        public static CharacterModel Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new CharacterModel();
-                }
-                return _instance;
-            }
-        }
+        #region Fields
 
         [DataMember]
         private Dictionary<int, int> _attributeValue = new Dictionary<int, int> { }; // (Attribute ID: Value)
@@ -65,13 +36,41 @@ namespace Engine.ViewModels
         [DataMember]
         private string _imgName;
 
+        #endregion
+
+        #region Constructors
+        public CharacterModel()
+        {
+
+        }
+
+        public CharacterModel(string name, List<StatRow> attributes, List<StatRow> skills, string description)
+        {
+            // Set Attributes/Skills
+            foreach (StatRow r in attributes)
+                this.AttributeValue[DataHandler.getAttributeId(r.StatName)] = r.StatValue;
+            foreach (StatRow r in skills)
+                this.SkillValue[DataHandler.getSkillId(r.StatName)] = r.StatValue;
+
+            // Set name
+            this.Name = name;
+            // Description
+            this.Description = description;
+        }
+        #endregion
+
+        #region Properties
+
         public Dictionary<int, int> AttributeValue
         {
             get { return _attributeValue; }
             set
             {
-                _attributeValue = value;
-                OnPropertyChanged(() => AttributeValue);
+                if(value != _attributeValue)
+                {
+                    _attributeValue = value;
+                    OnPropertyChanged("AttributeValue");
+                }
             }
         }
 
@@ -80,8 +79,11 @@ namespace Engine.ViewModels
             get { return _skillValue; }
             set
             {
-                _skillValue = value;
-                OnPropertyChanged(() => SkillValue);
+                if (value != _skillValue)
+                {
+                    _skillValue = value;
+                    OnPropertyChanged("SkillValue");
+                }
             }
         }
 
@@ -90,8 +92,11 @@ namespace Engine.ViewModels
             get { return _eventHistory; }
             set
             {
-                _eventHistory = value;
-                OnPropertyChanged(() => EventHistory);
+                if (value != _eventHistory)
+                {
+                    _eventHistory = value;
+                    OnPropertyChanged("EventHistory");
+                }
             }
         }
 
@@ -100,8 +105,11 @@ namespace Engine.ViewModels
             get { return _name; }
             set
             {
-                _name = value;
-                OnPropertyChanged(() => Name);
+                if (value != _name)
+                {
+                    _name = value;
+                    OnPropertyChanged("Name");
+                }
             }
         }
 
@@ -110,8 +118,11 @@ namespace Engine.ViewModels
             get { return _currentXP; }
             set
             {
-                _currentXP = value;
-                OnPropertyChanged(() => CurrentXP);
+                if (value != _currentXP)
+                {
+                    _currentXP = value;
+                    OnPropertyChanged("CurrentXP");
+                }
             }
         }
 
@@ -120,8 +131,11 @@ namespace Engine.ViewModels
             get { return _quests; }
             set
             {
-                _quests = value;
-                OnPropertyChanged(() => Quests);
+                if (value != _quests)
+                {
+                    _quests = value;
+                    OnPropertyChanged("Quests");
+                }
             }
         }
 
@@ -130,8 +144,11 @@ namespace Engine.ViewModels
             get { return _characterContacts; }
             set
             {
-                _characterContacts = value;
-                OnPropertyChanged(() => CharacterContacts);
+                if (value != _characterContacts)
+                {
+                    _characterContacts = value;
+                    OnPropertyChanged("CharacterContacts");
+                }
             }
         }
 
@@ -140,8 +157,11 @@ namespace Engine.ViewModels
             get { return _description; }
             set
             {
-                _description = value;
-                OnPropertyChanged(() => Description);
+                if (value != _description)
+                {
+                    _description = value;
+                    OnPropertyChanged("Description");
+                }
             }
         }
 
@@ -150,10 +170,18 @@ namespace Engine.ViewModels
             get { return _imgName; }
             set
             {
-                _imgName = value;
-                OnPropertyChanged(() => ImgName);
+                if (value != _imgName)
+                {
+                    _imgName = value;
+                    OnPropertyChanged("ImgName");
+                }
             }
         }
+
+        #endregion
+
+
+        #region Initial attribute/skills
         private void SetDefaultAttributeValues()
         {
             // Set all attributes to 0 (default)
@@ -161,9 +189,6 @@ namespace Engine.ViewModels
             {
                 this.AttributeValue.Add(key, 0);
             }
-
-            //debugging
-            this.AttributeValue[2] = 1;
         }
 
         private void SetDefaultSkillValues()
@@ -174,7 +199,9 @@ namespace Engine.ViewModels
                 this.SkillValue.Add(key, 0);
             }
         }
+        #endregion
 
+        #region Getters (contacts, quests, etc)
         public ContactModel GetCharacterContact(int id)
         {
             foreach (ContactModel c in this.CharacterContacts)
@@ -212,47 +239,13 @@ namespace Engine.ViewModels
                 }
             }
             return new ContactModel();
-        }
+        } 
+        #endregion
 
-        public static CharacterModel LoadCharacter()
-        {
-            CharacterModel loadedChar = new CharacterModel();
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
-            {
-                DefaultExt = ".xml",
-                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
-            };
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and load a character with it
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                loadedChar = DataHandler.LoadCharacterFromXml(filename);
-            }
-
-            return loadedChar;
-        }
-
-        public void SetImage()
+        public string SetImage()
         {
             this.ImgName = DataHandler.UploadImageAndGetPath();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
-
-        // Just so we can call it via lambda which is nicer
-        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
-        {
-            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
+            return this.ImgName;
         }
     }
 }

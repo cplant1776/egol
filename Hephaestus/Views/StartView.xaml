@@ -74,7 +74,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         materialDesign:ButtonAssist.CornerRadius="10"
-                        Click="LoadCharacter_Click"
+                        Command="{Binding LoadCharacterCommand}"
                         FontSize="30"
                         Style="{StaticResource MaterialDesignRaisedButton}">
 
