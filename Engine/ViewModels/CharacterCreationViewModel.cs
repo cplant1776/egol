@@ -173,22 +173,12 @@ namespace Engine.ViewModels
                 attributes: AttributeRows,
                 skills: SkillRows
                 );
-            NavigateToStart();
-        }
-
-        public void NavigateToStart()
-        {
-            Window mainWindow = (Window)Application.Current.MainWindow;
-            ApplicationViewModel viewModel = (ApplicationViewModel)mainWindow.DataContext;
-            if (viewModel.ChangePageCommand.CanExecute(viewModel.PageViewModels[0]))
-            {
-                viewModel.ChangePageCommand.Execute(viewModel.PageViewModels[0]);
-            }
+            NavigateTo("Start");
         }
 
         public void Cancel()
         {
-            NavigateToStart();
+            //NavigateToStart();
         }
 
         public void PlusAttribute(object sender)

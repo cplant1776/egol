@@ -96,6 +96,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     materialDesign:ButtonAssist.CornerRadius="10"
+                    Command="{Binding GenerateCharacterCommand}"
                     Content="Generate"
                     FontSize="30"
                     Style="{StaticResource MaterialDesignRaisedButton}" />

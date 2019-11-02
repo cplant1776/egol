@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Engine.Models
 {
-    public class StatRow : INotifyPropertyChanged
+    public class StatRow : MyObservableObject
     {
         private string _name;
         private int _value;
@@ -22,7 +22,7 @@ namespace Engine.Models
             set
             {
                 _name = value;
-                OnPropertyChanged(() => StatName);
+                OnPropertyChanged("StatName");
             }
         }
 
@@ -32,7 +32,7 @@ namespace Engine.Models
             set
             {
                 _value = value;
-                OnPropertyChanged(() => StatValue);
+                OnPropertyChanged("StatValue");
             }
         }
         public StatRow()
@@ -46,19 +46,6 @@ namespace Engine.Models
             this.StatValue = value;
             this.StartingValue = value;
             this.IsSkill = isSkill;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
-
-        // Just so we can call it via lambda which is nicer
-        public void OnPropertyChanged<T>(Expression<Func<T>> propertyNameExpression)
-        {
-            OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
         }
     }
 }

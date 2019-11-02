@@ -32,6 +32,9 @@
             <DataTemplate DataType="{x:Type viewModels:CharacterCreationViewModel}">
                 <views:CharacterCreationView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                <views:DashboardView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

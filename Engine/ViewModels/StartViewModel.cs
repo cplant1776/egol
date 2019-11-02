@@ -12,9 +12,8 @@ namespace Engine.ViewModels
     public class StartViewModel : BaseViewModel, IPageViewModel
     {
         #region Fields
-
-        private ICommand _loadCharacterCommand;
         private ICommand _newCharacterCommand;
+        private ICommand _loadCharacterCommand;
         private ICommand _generateCharacterCommand; 
 
         #endregion
@@ -32,6 +31,20 @@ namespace Engine.ViewModels
             get { return "Start"; }
         }
 
+        public ICommand NewCharacterCommand
+        {
+            get
+            {
+                if (_newCharacterCommand == null)
+                {
+                    _newCharacterCommand = new RelayCommand(
+                        param => NewCharacter()
+                    );
+                }
+                return _loadCharacterCommand;
+            }
+        }
+
         public ICommand LoadCharacterCommand
         {
             get
@@ -43,20 +56,6 @@ namespace Engine.ViewModels
                     );
                 }
                 return _loadCharacterCommand;
-            }
-        }
-
-        public ICommand NewCharacterCommand
-        {
-            get
-            {
-                if (_newCharacterCommand == null)
-                {
-                    _newCharacterCommand = new RelayCommand(
-                        param => NewCharacter()
-                    );
-                }
-                return _newCharacterCommand;
             }
         }
 
@@ -77,7 +76,7 @@ namespace Engine.ViewModels
 
         public void NewCharacter()
         {
-            // NAVIGATE TO CHARACTER CREATION
+            NavigateTo("CharacterCreation");
         }
 
         public void LoadCharacter()
@@ -101,11 +100,13 @@ namespace Engine.ViewModels
             }
 
             this.UserCharacter = loadedChar;
+            NavigateTo("Dashboard");
         }
 
         public void GenerateCharacter()
         {
             this.UserCharacter = new DummyCharacter();
+            NavigateTo("Dashboard");
         }
     }
 }

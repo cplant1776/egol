@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Engine.ViewModels
@@ -17,6 +18,7 @@ namespace Engine.ViewModels
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
 
+
         #endregion
 
         public ApplicationViewModel()
@@ -24,6 +26,7 @@ namespace Engine.ViewModels
             // Add available pages
             PageViewModels.Add(new StartViewModel());
             PageViewModels.Add(new CharacterCreationViewModel());
+            PageViewModels.Add(new DashboardViewModel());
 
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];

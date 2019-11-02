@@ -1,4 +1,5 @@
 ﻿using System;
+using Engine.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,13 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for DashboardView.xaml
     /// </summary>
-    public partial class DashboardView : Page
+    public partial class DashboardView : UserControl
     {
+        private readonly DashboardViewModel _viewModel = new DashboardViewModel();
+
         public DashboardView()
         {
+            DataContext = _viewModel;
             InitializeComponent();
         }
     }
