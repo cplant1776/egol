@@ -27,6 +27,7 @@ namespace Engine.ViewModels
             PageViewModels.Add(new StartViewModel());
             PageViewModels.Add(new CharacterCreationViewModel());
             PageViewModels.Add(new DashboardViewModel());
+            PageViewModels.Add(new QuestLogViewModel());
 
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];

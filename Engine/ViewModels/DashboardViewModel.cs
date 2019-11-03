@@ -303,17 +303,17 @@ namespace Engine.ViewModels
 
         private void FullHistory()
         {
-            NavigateTo("FullHistory");
+            NavigateTo("Full History");
         }
 
         private void QuestLog()
         {
-            NavigateTo("QuestLog");
+            NavigateTo("Quest Log");
         }
 
         private void AddQuest()
         {
-            NavigateTo("NewQuest");
+            NavigateTo("New Quest");
         }
 
         private void CompleteSelected()

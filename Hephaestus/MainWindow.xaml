@@ -35,6 +35,9 @@
             <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
                 <views:DashboardView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:QuestLogViewModel}">
+                <views:QuestLogView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

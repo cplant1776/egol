@@ -58,6 +58,7 @@ namespace Engine.Utils.test
                 contactList.Add(new ContactModel(
                     name: GetRandomName(),
                     description: GetRandomDescription(),
+                    reputation: RandomIntUnder(100),
                     imgName: GetRandomImage(),
                     id: GetRandomId()
                     )
