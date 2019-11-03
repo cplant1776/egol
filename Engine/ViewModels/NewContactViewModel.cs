@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace Engine.ViewModels
 {
-    class NewContactViewModel
+    public class NewContactViewModel : BaseViewModel, IPageViewModel
     {
+
+        #region Fields
+        #endregion
+
+        #region Constructors
+        #endregion
+
+        #region Public Properties/Commands
+        public string Name { get { return "NewContact"; } }
+        #endregion
+
+        #region
+        #endregion
+
     }
 }

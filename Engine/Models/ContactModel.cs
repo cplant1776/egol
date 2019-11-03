@@ -91,6 +91,12 @@ namespace Engine.ViewModels
 
         }
 
+        public string SetImage()
+        {
+            this.ImgName = DataHandler.UploadImageAndGetPath();
+            return this.ImgName;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)

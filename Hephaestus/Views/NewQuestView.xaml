@@ -10,302 +10,71 @@
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="9*" />
-        </Grid.RowDefinitions>
+    <materialDesign:DialogHost>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
 
-        <!--  HEADER  -->
-        <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <!--  HEADER  -->
+            <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <!--  BACK BUTTON  -->
-            <Button
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                BorderThickness="0"
-                Command="{Binding GoBackCommand}"
-                Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon
-                    Width="50"
-                    Height="50"
-                    HorizontalAlignment="Stretch"
-                    Foreground="White"
-                    Kind="KeyboardBackspace" />
-            </Button>
-
-            <!--  TEXT  -->
-            <TextBlock
-                Grid.Column="1"
-                Style="{StaticResource MaterialDesignDisplay1TextBlock}"
-                Text="{StaticResource AppName}" />
-        </Grid>
-
-        <!--  CONTENT  -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-
-            <!--  LEFT SIDE  -->
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*" />
-                    <RowDefinition Height="6*" />
-                </Grid.RowDefinitions>
-
-                <!--  Details  -->
-                <GroupBox
-                    Grid.Row="0"
-                    Margin="16"
-                    VerticalAlignment="Stretch"
-                    materialDesign:ColorZoneAssist.Mode="PrimaryDark"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                    Background="{DynamicResource PrimaryHueMidBrush}"
-                    BorderThickness="3"
-                    Header="Details">
-
-                    <GroupBox.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="8,0,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="20"
-                                    FontWeight="Bold"
-                                    Style="{StaticResource MaterialDesignSubheadingTextBlock}"
-                                    Text="{Binding}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupBox.HeaderTemplate>
-
-
-
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-
-
-                        <!--  TITLE  -->
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                x:Name="TitleInput"
-                                Grid.Column="0"
-                                Margin="16,0,0,0"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                materialDesign:HintAssist.Hint="Title"
-                                materialDesign:HintAssist.HintOpacity=".5"
-                                FontSize="14"
-                                FontWeight="Bold"
-                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                IsEditable="True"
-                                ItemsSource="{Binding QuestList}"
-                                SelectedItem="{Binding SelectedQuest}"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemTemplate>
-
-                                    <DataTemplate>
-                                        <WrapPanel>
-                                            <TextBlock Text="{Binding Title}" />
-                                            <TextBlock Text=" - " />
-                                            <TextBlock Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Text="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}" />
-                                            <TextBlock Foreground="Red" Text=" (" />
-                                            <TextBlock Foreground="Red" Text="{Binding Created, Converter={StaticResource QuestCreatedDateTimeToStringConverter}}" />
-                                            <TextBlock Foreground="Red" Text=")" />
-                                        </WrapPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-
-                        </Grid>
-
-                        <!--  CONTACT  -->
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="2*" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                x:Name="ContactInput"
-                                Grid.Column="0"
-                                Margin="16,0,0,0"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                materialDesign:HintAssist.Hint="Contact"
-                                materialDesign:HintAssist.HintOpacity=".5"
-                                DisplayMemberPath="Name"
-                                FontSize="16"
-                                FontWeight="Bold"
-                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                IsEditable="True"
-                                ItemsSource="{Binding ContactList}"
-                                SelectedItem="{Binding SelectedContact}"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-
-                            <Button
-                                Grid.Column="1"
-                                Height="50"
-                                Margin="16,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                materialDesign:ButtonAssist.CornerRadius="10"
-                                Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                                ToolTip="Add New Contact">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon
-                                        Width="20"
-                                        Height="20"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Kind="UserMultipleAdd" />
-                                </StackPanel>
-                            </Button>
-
-
-
-
-                        </Grid>
-
-                        <!--  VALUES  -->
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!--  XP  -->
-                            <ComboBox
-                                x:Name="XPValue"
-                                Grid.Column="0"
-                                MinWidth="100"
-                                Margin="16,0,0,0"
-                                HorizontalAlignment="Center"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                materialDesign:HintAssist.Hint="XP"
-                                FontSize="16"
-                                FontWeight="Bold"
-                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                ItemsSource="{Binding SelectableXPValues}"
-                                SelectedValue="{Binding SelectedQuest.XPValue}"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-
-                            <!--  REP  -->
-                            <ComboBox
-                                x:Name="ReputationValue"
-                                Grid.Column="1"
-                                MinWidth="100"
-                                Margin="16,0,0,0"
-                                HorizontalAlignment="Center"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                materialDesign:HintAssist.Hint="Rep"
-                                FontSize="16"
-                                FontWeight="Bold"
-                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                ItemsSource="{Binding SelectableRepuationValues}"
-                                SelectedValue="{Binding SelectedQuest.ReputationValue}"
-                                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
-                            </ComboBox>
-
-                            <!--  Deadline  -->
-                            <DatePicker
-                                x:Name="DeadlineInput"
-                                Grid.Column="2"
-                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                materialDesign:HintAssist.Hint="Deadline"
-                                FontSize="16"
-                                FontWeight="Bold"
-                                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
-                                SelectedDate="{Binding QuestDeadline}"
-                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-
-
-                        </Grid>
-                    </Grid>
-
-                </GroupBox>
-
-                <!--  DESCRIPTION  -->
-                <GroupBox
-                    Grid.Row="3"
-                    Margin="20"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                    Background="Transparent"
+                <!--  BACK BUTTON  -->
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
                     BorderThickness="0"
-                    Header="Quest Description"
-                    Style="{StaticResource MaterialDesignGroupBox}">
-                    <GroupBox.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon
-                                    Width="24"
-                                    Height="24"
-                                    VerticalAlignment="Center"
-                                    Kind="CompassOutline" />
-                                <TextBlock
-                                    Margin="8,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignSubheadingTextBlock}"
-                                    Text="{Binding}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupBox.HeaderTemplate>
-                    <!--  Description Box  -->
-                    <StackPanel Name="DescirptionBoxStack" Grid.Row="1">
-                        <TextBox
-                            x:Name="DescriptionInput"
-                            Height="250"
-                            Margin="20,5,0,0"
-                            materialDesign:HintAssist.Foreground="White"
-                            materialDesign:HintAssist.Hint="Enter quest description!"
-                            AcceptsReturn="True"
-                            BorderBrush="White"
-                            FontSize="16"
-                            Foreground="White"
-                            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                            Text="{Binding SelectedQuest.Description}"
-                            TextWrapping="Wrap"
-                            VerticalScrollBarVisibility="Auto" />
-                    </StackPanel>
-                </GroupBox>
+                    Command="{Binding GoBackCommand}"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <materialDesign:PackIcon
+                        Width="50"
+                        Height="50"
+                        HorizontalAlignment="Stretch"
+                        Foreground="White"
+                        Kind="KeyboardBackspace" />
+                </Button>
 
+                <!--  TEXT  -->
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Style="{StaticResource MaterialDesignDisplay1TextBlock}"
+                    Text="{StaticResource AppName}" />
             </Grid>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <!--  CONTENT  -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                <!--  Contact Info  -->
-                <StackPanel Grid.Row="0">
+
+                <!--  LEFT SIDE  -->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="6*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Details  -->
                     <GroupBox
+                        Grid.Row="0"
                         Margin="16"
                         VerticalAlignment="Stretch"
+                        materialDesign:ColorZoneAssist.Mode="PrimaryDark"
                         materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
                         BorderThickness="3"
-                        Header="{Binding SelectedContact.Name}">
+                        Header="Details">
 
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
@@ -321,70 +90,617 @@
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
 
-                        <StackPanel>
-                            <Image
-                                Height="150"
-                                Margin="0,0,0,0"
-                                Source="{Binding SelectedContact.ImgName}" />
 
-                            <!--  Reputation  -->
-                            <ProgressBar
-                                Margin="20,20,20,10"
-                                Foreground="{DynamicResource SecondaryAccentBrush}"
-                                Maximum="100"
-                                Minimum="0"
-                                Value="{Binding SelectedContact.Reputation}" />
+
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+
+
+                            <!--  TITLE  -->
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox
+                                    x:Name="TitleInput"
+                                    Grid.Column="0"
+                                    Margin="16,0,0,0"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    materialDesign:HintAssist.Hint="Title"
+                                    materialDesign:HintAssist.HintOpacity=".5"
+                                    FontSize="14"
+                                    FontWeight="Bold"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    IsEditable="True"
+                                    ItemsSource="{Binding QuestList}"
+                                    SelectedItem="{Binding SelectedQuest}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    Text="{Binding SelectedQuest.Title}">
+                                    <ComboBox.ItemTemplate>
+
+                                        <DataTemplate>
+                                            <WrapPanel>
+                                                <TextBlock Text="{Binding Title}" />
+                                                <TextBlock Text=" - " />
+                                                <TextBlock Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Text="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}" />
+                                                <TextBlock Foreground="Red" Text=" (" />
+                                                <TextBlock Foreground="Red" Text="{Binding Created, Converter={StaticResource QuestCreatedDateTimeToStringConverter}}" />
+                                                <TextBlock Foreground="Red" Text=")" />
+                                            </WrapPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                            </Grid>
+
+                            <!--  CONTACT  -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox
+                                    x:Name="ContactInput"
+                                    Grid.Column="0"
+                                    Margin="16,0,0,0"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    materialDesign:HintAssist.Hint="Contact"
+                                    materialDesign:HintAssist.HintOpacity=".5"
+                                    DisplayMemberPath="Name"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    IsEditable="True"
+                                    ItemsSource="{Binding ContactList}"
+                                    SelectedItem="{Binding SelectedContact}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+
+                                <!--  New Contact Button  -->
+                                <Button
+                                    Grid.Column="1"
+                                    Height="50"
+                                    Margin="16,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    materialDesign:ButtonAssist.CornerRadius="10"
+                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                    Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                    ToolTip="Add New Contact">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="20"
+                                            Height="20"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Kind="UserMultipleAdd" />
+                                    </StackPanel>
+
+                                    <!--  ==================== NEW CONTACT DIALOG ====================  -->
+                                    <Button.CommandParameter>
+                                        <Grid
+                                            MinWidth="800"
+                                            MaxWidth="800"
+                                            Background="{DynamicResource WindowBackgroundColor}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="9*" />
+                                            </Grid.RowDefinitions>
+
+                                            <!--  HEADER  -->
+                                            <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!--  BACK BUTTON  -->
+                                                <Button
+                                                    Grid.Column="0"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Command="materialDesign:DialogHost.CloseDialogCommand"
+                                                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                                    <Button.CommandParameter>
+                                                        <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                                            False
+                                                        </system:Boolean>
+                                                    </Button.CommandParameter>
+                                                    <materialDesign:PackIcon
+                                                        Width="25"
+                                                        Height="25"
+                                                        HorizontalAlignment="Stretch"
+                                                        Foreground="White"
+                                                        Kind="KeyboardBackspace" />
+                                                </Button>
+
+                                                <!--  TEXT  -->
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                                    Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                                    Text="New Contact" />
+
+                                            </Grid>
+
+                                            <!--  CONTENT  -->
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!--  LEFT SIDE  -->
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="2*" />
+                                                        <RowDefinition Height="4*" />
+                                                    </Grid.RowDefinitions>
+
+
+                                                    <!--  Name  -->
+                                                    <Grid Grid.Row="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <GroupBox
+                                                            Grid.Row="0"
+                                                            Margin="16,16,0,16"
+                                                            VerticalAlignment="Stretch"
+                                                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                            Background="{DynamicResource PrimaryHueDarkBrush}"
+                                                            BorderThickness="3"
+                                                            Header="Name">
+                                                            <GroupBox.HeaderTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                                        <TextBlock
+                                                                            Margin="8,0,0,0"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="20"
+                                                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                                            Text="{Binding}" />
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </GroupBox.HeaderTemplate>
+                                                            <TextBox
+                                                                Name="NameInput"
+                                                                VerticalAlignment="Top"
+                                                                materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                                                                materialDesign:HintAssist.Hint="Contact Name"
+                                                                FontSize="20"
+                                                                Foreground="{DynamicResource SecondaryHueLightBrush}"
+                                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                                Text="{Binding NewContact.Name}" />
+                                                        </GroupBox>
+
+                                                        <!--  Reputation  -->
+                                                        <GroupBox
+                                                            Grid.Column="1"
+                                                            Margin="16"
+                                                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                            Background="Transparent"
+                                                            BorderThickness="0"
+                                                            Header="Starting Reputation"
+                                                            Style="{StaticResource MaterialDesignGroupBox}">
+                                                            <GroupBox.HeaderTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                                        <materialDesign:PackIcon
+                                                                            Width="24"
+                                                                            Height="24"
+                                                                            VerticalAlignment="Center"
+                                                                            Kind="SmileyExcited" />
+                                                                        <TextBlock
+                                                                            Margin="8,0,0,0"
+                                                                            VerticalAlignment="Center"
+                                                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                                            Text="{Binding}" />
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </GroupBox.HeaderTemplate>
+                                                            <!--  Slider  -->
+                                                            <StackPanel Grid.Row="0">
+                                                                <Grid Grid.Row="1">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="3*" />
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Slider
+                                                                        x:Name="ReputationSlider"
+                                                                        Grid.Column="1"
+                                                                        Foreground="{DynamicResource SecondaryHueMidBrush}"
+                                                                        Maximum="100"
+                                                                        Minimum="0"
+                                                                        Style="{StaticResource MaterialDesignDiscreteSlider}"
+                                                                        ToolTip="Starting Reputation"
+                                                                        Value="{Binding NewContact.Reputation}" />
+                                                                </Grid>
+                                                            </StackPanel>
+                                                        </GroupBox>
+
+
+
+                                                    </Grid>
+
+                                                    <!--  Description  -->
+                                                    <GroupBox
+                                                        Grid.Row="1"
+                                                        Margin="16,20,16,4"
+                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        Header="Contact Description"
+                                                        Style="{StaticResource MaterialDesignGroupBox}">
+                                                        <GroupBox.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <materialDesign:PackIcon
+                                                                        Width="24"
+                                                                        Height="24"
+                                                                        VerticalAlignment="Center"
+                                                                        Kind="ScriptTextOutline" />
+                                                                    <TextBlock
+                                                                        Margin="8,0,0,0"
+                                                                        VerticalAlignment="Center"
+                                                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                                        Text="{Binding}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </GroupBox.HeaderTemplate>
+                                                        <!--  Description Box  -->
+                                                        <StackPanel Name="DescirptionBoxStack" Grid.Row="1">
+                                                            <TextBox
+                                                                Height="200"
+                                                                Margin="20,5,0,0"
+                                                                materialDesign:HintAssist.Foreground="White"
+                                                                materialDesign:HintAssist.Hint="Enter contact description!"
+                                                                AcceptsReturn="True"
+                                                                BorderBrush="White"
+                                                                FontSize="16"
+                                                                Foreground="White"
+                                                                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                                                Text="{Binding NewContact.Description}"
+                                                                TextWrapping="Wrap"
+                                                                VerticalScrollBarVisibility="Auto" />
+                                                        </StackPanel>
+                                                    </GroupBox>
+                                                    <!--  Reputation  -->
+                                                    <Grid Grid.Row="2">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="3*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+
+                                                    </Grid>
+
+
+                                                    <!--  Slider  -->
+
+
+                                                    <!--  Slider Value  -->
+                                                    <!--<TextBlock
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Text="{Binding ElementName=ReputationSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}" />-->
+                                                </Grid>
+
+                                                <!--  RIGHT SIDE  -->
+                                                <Grid Grid.Column="1">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="2*" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <!--  ContactImage  -->
+                                                    <GroupBox
+                                                        Grid.Row="0"
+                                                        Margin="16"
+                                                        VerticalAlignment="Stretch"
+                                                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                                                        BorderThickness="3"
+                                                        Header="">
+
+                                                        <GroupBox.HeaderTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                                    <TextBlock
+                                                                        Margin="8,0,0,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="20"
+                                                                        FontWeight="Bold"
+                                                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                                                        Text="{Binding}" />
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </GroupBox.HeaderTemplate>
+
+                                                        <StackPanel>
+                                                            <Image
+                                                                Height="150"
+                                                                Margin="0,0,0,0"
+                                                                Source="{Binding NewContact.ImgName}" />
+                                                        </StackPanel>
+                                                    </GroupBox>
+
+                                                    <!--  Add Image Button  -->
+                                                    <Button
+                                                        Grid.Row="1"
+                                                        Height="50"
+                                                        Margin="0,10,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Top"
+                                                        materialDesign:ButtonAssist.CornerRadius="10"
+                                                        Command="{Binding NewContactAddImageCommand}"
+                                                        FontSize="24"
+                                                        Style="{StaticResource MaterialDesignRaisedLightButton}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon
+                                                                Width="26"
+                                                                Height="26"
+                                                                Margin="0,0,10,0"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="Black"
+                                                                Kind="Camera" />
+                                                            <TextBlock Text="Add Image" />
+                                                        </StackPanel>
+                                                    </Button>
+
+                                                    <!--  Done button  -->
+                                                    <Button
+                                                        Grid.Row="3"
+                                                        Height="50"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Top"
+                                                        materialDesign:ButtonAssist.CornerRadius="10"
+                                                        Command="{Binding NewContactDoneCommand}"
+                                                        FontSize="20"
+                                                        Style="{StaticResource MaterialDesignRaisedButton}">
+                                                        <Button.CommandParameter>
+                                                            <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">
+                                                                True
+                                                            </system:Boolean>
+                                                        </Button.CommandParameter>
+
+                                                        <TextBlock Text="Create Contact" />
+                                                    </Button>
+
+                                                </Grid>
+                                            </Grid>
+
+                                        </Grid>
+                                    </Button.CommandParameter>
+                                </Button>
+
+
+
+
+                            </Grid>
+
+                            <!--  VALUES  -->
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  XP  -->
+                                <ComboBox
+                                    x:Name="XPValue"
+                                    Grid.Column="0"
+                                    MinWidth="100"
+                                    Margin="16,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    materialDesign:HintAssist.Hint="XP"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    ItemsSource="{Binding SelectableXPValues}"
+                                    SelectedValue="{Binding SelectedQuest.XPValue}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+
+                                <!--  REP  -->
+                                <ComboBox
+                                    x:Name="ReputationValue"
+                                    Grid.Column="1"
+                                    MinWidth="100"
+                                    Margin="16,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    materialDesign:HintAssist.Hint="Rep"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    ItemsSource="{Binding SelectableRepuationValues}"
+                                    SelectedValue="{Binding SelectedQuest.ReputationValue}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                </ComboBox>
+
+                                <!--  Deadline  -->
+                                <DatePicker
+                                    x:Name="DeadlineInput"
+                                    Grid.Column="2"
+                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    materialDesign:HintAssist.Hint="Deadline"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    SelectedDate="{Binding QuestDeadline}"
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+
+                            </Grid>
+                        </Grid>
+
+                    </GroupBox>
+
+                    <!--  DESCRIPTION  -->
+                    <GroupBox
+                        Grid.Row="3"
+                        Margin="20"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Header="Quest Description"
+                        Style="{StaticResource MaterialDesignGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="24"
+                                        Height="24"
+                                        VerticalAlignment="Center"
+                                        Kind="CompassOutline" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <!--  Description Box  -->
+                        <StackPanel Grid.Row="1">
+                            <TextBox
+                                x:Name="DescriptionInput"
+                                Height="250"
+                                Margin="20,5,0,0"
+                                materialDesign:HintAssist.Foreground="White"
+                                materialDesign:HintAssist.Hint="Enter quest description!"
+                                AcceptsReturn="True"
+                                BorderBrush="White"
+                                FontSize="16"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                Text="{Binding SelectedQuest.Description}"
+                                TextWrapping="Wrap"
+                                VerticalScrollBarVisibility="Auto" />
                         </StackPanel>
                     </GroupBox>
-                </StackPanel>
 
-                <StackPanel Grid.Row="1" VerticalAlignment="Center">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
+                </Grid>
 
-                        <ToggleButton
-                            x:Name="IsActiveToggle"
-                            Grid.Column="2"
-                            HorizontalAlignment="Left"
-                            IsChecked="{Binding QuestIsActive}"
-                            Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
-                            ToolTip="MaterialDesignSwitchAccentToggleButton" />
-                        <TextBlock
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
-                            Style="{DynamicResource MaterialDesignTitleTextBlock}"
-                            Text="Set Active" />
-                    </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                    <Button
-                        Height="50"
-                        Margin="0,16,0,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        Command="{Binding DoneCommand}"
-                        FontSize="24"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon
-                                Width="26"
-                                Height="26"
-                                Margin="0,0,10,0"
+                    <!--  Contact Info  -->
+                    <StackPanel Grid.Row="0">
+                        <GroupBox
+                            Margin="16"
+                            VerticalAlignment="Stretch"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                            BorderThickness="3"
+                            Header="{Binding SelectedContact.Name}">
+
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="20"
+                                            FontWeight="Bold"
+                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                            Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+
+                            <StackPanel>
+                                <Image
+                                    Height="150"
+                                    Margin="0,0,0,0"
+                                    Source="{Binding SelectedContact.ImgName}" />
+
+                                <!--  Reputation  -->
+                                <ProgressBar
+                                    Margin="20,20,20,10"
+                                    Foreground="{DynamicResource SecondaryAccentBrush}"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{Binding SelectedContact.Reputation}" />
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ToggleButton
+                                x:Name="IsActiveToggle"
+                                Grid.Column="2"
                                 HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Foreground="Black"
-                                Kind="EmoticonCoolOutline" />
-                            <TextBlock Text="Done" />
-                        </StackPanel>
+                                IsChecked="{Binding QuestIsActive}"
+                                Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                                ToolTip="MaterialDesignSwitchAccentToggleButton" />
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                Style="{DynamicResource MaterialDesignTitleTextBlock}"
+                                Text="Set Active" />
+                        </Grid>
 
-                    </Button>
-                </StackPanel>
+                        <Button
+                            Height="50"
+                            Margin="0,16,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            Command="{Binding DoneCommand}"
+                            FontSize="24"
+                            Style="{StaticResource MaterialDesignRaisedLightButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Width="26"
+                                    Height="26"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Foreground="Black"
+                                    Kind="EmoticonCoolOutline" />
+                                <TextBlock Text="Done" />
+                            </StackPanel>
 
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
