@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,12 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for NewQuestView.xaml
     /// </summary>
-    public partial class NewQuestView : Page
+    public partial class NewQuestView : UserControl
     {
+        private readonly NewQuestViewModel _viewModel = new NewQuestViewModel();
         public NewQuestView()
         {
+            DataContext = _viewModel;
             InitializeComponent();
         }
     }

@@ -29,6 +29,7 @@ namespace Engine.ViewModels
             PageViewModels.Add(new DashboardViewModel());
             PageViewModels.Add(new QuestLogViewModel());
             PageViewModels.Add(new FullHistoryViewModel());
+            PageViewModels.Add(new NewQuestViewModel());
 
             // Set starting page
             CurrentPageViewModel = PageViewModels[0];

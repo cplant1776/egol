@@ -19,6 +19,7 @@ namespace Engine.ViewModels
                 { "Dashboard", 2 },
                 { "Quest Log", 3 },
                 { "Full History", 4 },
+                { "New Quest", 5 },
             };
 
         private static CharacterModel _userCharacter;
