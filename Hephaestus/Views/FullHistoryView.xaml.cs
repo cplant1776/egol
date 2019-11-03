@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,12 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for FullHistoryView.xaml
     /// </summary>
-    public partial class FullHistoryView : Page
+    public partial class FullHistoryView : UserControl
     {
+        private readonly FullHistoryViewModel _viewModel = new FullHistoryViewModel();
         public FullHistoryView()
         {
+            DataContext = _viewModel;
             InitializeComponent();
         }
     }
