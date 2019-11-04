@@ -254,5 +254,14 @@ namespace Engine.ViewModels
             this.ImgName = DataHandler.UploadImageAndGetPath();
             return this.ImgName;
         }
+
+        public int AddXPAndGetLevelDifference(int xp)
+        {
+            int previousLevel = this.CurrentXP / 100;
+            this.CurrentXP += xp;
+            int currentLevel = this.CurrentXP / 100;
+
+            return currentLevel - previousLevel;
+        }
     }
 }

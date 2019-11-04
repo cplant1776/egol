@@ -291,7 +291,7 @@ namespace Engine.ViewModels
             }
 
             // Update XP
-            this.UserCharacter.CurrentXP += this.SelectedQuest.XPValue;
+            int levelChange = this.UserCharacter.AddXPAndGetLevelDifference(this.SelectedQuest.XPValue);
 
 
             // Add new event record
@@ -303,6 +303,12 @@ namespace Engine.ViewModels
                 );
 
             this.UserCharacter.EventHistory.Add(newRecord);
+
+            // Check for level up
+            if(levelChange > 0)
+            {
+                // LEVEL UP SEQUENCE
+            }
         }
 
         private void ChangeStateChangeCancel()

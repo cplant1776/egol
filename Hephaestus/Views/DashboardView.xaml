@@ -10,7 +10,9 @@
     d:DesignWidth="1170"
     mc:Ignorable="d">
 
-    <materialDesign:DialogHost>
+    <materialDesign:DialogHost CloseOnClickAway="True">
+
+        <!--  ================================ QUICK POPOUT MENU ================================  -->
         <materialDesign:DrawerHost BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="2">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <Grid>
@@ -212,9 +214,9 @@
                     </StackPanel>
 
                 </Grid>
-
             </materialDesign:DrawerHost.LeftDrawerContent>
 
+            <!--  ================================ BODY ================================  -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -626,7 +628,7 @@
                                 Margin="16"
                                 materialDesign:ShadowAssist.ShadowDepth="Depth1"
                                 BorderThickness="3"
-                                Header="{Binding CharacterName}">
+                                Header="{Binding UserCharacter.Name}">
 
                                 <GroupBox.HeaderTemplate>
                                     <DataTemplate>
@@ -654,7 +656,7 @@
                                         Grid.Row="0"
                                         MaxWidth="300"
                                         MaxHeight="300"
-                                        Source="{Binding ImgName}" />
+                                        Source="{Binding UserCharacter.ImgName}" />
                                     <Grid Grid.Row="1" VerticalAlignment="Bottom">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -690,7 +692,7 @@
                                 FontSize="16"
                                 Style="{StaticResource MaterialDesignRaisedLightButton}">
 
-                                <!--  MILESTONE DIALOG CONTENTS  -->
+                                <!--  ================================  MILESTONE DIALOG CONTENTS ================================  -->
                                 <Button.CommandParameter>
                                     <Grid MinWidth="500">
                                         <Grid.RowDefinitions>
@@ -1003,6 +1005,8 @@
                 </Grid>
 
             </Grid>
+
+
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>
 </UserControl>

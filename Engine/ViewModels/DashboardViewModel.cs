@@ -1,5 +1,6 @@
 ﻿using Engine.Models;
 using Engine.Utils;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +19,10 @@ namespace Engine.ViewModels
     {
         #region Fields
         private ObservableCollection<StatRow> _attributeRows = new ObservableCollection<StatRow> { };
-        private List<StatRow> _skillRows = new List<StatRow> { };
+        private ObservableCollection<StatRow> _skillRows = new ObservableCollection<StatRow> { };
         private List<QuestModel> _quests = new List<QuestModel> { };
         private ObservableCollection<EventRecordModel> _eventRecords = new ObservableCollection<EventRecordModel> { };
         private int _characterXP;
-        private string _imgName;
-        private string _characterName;
 
         private string _milestoneDescription;
         private string _milestoneStat;
@@ -49,8 +48,6 @@ namespace Engine.ViewModels
         {
             GenerateStatRows();
             GenerateMilestoneStats();
-            this.ImgName = this.UserCharacter.ImgName;
-            this.CharacterName = this.UserCharacter.Name;
             this.CharacterXP = this.UserCharacter.CurrentXP;
             this.MilestoneValue = "1";
             this.MilestoneStat = "Attribute 4";
@@ -69,33 +66,25 @@ namespace Engine.ViewModels
 
         #region Public Properties/Commands
 
-        public ObservableCollection<StatRow> AttributeRows { get {  return _attributeRows; } }
+        public ObservableCollection<StatRow> AttributeRows { get {  return _attributeRows; } set { _attributeRows = value; } }
 
-        public List<StatRow> SkillRows { get { return _skillRows; } set { _skillRows = value; } }
+        public ObservableCollection<StatRow> SkillRows { get { return _skillRows; } set { _skillRows = value; } }
 
-        public string CharacterName { get { return _characterName; } set { _characterName = value; } }
-        public string ImgName { get { return _imgName; } set { _imgName = value; OnPropertyChanged("ImgName"); } }
         public int CharacterXP { get { return _characterXP; } set { _characterXP = value; OnPropertyChanged("CharacterXP"); OnPropertyChanged("CharacterLevel"); OnPropertyChanged("LevelProgress"); } }
         public int CharacterLevel { get { return _characterXP / 100; } set { OnPropertyChanged("CharacterXP"); } }
         public int LevelProgress { get { return _characterXP % 100; }  set { OnPropertyChanged("CharacterXP"); }}
         public ObservableCollection<QuestModel> ActiveQuests { get; set; }
 
+        #region Milestones
         public string MilestoneDescription { get { return _milestoneDescription; } set { _milestoneDescription = value; OnPropertyChanged("MilestoneDescription"); } }
         public string MilestoneStat { get { return _milestoneStat; } set { _milestoneStat = value; OnPropertyChanged("MilestoneStat"); } }
         public string MilestoneValue { get { return _milestoneValue; } set { _milestoneValue = value; OnPropertyChanged("MilestoneValue"); } }
         public List<string> MilestoneStatList { get { return _milestoneStatList; } set { _milestoneStatList = value; OnPropertyChanged("MilestoneStatList"); } }
+        #endregion
 
         public QuestModel SelectedQuest { get; set; }
 
-        public List<QuestModel> Quests
-        {
-            get { return _quests; }
-            set
-            {
-                _quests = value;
-                OnPropertyChanged("Quests");
-            }
-        }
+        public List<QuestModel> Quests{ get { return _quests; } set{ _quests = value; OnPropertyChanged("Quests"); } }
 
         public ObservableCollection<EventRecordModel> EventRecords
         {
@@ -260,7 +249,6 @@ namespace Engine.ViewModels
                 return _milestoneDialogDone;
             }
         }
-
         #endregion
 
         #region Filters
@@ -282,6 +270,9 @@ namespace Engine.ViewModels
 
         private void GenerateStatRows()
         {
+            // Clear out old values
+            this.AttributeRows.Clear();
+            this.SkillRows.Clear();
             // Generate attribute rows
             foreach (KeyValuePair<int, int> entry in this.UserCharacter.AttributeValue)
             {
@@ -350,7 +341,7 @@ namespace Engine.ViewModels
             }
 
             // Update XP
-            this.UserCharacter.CurrentXP += targetQuest.XPValue;
+            int levelChange = this.UserCharacter.AddXPAndGetLevelDifference(targetQuest.XPValue);
             this.CharacterXP += targetQuest.XPValue;
 
 
@@ -365,8 +356,21 @@ namespace Engine.ViewModels
             this.UserCharacter.EventHistory.Add(newRecord);
             _eventRecords.Add(newRecord);
 
+            // Level up sequence if needed
+            if (levelChange > 0)
+            {
+                AppSettings.NumOfLevelsOnLevelUp = levelChange;
+                var result = DialogHost.Show(new LevelUpViewModel(), LevelUpDialogClosingHandler);
+
+            }
+
             // Refresh quest filter
             CollectionViewSource.GetDefaultView(ActiveQuests).Refresh();
+        }
+
+        private void LevelUpDialogClosingHandler(object sender, DialogClosingEventArgs e)
+        {
+            GenerateStatRows();
         }
 
         private void SaveCharacterAs()
@@ -414,16 +418,6 @@ namespace Engine.ViewModels
             Application.Current.Shutdown();
         }
 
-        private void GoToHistory()
-        {
-            //TODO
-        }
-
-        private void GoToQuest()
-        {
-            //TODO
-        }
-
         private void MilestoneDialogDone()
         {
             // generate random id
@@ -463,6 +457,18 @@ namespace Engine.ViewModels
                 }
             }
         }
+
+        private void GoToQuest()
+        {
+
+        }
+
+        private void GoToHistory()
+        {
+
+        }
+
+
 
         #endregion
     }

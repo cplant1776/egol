@@ -44,6 +44,9 @@
             <DataTemplate DataType="{x:Type viewModels:NewQuestViewModel}">
                 <views:NewQuestView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:LevelUpViewModel}">
+                <views:LevelUpView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

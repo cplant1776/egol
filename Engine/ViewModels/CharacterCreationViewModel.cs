@@ -173,7 +173,7 @@ namespace Engine.ViewModels
                 attributes: AttributeRows,
                 skills: SkillRows
                 );
-            NavigateTo("Start");
+            NavigateTo("Dashboard");
         }
 
         public void Cancel()

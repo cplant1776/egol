@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +19,12 @@ namespace Hephaestus.Views
     /// <summary>
     /// Interaction logic for LevelUpView.xaml
     /// </summary>
-    public partial class LevelUpView : Page
+    public partial class LevelUpView : UserControl
     {
+        private LevelUpViewModel _viewModel = new LevelUpViewModel();
         public LevelUpView()
         {
+            DataContext = _viewModel;
             InitializeComponent();
         }
     }
