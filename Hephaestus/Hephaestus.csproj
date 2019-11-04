@@ -92,6 +92,9 @@
     <Compile Include="Views\LevelUpView.xaml.cs">
       <DependentUpon>LevelUpView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MilestoneView.xaml.cs">
+      <DependentUpon>MilestoneView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewQuestView.xaml.cs" />
     <Compile Include="Views\QuestLogView.xaml.cs">
       <DependentUpon>QuestLogView.xaml</DependentUpon>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LevelUpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MilestoneView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

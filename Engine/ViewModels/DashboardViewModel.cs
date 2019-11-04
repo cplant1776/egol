@@ -25,11 +25,6 @@ namespace Engine.ViewModels
         private ObservableCollection<EventRecordModel> _eventRecords = new ObservableCollection<EventRecordModel> { };
         private int _characterXP;
 
-        private string _milestoneDescription;
-        private string _milestoneStat;
-        private string _milestoneValue;
-        private List<string> _milestoneStatList = new List<string> { };
-
         private ICommand _fullHistory;
         private ICommand _completeSelected;
         private ICommand _addQuest;
@@ -40,7 +35,7 @@ namespace Engine.ViewModels
         private ICommand _exitProgram;
         private ICommand _goToHistoryEvent;
         private ICommand _goToQuest;
-        private ICommand _milestoneDialogDone;
+        private ICommand _openMilestoneDialogCommand;
 
         #endregion
 
@@ -48,10 +43,7 @@ namespace Engine.ViewModels
         public DashboardViewModel()
         {
             GenerateStatRows();
-            GenerateMilestoneStats();
             this.CharacterXP = this.UserCharacter.CurrentXP;
-            this.MilestoneValue = "1";
-            this.MilestoneStat = "Attribute 4";
 
             // Set quest filter
             this.ActiveQuests = new ObservableCollection<QuestModel>(this.UserCharacter.Quests);
@@ -75,13 +67,6 @@ namespace Engine.ViewModels
         public int CharacterLevel { get { return _characterXP / 100; } set { OnPropertyChanged("CharacterXP"); } }
         public int LevelProgress { get { return _characterXP % 100; }  set { OnPropertyChanged("CharacterXP"); }}
         public ObservableCollection<QuestModel> ActiveQuests { get; set; }
-
-        #region Milestones
-        public string MilestoneDescription { get { return _milestoneDescription; } set { _milestoneDescription = value; OnPropertyChanged("MilestoneDescription"); } }
-        public string MilestoneStat { get { return _milestoneStat; } set { _milestoneStat = value; OnPropertyChanged("MilestoneStat"); } }
-        public string MilestoneValue { get { return _milestoneValue; } set { _milestoneValue = value; OnPropertyChanged("MilestoneValue"); } }
-        public List<string> MilestoneStatList { get { return _milestoneStatList; } set { _milestoneStatList = value; OnPropertyChanged("MilestoneStatList"); } }
-        #endregion
 
         public QuestModel SelectedQuest { get; set; }
 
@@ -237,17 +222,17 @@ namespace Engine.ViewModels
             }
         }
 
-        public ICommand MilestoneDialogDoneCommand
+        public ICommand OpenMilestoneDialogCommand
         {
             get
             {
-                if (_milestoneDialogDone == null)
+                if (_openMilestoneDialogCommand == null)
                 {
-                    _milestoneDialogDone = new RelayCommand(
-                        param => MilestoneDialogDone()
+                    _openMilestoneDialogCommand = new RelayCommand(
+                        param => OpenMilestoneDialog()
                     );
                 }
-                return _milestoneDialogDone;
+                return _openMilestoneDialogCommand;
             }
         }
         #endregion
@@ -285,12 +270,6 @@ namespace Engine.ViewModels
             {
                 this.SkillRows.Add(new StatRow(name: DataHandler.getSkillDesc(entry.Key), value: entry.Value, isSkill: true));
             }
-        }
-
-        private void GenerateMilestoneStats()
-        {
-            foreach (string val in AppSettings.Attributes.Values)
-                this.MilestoneStatList.Add(val);
         }
 
         private void FullHistory()
@@ -374,6 +353,17 @@ namespace Engine.ViewModels
             GenerateStatRows();
         }
 
+        private void OpenMilestoneDialog()
+        {
+            var result = DialogHost.Show(new MilestoneViewModel(), MilestoneDialogClosingHandler);
+        }
+
+        private void MilestoneDialogClosingHandler(object sender, DialogClosingEventArgs e)
+        {
+            GenerateStatRows();
+            _eventRecords.Add(this.UserCharacter.EventHistory[this.UserCharacter.EventHistory.Count - 1]);
+        }
+
         private void SaveCharacterAs()
         {
 
@@ -419,46 +409,6 @@ namespace Engine.ViewModels
             Application.Current.Shutdown();
         }
 
-        private void MilestoneDialogDone()
-        {
-            // generate random id
-            Random rnd = new Random();
-            int newId = rnd.Next(1, 600000); 
-
-            // Get attribute id and added value
-            int attributeId = DataHandler.getAttributeId(MilestoneStat);
-            int attributeValue = Convert.ToInt32(MilestoneValue);
-
-            MilestoneModel newMilestone = new MilestoneModel(
-                                                description: MilestoneDescription,
-                                                eventId: newId,
-                                                attributeId: attributeId,
-                                                value: attributeValue
-                                             );
-
-            // Add record of milestone
-            this.UserCharacter.EventHistory.Add(newMilestone);
-            _eventRecords.Add(newMilestone);
-
-            // Update attribute
-            this.UserCharacter.AttributeValue[attributeId] += attributeValue;
-            this.UpdateAttributeRowValue(attributeId, attributeValue);
-
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
-        }
-
-        private void UpdateAttributeRowValue(int attributeId, int attributeValue)
-        {
-            foreach(StatRow r in this._attributeRows)
-            {
-                if(DataHandler.getAttributeId(r.StatName) == attributeId)
-                {
-                    r.StatValue += attributeValue;
-                }
-            }
-        }
-
         private void GoToQuest(object sender)
         {
             QuestModel selectedQuest = new QuestModel();
@@ -474,8 +424,13 @@ namespace Engine.ViewModels
             catch (InvalidCastException) // Double Clicked "RECENT EVENTS" item
             {
                 EventRecordModel selectedEvent = (EventRecordModel)senderList.SelectedItems[0];
-                targetId = selectedEvent.AssociatedEventId;
+                 targetId = selectedEvent.AssociatedEventId;
             }
+            catch (ArgumentOutOfRangeException) // Double clicked on contact's chip; not implemented yet
+            {
+                return;
+            }
+
 
             // Update default quest displayed when opening quest log
             AppSettings.UpdateDefaultSelectedQuestId(targetId);

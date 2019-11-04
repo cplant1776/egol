@@ -206,7 +206,7 @@
 
                                     </Grid>
                                     <!--  Due Date  -->
-                                    <Grid x:Name="DeadlineGrid" Visibility="Hidden">
+                                    <Grid x:Name="DeadlineGrid" Visibility="{Binding DueDateShowing, Mode=OneWay}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*" />

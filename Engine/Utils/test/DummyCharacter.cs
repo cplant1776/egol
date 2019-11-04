@@ -70,16 +70,22 @@ namespace Engine.Utils.test
         public List<QuestModel> GenerateQuests()
         {
             List<QuestModel> questList = new List<QuestModel> { };
+            DateTime deadline = new DateTime();
 
             for (int i = 0; i < NUM_OF_QUESTS; i++)
             {
+                if (RandomIntUnder(100) > 50)
+                    deadline = GetRandomDateTime();
+                else
+                    deadline = new DateTime();
+
                 questList.Add(new QuestModel(
                     title: GetRandomQuestTitle(),
                     description: GetRandomDescription(),
                     xpValue: GetRandomXPValue(),
                     contactId: GetRandomContactId(),
                     reputationValue: RandomIntUnder(MAX_REP_GAIN),
-                    deadline: GetRandomDateTime(),
+                    deadline: deadline,
                     status: GetRandomStatus(),
                     created: GetRandomDateTime(),
                     id: GetRandomId()

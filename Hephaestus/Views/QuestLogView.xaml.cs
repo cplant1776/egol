@@ -34,7 +34,7 @@ namespace Hephaestus.Views
          */
         private void UpdateSelectedQuest(object sender, MouseButtonEventArgs args)
         {
-            _viewModel.UpdateSelectedQuest(sender);
+            this._viewModel.UpdateSelectedQuest(sender);
         }
     }
 }

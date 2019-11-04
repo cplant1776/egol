@@ -47,6 +47,9 @@
             <DataTemplate DataType="{x:Type viewModels:LevelUpViewModel}">
                 <views:LevelUpView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:MilestoneViewModel}">
+                <views:MilestoneView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

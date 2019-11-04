@@ -1,4 +1,5 @@
 ﻿using Engine.Utils;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,7 @@ namespace Engine.ViewModels
             if (this.UserCharacter.Quests.Any()) // If there are any quests in the log
             {
                 FindDefaultSelectedQuest();
+                UpdateQuestState();
             }
         }
         #endregion
@@ -75,6 +77,7 @@ namespace Engine.ViewModels
                 OnPropertyChanged("ActiveQuestsItems");
                 OnPropertyChanged("AcceptedQuestsItems");
                 OnPropertyChanged("CompletedQuestsItems");
+                OnPropertyChanged("DueDateShowing");
             }
         }
 
@@ -83,7 +86,7 @@ namespace Engine.ViewModels
             get
             {
                 ObservableCollection<QuestModel> activeQuests = new ObservableCollection<QuestModel>();
-                foreach(QuestModel q in _quests)
+                foreach (QuestModel q in _quests)
                 {
                     if (q.Status == (int)QuestModel.QuestStatus.ACTIVE)
                     {
@@ -137,6 +140,17 @@ namespace Engine.ViewModels
         public int QuestReputation { get { return _selectedQuest.ReputationValue; } }
         public DateTime QuestDeadline { get { return _selectedQuest.Deadline; } }
         public string QuestDescription { get { return _selectedQuest.Description; } }
+
+        public System.Windows.Visibility DueDateShowing
+        {
+            get
+            {
+                if (_selectedQuest.Deadline != DateTime.MinValue)
+                    return System.Windows.Visibility.Visible;
+                else
+                    return System.Windows.Visibility.Hidden;
+            }
+        }
 
         public bool SelectedQuestStateActive { get { return _selectedQuestStateActive; } set { _selectedQuestStateActive = value; OnPropertyChanged("SelectedQuestStateActive"); } }
         public bool SelectedQuestStateAccepted { get { return _selectedQuestStateAccepted; } set { _selectedQuestStateAccepted = value; OnPropertyChanged("SelectedQuestStateAccepted"); } }
@@ -280,7 +294,8 @@ namespace Engine.ViewModels
         {
             try
             {
-                TreeView sendingTree = (TreeView)sender;
+                TreeViewItem sendingItem = (TreeViewItem)sender;
+                TreeView sendingTree = (TreeView)sendingItem.Parent;
                 // Find clicked quest's name
                 QuestModel targetQuest = (QuestModel)sendingTree.SelectedItem;
                 int targetQuestId = targetQuest.Id;
@@ -374,7 +389,9 @@ namespace Engine.ViewModels
             // Check for level up
             if(levelChange > 0)
             {
-                // LEVEL UP SEQUENCE
+                AppSettings.NumOfLevelsOnLevelUp = levelChange;
+                var result = DialogHost.Show(new LevelUpViewModel());
+
             }
         }
 
