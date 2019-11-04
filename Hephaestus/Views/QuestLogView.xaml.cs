@@ -34,25 +34,7 @@ namespace Hephaestus.Views
          */
         private void UpdateSelectedQuest(object sender, MouseButtonEventArgs args)
         {
-            try
-            {
-                // Find clicked quest's name
-                QuestModel targetQuest = (QuestModel)QuestTree.SelectedItem;
-                int targetQuestId = targetQuest.Id;
-
-                // Set selected quest & contact
-                _viewModel.SelectedQuest = _viewModel.UserCharacter.GetQuest(targetId: targetQuestId);
-                _viewModel.SelectedContact = _viewModel.UserCharacter.GetContact(targetId: _viewModel.SelectedQuest.ContactId);
-                _viewModel.UpdateQuestState();
-            }
-            catch (InvalidCastException) // Quest category clicked
-            {
-                // Expand quest category
-                (sender as TreeViewItem).IsExpanded = true;
-            }
-
-
-
+            _viewModel.UpdateSelectedQuest(sender);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Engine.Utils
 
         /* Changed during runtime */
         public static string SaveLocation;
-        public static int? DefaultSelectedQuest;
+        public static int? DefaultSelectedQuestId;
         public static int NumOfLevelsOnLevelUp;
 
         /*Created at runtime*/
@@ -131,14 +131,14 @@ namespace Engine.Utils
             SaveLocation = path;
         }
 
-        public static void UpdateDefaultSelectedQuest(int id)
+        public static void UpdateDefaultSelectedQuestId(int id)
         {
-            DefaultSelectedQuest = id;
+            DefaultSelectedQuestId = id;
         }
 
         public static void ResetDefaultSelectedQuest()
         {
-            DefaultSelectedQuest = null;
+            DefaultSelectedQuestId = null;
         }
 
         public static Dictionary<TValue, TKey> Reverse<TKey, TValue>(this IDictionary<TKey, TValue> source)

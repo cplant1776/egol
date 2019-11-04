@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -229,7 +230,7 @@ namespace Engine.ViewModels
                 if (_goToQuest == null)
                 {
                     _goToQuest = new RelayCommand(
-                        param => GoToQuest()
+                        param => GoToQuest(param)
                     );
                 }
                 return _goToQuest;
@@ -458,9 +459,27 @@ namespace Engine.ViewModels
             }
         }
 
-        private void GoToQuest()
+        private void GoToQuest(object sender)
         {
+            QuestModel selectedQuest = new QuestModel();
+            ListView senderList = (ListView)sender;
+            int targetId = -1;
+            // Find selected quest
+            try // Double clicked "ACTIVE QUESTS" item
+            {
+                selectedQuest = (QuestModel)senderList.SelectedItems[0];
+                targetId = selectedQuest.Id;
 
+            }
+            catch (InvalidCastException) // Double Clicked "RECENT EVENTS" item
+            {
+                EventRecordModel selectedEvent = (EventRecordModel)senderList.SelectedItems[0];
+                targetId = selectedEvent.AssociatedEventId;
+            }
+
+            // Update default quest displayed when opening quest log
+            AppSettings.UpdateDefaultSelectedQuestId(targetId);
+            NavigateTo("Quest Log");
         }
 
         private void GoToHistory()

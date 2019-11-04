@@ -81,6 +81,7 @@ namespace Engine.Utils.test
                     reputationValue: RandomIntUnder(MAX_REP_GAIN),
                     deadline: GetRandomDateTime(),
                     status: GetRandomStatus(),
+                    created: GetRandomDateTime(),
                     id: GetRandomId()
                     )
                 );
@@ -92,10 +93,20 @@ namespace Engine.Utils.test
         public List<EventRecordModel> GenerateEventHistory()
         {
             List<EventRecordModel> eventRecords = new List<EventRecordModel> { };
-            for (int i = 0; i < NUM_OF_EVENTS; i++)
+            List<QuestModel> completedQuests = new List<QuestModel> { };
+            // Find completed quests
+            completedQuests = this.Quests.Where(q => q.Status == (int)QuestModel.QuestStatus.COMPLETED).ToList();
+            //foreach (QuestModel q in this.Quests)
+            //{
+            //    if (q.Status == (int)QuestModel.QuestStatus.COMPLETED)
+            //        completedQuests.Add(q);
+            //}
+            foreach(QuestModel cq in completedQuests)
             {
-                eventRecords.Add(GenerateRandomEvent());
+                eventRecords.Add(GenerateCompletedEvent(cq));
             }
+            // Sprinkle in a milestone
+            eventRecords.Add(GetRandomMilestone());
             return eventRecords;
         }
 
@@ -145,6 +156,17 @@ namespace Engine.Utils.test
                     totalXP += q.XPValue;
             }
             return totalXP;
+        }
+
+        public EventRecordModel GenerateCompletedEvent(QuestModel cq)
+        {
+            return new XPEventModel(
+                    description: "Completed " + cq.Title,
+                    eventId: cq.Id,
+                    value: cq.XPValue,
+                    primarySkill: RandomIntUnder(NUM_OF_SKILLS),
+                    timestamp: cq.Created
+                );
         }
 
         public EventRecordModel GenerateRandomEvent()

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Engine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Engine.ViewModels
@@ -19,6 +21,7 @@ namespace Engine.ViewModels
         private bool _selectedQuestStateAccepted;
         private bool _selectedQuestStateComplete;
 
+        private ICommand _updateSelectedQuest;
         private ICommand _updateQuestState;
         private ICommand _goBack;
         private ICommand _setQuestStateActive;
@@ -30,11 +33,10 @@ namespace Engine.ViewModels
         #region Constructors
         public QuestLogViewModel()
         {
-            if(this.UserCharacter.Quests.Any())
+            this._quests = this.UserCharacter.Quests;
+            if (this.UserCharacter.Quests.Any()) // If there are any quests in the log
             {
-                this.SelectedQuest = this.UserCharacter.Quests[0];
-                this.SelectedContact = this.UserCharacter.CharacterContacts[0];
-                this._quests = this.UserCharacter.Quests;
+                FindDefaultSelectedQuest();
             }
         }
         #endregion
@@ -140,7 +142,21 @@ namespace Engine.ViewModels
         public bool SelectedQuestStateAccepted { get { return _selectedQuestStateAccepted; } set { _selectedQuestStateAccepted = value; OnPropertyChanged("SelectedQuestStateAccepted"); } }
         public bool SelectedQuestStateComplete { get { return _selectedQuestStateComplete; } set { _selectedQuestStateComplete = value; OnPropertyChanged("SelectedQuestStateComplete"); } }
 
-        public ICommand SelectQuestCommand
+        public ICommand UpdateSelectedQuestCommand
+        {
+            get
+            {
+                if (_updateSelectedQuest == null)
+                {
+                    _updateSelectedQuest = new RelayCommand(
+                        param => UpdateSelectedQuest(param)
+                    );
+                }
+                return _updateSelectedQuest;
+            }
+        }
+
+        public ICommand UpdateQuestStateCommand
         {
             get
             {
@@ -231,6 +247,57 @@ namespace Engine.ViewModels
         #endregion
 
         #region Methods
+        public void FindDefaultSelectedQuest()
+        {
+            bool questWasFound = false;
+            // Set default selected quest & contact
+            if (AppSettings.DefaultSelectedQuestId == null)
+            {
+                this.SelectedQuest = this.UserCharacter.Quests[0];
+                this.SelectedContact = this.UserCharacter.CharacterContacts[0];
+            }
+            else
+            {
+                foreach (QuestModel q in this.UserCharacter.Quests)
+                {
+                    if (q.Id == AppSettings.DefaultSelectedQuestId)
+                    {
+                        this.SelectedQuest = q;
+                        this.SelectedContact = this.UserCharacter.GetContact(q.Id);
+                        questWasFound = true;
+                        break;
+                    }
+                    if(!questWasFound)
+                    {
+                        this.SelectedQuest = this.UserCharacter.Quests[0];
+                        this.SelectedContact = this.UserCharacter.CharacterContacts[0];
+                    }
+                }
+            }
+        }
+
+        public void UpdateSelectedQuest(object sender)
+        {
+            try
+            {
+                TreeView sendingTree = (TreeView)sender;
+                // Find clicked quest's name
+                QuestModel targetQuest = (QuestModel)sendingTree.SelectedItem;
+                int targetQuestId = targetQuest.Id;
+
+                // Set selected quest & contact
+                this.SelectedQuest = this.UserCharacter.GetQuest(targetId: targetQuestId);
+                this.SelectedContact = this.UserCharacter.GetContact(targetId: this.SelectedQuest.ContactId);
+                this.UpdateQuestState();
+            }
+            catch (InvalidCastException) // Quest category clicked
+            {
+                // Expand quest category
+                (sender as TreeViewItem).IsExpanded = true;
+            }
+        }
+
+
         public void UpdateQuestState()
         {
             if (this.SelectedQuest.Status == (int)QuestModel.QuestStatus.ACTIVE)

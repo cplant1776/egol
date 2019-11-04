@@ -89,7 +89,7 @@ namespace Engine.ViewModels
         }
 
         public QuestModel(String title, String description, int xpValue, int contactId,
-            int reputationValue, DateTime deadline = new DateTime(), int status = -1, int id = -1)
+            int reputationValue, DateTime deadline = new DateTime(), int status = -1, int id = -1, DateTime created = new DateTime())
         {
             this.Title = title;
             this.Description = description;
@@ -97,7 +97,10 @@ namespace Engine.ViewModels
             this.ContactId = contactId;
             this.ReputationValue = reputationValue;
             this.Deadline = deadline;
-            this.Created = DateTime.UtcNow;
+            if (created == DateTime.MinValue)
+                this.Created = DateTime.UtcNow;
+            else
+                this.Created = created;
             if (status == -1)
             {
                 this.Status = (int)QuestStatus.ACCEPTED;

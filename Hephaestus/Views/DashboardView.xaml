@@ -438,15 +438,13 @@
                                     x:Name="HistoryControl"
                                     HorizontalContentAlignment="Stretch"
                                     ItemsSource="{Binding EventRecords}"
+                                    MouseDoubleClick="QuestList_MouseDoubleClick"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                                     SelectionMode="Single">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel Margin="0" Orientation="Horizontal">
-                                                <WrapPanel.InputBindings>
-                                                    <MouseBinding Command="{Binding GoToHistoryEventCommand}" Gesture="LeftDoubleClick" />
-                                                </WrapPanel.InputBindings>
                                                 <materialDesign:Chip
                                                     Margin="0,0,10,0"
                                                     Background="{DynamicResource SecondaryHueMidBrush}"
@@ -550,6 +548,7 @@
                                     HorizontalContentAlignment="Stretch"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     ItemsSource="{Binding ActiveQuests}"
+                                    MouseDoubleClick="QuestList_MouseDoubleClick"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                                     SelectedItem="{Binding SelectedQuest}"
@@ -557,9 +556,6 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <WrapPanel>
-                                                <WrapPanel.InputBindings>
-                                                    <MouseBinding Command="{Binding GoToQuestCommand}" Gesture="LeftDoubleClick" />
-                                                </WrapPanel.InputBindings>
                                                 <Button
                                                     Margin="0,0,10,0"
                                                     BorderBrush="Transparent"
@@ -651,7 +647,7 @@
                                         <RowDefinition Height="10*" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <!--<Image Source="{Binding MainWindow.CurrentCharacter.ImgName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Page}}" />-->
+
                                     <Image
                                         Grid.Row="0"
                                         MaxWidth="300"
