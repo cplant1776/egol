@@ -113,7 +113,7 @@
                                 VerticalAlignment="Stretch"
                                 materialDesign:ShadowAssist.ShadowDepth="Depth1"
                                 BorderThickness="3"
-                                Header="{Binding ContactName}">
+                                Header="{Binding SelectedContact.Name}">
 
                                 <GroupBox.HeaderTemplate>
                                     <DataTemplate>
@@ -133,7 +133,7 @@
                                     <Image
                                         Height="150"
                                         Margin="0,0,0,0"
-                                        Source="{Binding ContactImage}" />
+                                        Source="{Binding SelectedContact.ImgName}" />
 
                                     <!--  Reputation  -->
                                     <ProgressBar
@@ -141,7 +141,7 @@
                                         Foreground="{DynamicResource SecondaryAccentBrush}"
                                         Maximum="100"
                                         Minimum="0"
-                                        Value="{Binding ContactReputation, Mode=OneWay}" />
+                                        Value="{Binding SelectedContact.Reputation, Mode=OneWay}" />
 
                                 </StackPanel>
 
@@ -163,7 +163,7 @@
                                         HorizontalAlignment="Center"
                                         FontSize="36"
                                         Foreground="{DynamicResource SecondaryHueLightBrush}"
-                                        Text="{Binding QuestTitle}"
+                                        Text="{Binding SelectedQuest.Title}"
                                         TextWrapping="Wrap" />
                                     <!--  XP Reward/Reputation Gain  -->
                                     <Grid>
@@ -188,7 +188,7 @@
                                             HorizontalAlignment="Center"
                                             Foreground="Lime"
                                             Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                            Text="{Binding QuestXP}" />
+                                            Text="{Binding SelectedQuest.XPValue}" />
 
                                         <TextBlock
                                             Grid.Row="1"
@@ -202,7 +202,7 @@
                                             HorizontalAlignment="Center"
                                             Foreground="Violet"
                                             Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                            Text="{Binding QuestReputation}" />
+                                            Text="{Binding SelectedQuest.ReputationValue}" />
 
                                     </Grid>
                                     <!--  Due Date  -->
@@ -221,7 +221,7 @@
                                             HorizontalAlignment="Center"
                                             Foreground="Red"
                                             Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                            Text="{Binding QuestDeadline, Converter={StaticResource DeadlineDateTimeToStringConverter}}" />
+                                            Text="{Binding SelectedQuest.Deadline, Converter={StaticResource DeadlineDateTimeToStringConverter}}" />
                                     </Grid>
 
                                 </StackPanel>
@@ -259,7 +259,7 @@
                                 Margin="20,5,0,0"
                                 FontSize="16"
                                 Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                                Text="{Binding QuestDescription}"
+                                Text="{Binding SelectedQuest.Description}"
                                 TextWrapping="Wrap" />
                         </ScrollViewer>
                     </GroupBox>

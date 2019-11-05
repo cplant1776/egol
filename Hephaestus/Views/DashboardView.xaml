@@ -51,6 +51,7 @@
                                 <Button
                                     Margin="0"
                                     HorizontalAlignment="Center"
+                                    Command="{Binding SaveCharacterCommand}"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     Style="{DynamicResource MaterialDesignFlatButton}">
                                     <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="Save" />
@@ -90,7 +91,7 @@
                                 <Button
                                     Margin="0"
                                     HorizontalAlignment="Center"
-                                    Command="{Binding LoadCharacterCommnand}"
+                                    Command="{Binding LoadCharacterCommand}"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     Style="{DynamicResource MaterialDesignFlatButton}">
                                     <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="Open..." />
@@ -449,16 +450,19 @@
                                                     Margin="0,0,10,0"
                                                     Background="{DynamicResource SecondaryHueMidBrush}"
                                                     Content="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactNameConverter}}"
-                                                    IconBackground="{DynamicResource SecondaryHueMidForegroundBrush}">
+                                                    IconBackground="{DynamicResource SecondaryHueMidForegroundBrush}"
+                                                    IsHitTestVisible="False">
                                                     <materialDesign:Chip.Icon>
                                                         <Grid Margin="0">
                                                             <materialDesign:PackIcon
                                                                 Width="30"
                                                                 Height="30"
+                                                                IsHitTestVisible="False"
                                                                 Kind="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactIconConverter}}" />
                                                             <Image
                                                                 Width="40"
                                                                 Height="40"
+                                                                IsHitTestVisible="False"
                                                                 Source="{Binding AssociatedEventId, Converter={StaticResource EventIdToContactImageConverter}}" />
                                                         </Grid>
                                                     </materialDesign:Chip.Icon>
@@ -559,6 +563,7 @@
                                                 <Button
                                                     Margin="0,0,10,0"
                                                     BorderBrush="Transparent"
+                                                    IsHitTestVisible="False"
                                                     Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                                                     ToolTip="{Binding ContactId, Converter={StaticResource ContactIdToStringConverter}}">
                                                     <Grid>

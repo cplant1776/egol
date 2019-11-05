@@ -4,18 +4,25 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Engine.ViewModels
 {
+        [DataContract]
         public class EventRecordModel : INotifyPropertyChanged
         {
+            [DataMember]
             public string Description { get; set; }
 
+            [DataMember]
             public string TextTail { get; set; }
+            [DataMember]
             public int Value { get; set; }
+            [DataMember]
             public int AssociatedEventId { get; set; }
+            [DataMember]
             public DateTime Timestamp { get; set; }
 
 
@@ -47,8 +54,10 @@ namespace Engine.ViewModels
                 OnPropertyChanged(((MemberExpression)propertyNameExpression.Body).Member.Name);
             }
         }
-
-        public class XPEventModel : EventRecordModel
+        [DataContract]
+        [KnownType(typeof(EventRecordModel))]
+        [KnownType(typeof(XPEventModel))]
+    public class XPEventModel : EventRecordModel
         {
             public int PrimarySkill;
 
@@ -59,7 +68,10 @@ namespace Engine.ViewModels
             }
         }
 
-        public class MilestoneModel : EventRecordModel
+        [DataContract]
+        [KnownType(typeof(EventRecordModel))]
+        [KnownType(typeof(MilestoneModel))]
+    public class MilestoneModel : EventRecordModel
         {
             public int AttributeId;
             public MilestoneModel(string description, int eventId, int attributeId, int value = 0, DateTime timestamp = new DateTime()) : base(description, eventId, value, timestamp)

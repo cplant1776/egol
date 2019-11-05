@@ -4,12 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using static Engine.ViewModels.EventRecordModel;
 
 namespace Engine.Utils.test
 {
+    [DataContract]
+    [KnownType(typeof(CharacterModel))]
+    [KnownType(typeof(DummyCharacter))]
+    [KnownType(typeof(QuestModel))]
+    [KnownType(typeof(ContactModel))]
+    [KnownType(typeof(XPEventModel))]
+    [KnownType(typeof(MilestoneModel))]
+    [KnownType(typeof(EventRecordModel))]
     class DummyCharacter : CharacterModel
     {
         private int NUM_OF_CONTACTS = 10;

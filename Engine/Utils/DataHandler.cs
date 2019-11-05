@@ -1,4 +1,5 @@
-﻿using Engine.ViewModels;
+﻿using Engine.Utils.test;
+using Engine.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +42,14 @@ namespace Engine.Utils
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(origin);
-            return (CharacterModel)ReadFromXml(doc.OuterXml, typeof(CharacterModel));
+            try
+            {
+                return (CharacterModel)ReadFromXml(doc.OuterXml, typeof(CharacterModel));
+            }
+            catch(SerializationException) // see if it's a DummyCharacter
+            {
+                return (DummyCharacter)ReadFromXml(doc.OuterXml, typeof(DummyCharacter));
+            }
         }
 
         public static object ReadFromXml(string xml, Type toType)

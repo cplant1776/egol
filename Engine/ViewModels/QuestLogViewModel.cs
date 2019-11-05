@@ -38,7 +38,6 @@ namespace Engine.ViewModels
             if (this.UserCharacter.Quests.Any()) // If there are any quests in the log
             {
                 FindDefaultSelectedQuest();
-                UpdateQuestState();
             }
         }
         #endregion
@@ -54,9 +53,7 @@ namespace Engine.ViewModels
             set
             {
                 _selectedContact = value;
-                OnPropertyChanged("ContactName");
-                OnPropertyChanged("ContactImage");
-                OnPropertyChanged("ContactReputation");
+                OnPropertyChanged("SelectedContact");
             }
         }
 
@@ -69,15 +66,8 @@ namespace Engine.ViewModels
             set
             {
                 _selectedQuest = value;
-                OnPropertyChanged("QuestTitle");
-                OnPropertyChanged("QuestXP");
-                OnPropertyChanged("QuestReputation");
-                OnPropertyChanged("QuestDeadline");
-                OnPropertyChanged("QuestDescription");
-                OnPropertyChanged("ActiveQuestsItems");
-                OnPropertyChanged("AcceptedQuestsItems");
-                OnPropertyChanged("CompletedQuestsItems");
-                OnPropertyChanged("DueDateShowing");
+                OnPropertyChanged("SelectedQuest");
+                OnPropertyChanged("SelectedContact");
             }
         }
 
@@ -128,18 +118,6 @@ namespace Engine.ViewModels
                 return completedQuests;
             }
         }
-
-        /* Contact */
-        public string ContactName { get { return _selectedContact.Name; } }
-        public string ContactImage { get { return _selectedContact.ImgName; } }
-        public int ContactReputation { get { return _selectedContact.Reputation; } }
-
-        /* Quest */
-        public string QuestTitle { get { return _selectedQuest.Title; } }
-        public int QuestXP { get { return _selectedQuest.XPValue; } }
-        public int QuestReputation { get { return _selectedQuest.ReputationValue; } }
-        public DateTime QuestDeadline { get { return _selectedQuest.Deadline; } }
-        public string QuestDescription { get { return _selectedQuest.Description; } }
 
         public System.Windows.Visibility DueDateShowing
         {
@@ -264,11 +242,13 @@ namespace Engine.ViewModels
         public void FindDefaultSelectedQuest()
         {
             bool questWasFound = false;
+            this.SelectedQuest = new QuestModel();
+            this.SelectedContact = new ContactModel();
             // Set default selected quest & contact
             if (AppSettings.DefaultSelectedQuestId == null)
             {
                 this.SelectedQuest = this.UserCharacter.Quests[0];
-                this.SelectedContact = this.UserCharacter.CharacterContacts[0];
+                this.SelectedContact = this.UserCharacter.GetContact(this.SelectedQuest.ContactId);
             }
             else
             {
@@ -277,17 +257,19 @@ namespace Engine.ViewModels
                     if (q.Id == AppSettings.DefaultSelectedQuestId)
                     {
                         this.SelectedQuest = q;
-                        this.SelectedContact = this.UserCharacter.GetContact(q.Id);
+                        this.SelectedContact = this.UserCharacter.GetContact(q.ContactId);
                         questWasFound = true;
                         break;
                     }
                     if(!questWasFound)
                     {
                         this.SelectedQuest = this.UserCharacter.Quests[0];
-                        this.SelectedContact = this.UserCharacter.CharacterContacts[0];
+                        this.SelectedContact = this.UserCharacter.GetContact(this.SelectedQuest.ContactId);
                     }
                 }
             }
+
+            UpdateQuestState();
         }
 
         public void UpdateSelectedQuest(object sender)
@@ -338,27 +320,39 @@ namespace Engine.ViewModels
         private void SetQuestStateActive()
         {
             this.SelectedQuest.Status = (int)QuestModel.QuestStatus.ACTIVE;
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
+            UpdateTree();
+            CloseDialog();
 
         }
 
         private void SetQuestStateAccepted()
         {
             this.SelectedQuest.Status = (int)QuestModel.QuestStatus.ACCEPTED;
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
+            UpdateTree();
+            CloseDialog();
 
         }
 
         private void SetQuestStateCompleted()
         {
             this.SelectedQuest.Status = (int)QuestModel.QuestStatus.COMPLETED;
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
-
+            UpdateTree();
+            CloseDialog();
             CompleteQuest();
 
+        }
+
+        private void UpdateTree()
+        {
+            // Update display properties
+            OnPropertyChanged("AcceptedQuestsItems");
+            OnPropertyChanged("ActiveQuestsItems");
+            OnPropertyChanged("CompletedQuestsItems");
+        }
+
+        private void CloseDialog()
+        {
+            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
         }
 
         private void CompleteQuest()
@@ -400,6 +394,11 @@ namespace Engine.ViewModels
             UpdateQuestState();
             // Close dialog host
             MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
+        }
+
+        private void RefreshQuestStatus()
+        {
+
         }
 
         private void GoBack()

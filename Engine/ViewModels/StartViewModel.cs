@@ -76,7 +76,7 @@ namespace Engine.ViewModels
 
         public void NewCharacter()
         {
-            NavigateTo("CharacterCreation");
+            NavigateTo("Character Creation");
         }
 
         public void LoadCharacter()

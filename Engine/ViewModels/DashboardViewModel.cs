@@ -21,7 +21,6 @@ namespace Engine.ViewModels
         #region Fields
         private ObservableCollection<StatRow> _attributeRows = new ObservableCollection<StatRow> { };
         private ObservableCollection<StatRow> _skillRows = new ObservableCollection<StatRow> { };
-        private List<QuestModel> _quests = new List<QuestModel> { };
         private ObservableCollection<EventRecordModel> _eventRecords = new ObservableCollection<EventRecordModel> { };
         private int _characterXP;
 
@@ -31,6 +30,7 @@ namespace Engine.ViewModels
         private ICommand _questLog;
 
         private ICommand _saveCharacterAs;
+        private ICommand _saveCharacter;
         private ICommand _loadCharacter;
         private ICommand _exitProgram;
         private ICommand _goToHistoryEvent;
@@ -69,8 +69,6 @@ namespace Engine.ViewModels
         public ObservableCollection<QuestModel> ActiveQuests { get; set; }
 
         public QuestModel SelectedQuest { get; set; }
-
-        public List<QuestModel> Quests{ get { return _quests; } set{ _quests = value; OnPropertyChanged("Quests"); } }
 
         public ObservableCollection<EventRecordModel> EventRecords
         {
@@ -149,6 +147,20 @@ namespace Engine.ViewModels
                     );
                 }
                 return _addQuest;
+            }
+        }
+
+        public ICommand SaveCharacterCommand
+        {
+            get
+            {
+                if (_saveCharacter == null)
+                {
+                    _saveCharacter = new RelayCommand(
+                        param => SaveCharacter()
+                    );
+                }
+                return _saveCharacter;
             }
         }
 
@@ -366,7 +378,25 @@ namespace Engine.ViewModels
 
         private void SaveCharacterAs()
         {
+            // Create OpenFileDialog 
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                // Set filter for file extension and default file extension 
+                DefaultExt = ".xml",
+                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
 
+            };
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Get the selected/new file name and write file to it
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                DataHandler.SaveToXml(this.UserCharacter, filename);
+                AppSettings.UpdateSaveLocation(filename);
+            }
         }
 
         private void SaveCharacter()
@@ -399,9 +429,11 @@ namespace Engine.ViewModels
             {
                 string filename = dlg.FileName;
                 loadedChar = DataHandler.LoadCharacterFromXml(filename);
+                AppSettings.SaveLocation = filename;
+                this.UserCharacter = loadedChar;
+                RefreshView();
             }
 
-            this.UserCharacter = loadedChar;
         }
 
         private void ExitProgram()
@@ -442,7 +474,27 @@ namespace Engine.ViewModels
 
         }
 
+        private void RefreshView()
+        {
+            GenerateStatRows();
+            this.CharacterXP = this.UserCharacter.CurrentXP;
 
+            // Refresh Quests
+            this.ActiveQuests.Clear();
+            this.ActiveQuests = new ObservableCollection<QuestModel>(this.UserCharacter.Quests);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ActiveQuests);
+            view.Filter = QuestFilter;
+
+            // Refresh Event History
+            this._eventRecords.Clear();
+            this._eventRecords = new ObservableCollection<EventRecordModel>(this.UserCharacter.EventHistory);
+            this._eventRecords.CollectionChanged += EventRecords_CollectionChanged;
+
+            // Refresh Quest Filter
+            CollectionViewSource.GetDefaultView(ActiveQuests).Refresh();
+            OnPropertyChanged("ActiveQuests");
+            OnPropertyChanged("EventRecords");
+        }
 
         #endregion
     }

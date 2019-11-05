@@ -171,7 +171,8 @@ namespace Engine.ViewModels
                 name: CharacterName,
                 description: CharacterDescription,
                 attributes: AttributeRows,
-                skills: SkillRows
+                skills: SkillRows,
+                imgName: ImgName
                 );
             NavigateTo("Dashboard");
         }

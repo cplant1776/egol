@@ -12,6 +12,13 @@ using System.Threading.Tasks;
 namespace Engine.ViewModels
 {
     [DataContract]
+    [KnownType(typeof(MyObservableObject))]
+    [KnownType(typeof(CharacterModel))]
+    [KnownType(typeof(QuestModel))]
+    [KnownType(typeof(ContactModel))]
+    [KnownType(typeof(XPEventModel))]
+    [KnownType(typeof(MilestoneModel))]
+    [KnownType(typeof(EventRecordModel))]
     public partial class CharacterModel : MyObservableObject
     {
         #region Fields
@@ -46,7 +53,7 @@ namespace Engine.ViewModels
             SetDefaultImage();
         }
 
-        public CharacterModel(string name, List<StatRow> attributes, List<StatRow> skills, string description)
+        public CharacterModel(string name, List<StatRow> attributes, List<StatRow> skills, string description, string imgName=null)
         {
             // Set Attributes/Skills
             foreach (StatRow r in attributes)
@@ -58,6 +65,15 @@ namespace Engine.ViewModels
             this.Name = name;
             // Description
             this.Description = description;
+            // Image
+            if (imgName == null)
+            {
+                SetDefaultImage();
+            }
+            else
+            {
+                this.ImgName = imgName;
+            }
         }
         #endregion
 
