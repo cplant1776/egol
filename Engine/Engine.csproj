@@ -82,10 +82,12 @@
     <Compile Include="ViewModels\FullHistoryViewModel.cs" />
     <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\LevelUpViewModel.cs" />
+    <Compile Include="ViewModels\LoadingViewModel.cs" />
     <Compile Include="ViewModels\MilestoneViewModel.cs" />
     <Compile Include="ViewModels\NewContactViewModel.cs" />
     <Compile Include="ViewModels\NewQuestViewModel.cs" />
     <Compile Include="ViewModels\QuestLogViewModel.cs" />
+    <Compile Include="ViewModels\QuickMenuViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RoutedEventArgs.cs" />
     <Compile Include="ViewModels\StartViewModel.cs" />

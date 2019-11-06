@@ -20,6 +20,7 @@ namespace Engine.ViewModels
                 { "Quest Log", 3 },
                 { "Full History", 4 },
                 { "New Quest", 5 },
+                { "Load", 6 },
             };
 
         private static CharacterModel _userCharacter;
@@ -49,6 +50,11 @@ namespace Engine.ViewModels
             {
                 viewModel.ChangePageCommand.Execute(viewModel.PageViewModels[_pageIndex[viewName]]);
             }
+        }
+
+        public virtual void RefreshView()
+        {
+
         }
     }
 }

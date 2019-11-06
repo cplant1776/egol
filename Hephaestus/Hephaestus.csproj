@@ -92,12 +92,18 @@
     <Compile Include="Views\LevelUpView.xaml.cs">
       <DependentUpon>LevelUpView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoadingView.xaml.cs">
+      <DependentUpon>LoadingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MilestoneView.xaml.cs">
       <DependentUpon>MilestoneView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\NewQuestView.xaml.cs" />
     <Compile Include="Views\QuestLogView.xaml.cs">
       <DependentUpon>QuestLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\QuickMenuView.xaml.cs">
+      <DependentUpon>QuickMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
@@ -134,6 +140,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\LoadingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MilestoneView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +153,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\QuestLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\QuickMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

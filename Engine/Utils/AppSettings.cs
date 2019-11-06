@@ -32,6 +32,8 @@ namespace Engine.Utils
         public static string SaveLocation;
         public static int? DefaultSelectedQuestId;
         public static int NumOfLevelsOnLevelUp;
+        public static int LoadDuration;
+        public static string LoadDestination;
 
         /*Created at runtime*/
         public static Dictionary<char, PackIconKind> PackIconDict;

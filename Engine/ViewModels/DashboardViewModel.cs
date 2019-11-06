@@ -36,6 +36,7 @@ namespace Engine.ViewModels
         private ICommand _goToHistoryEvent;
         private ICommand _goToQuest;
         private ICommand _openMilestoneDialogCommand;
+        private ICommand _refreshViewCommand;
 
         #endregion
 
@@ -150,76 +151,6 @@ namespace Engine.ViewModels
             }
         }
 
-        public ICommand SaveCharacterCommand
-        {
-            get
-            {
-                if (_saveCharacter == null)
-                {
-                    _saveCharacter = new RelayCommand(
-                        param => SaveCharacter()
-                    );
-                }
-                return _saveCharacter;
-            }
-        }
-
-        public ICommand SaveCharacterAsCommand
-        {
-            get
-            {
-                if (_saveCharacterAs == null)
-                {
-                    _saveCharacterAs = new RelayCommand(
-                        param => SaveCharacterAs()
-                    );
-                }
-                return _saveCharacterAs;
-            }
-        }
-
-        public ICommand LoadCharacterCommand
-        {
-            get
-            {
-                if (_loadCharacter == null)
-                {
-                    _loadCharacter = new RelayCommand(
-                        param => LoadCharacter()
-                    );
-                }
-                return _loadCharacter;
-            }
-        }
-
-        public ICommand ExitProgramCommand
-        {
-            get
-            {
-                if (_exitProgram == null)
-                {
-                    _exitProgram = new RelayCommand(
-                        param => ExitProgram()
-                    );
-                }
-                return _exitProgram;
-            }
-        }
-
-        public ICommand GoToHistoryEventCommand
-        {
-            get
-            {
-                if (_goToHistoryEvent == null)
-                {
-                    _saveCharacterAs = new RelayCommand(
-                        param => GoToHistory()
-                    );
-                }
-                return _goToHistoryEvent;
-            }
-        }
-
         public ICommand GoToQuestCommand
         {
             get
@@ -245,6 +176,20 @@ namespace Engine.ViewModels
                     );
                 }
                 return _openMilestoneDialogCommand;
+            }
+        }
+
+        public ICommand RefreshViewCommand
+        {
+            get
+            {
+                if (_refreshViewCommand == null)
+                {
+                    _refreshViewCommand = new RelayCommand(
+                        param => RefreshView()
+                    );
+                }
+                return _refreshViewCommand;
             }
         }
         #endregion
@@ -376,71 +321,6 @@ namespace Engine.ViewModels
             _eventRecords.Add(this.UserCharacter.EventHistory[this.UserCharacter.EventHistory.Count - 1]);
         }
 
-        private void SaveCharacterAs()
-        {
-            // Create OpenFileDialog 
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
-            {
-                // Set filter for file extension and default file extension 
-                DefaultExt = ".xml",
-                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
-
-            };
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected/new file name and write file to it
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                DataHandler.SaveToXml(this.UserCharacter, filename);
-                AppSettings.UpdateSaveLocation(filename);
-            }
-        }
-
-        private void SaveCharacter()
-        {
-            if (AppSettings.SaveDestination == null)
-            {
-                SaveCharacterAs();
-            }
-            else
-            {
-                DataHandler.SaveToXml(this.UserCharacter, AppSettings.SaveDestination);
-            }
-        }
-
-        private void LoadCharacter()
-        {
-            CharacterModel loadedChar = new CharacterModel();
-            // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
-            {
-                DefaultExt = ".xml",
-                Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*"
-            };
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Get the selected file name and load a character with it
-            if (result == true)
-            {
-                string filename = dlg.FileName;
-                loadedChar = DataHandler.LoadCharacterFromXml(filename);
-                AppSettings.SaveLocation = filename;
-                this.UserCharacter = loadedChar;
-                RefreshView();
-            }
-
-        }
-
-        private void ExitProgram()
-        {
-            Application.Current.Shutdown();
-        }
-
         private void GoToQuest(object sender)
         {
             QuestModel selectedQuest = new QuestModel();
@@ -467,33 +347,6 @@ namespace Engine.ViewModels
             // Update default quest displayed when opening quest log
             AppSettings.UpdateDefaultSelectedQuestId(targetId);
             NavigateTo("Quest Log");
-        }
-
-        private void GoToHistory()
-        {
-
-        }
-
-        private void RefreshView()
-        {
-            GenerateStatRows();
-            this.CharacterXP = this.UserCharacter.CurrentXP;
-
-            // Refresh Quests
-            this.ActiveQuests.Clear();
-            this.ActiveQuests = new ObservableCollection<QuestModel>(this.UserCharacter.Quests);
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ActiveQuests);
-            view.Filter = QuestFilter;
-
-            // Refresh Event History
-            this._eventRecords.Clear();
-            this._eventRecords = new ObservableCollection<EventRecordModel>(this.UserCharacter.EventHistory);
-            this._eventRecords.CollectionChanged += EventRecords_CollectionChanged;
-
-            // Refresh Quest Filter
-            CollectionViewSource.GetDefaultView(ActiveQuests).Refresh();
-            OnPropertyChanged("ActiveQuests");
-            OnPropertyChanged("EventRecords");
         }
 
         #endregion
