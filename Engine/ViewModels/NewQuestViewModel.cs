@@ -1,4 +1,5 @@
 ﻿using Engine.Utils;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +19,8 @@ namespace Engine.ViewModels
         private ContactModel _newContact;
         private ObservableCollection<ContactModel> _contactList;
         private ObservableCollection<QuestModel> _questList;
-        private ICommand _goBack;
         private ICommand _done;
         private ICommand _newContactDialog;
-        private ICommand _newContactGoBack;
-        private ICommand _newContactDone;
-        private ICommand _newContactAddImage;
 
         #endregion
 
@@ -37,6 +34,7 @@ namespace Engine.ViewModels
             this.SelectedContact = new ContactModel();
             this.SelectedQuest = new QuestModel();
             this.NewContact = new ContactModel();
+            _selectedContact = new ContactModel();
 
         }
         #endregion
@@ -111,20 +109,6 @@ namespace Engine.ViewModels
             }
         }
 
-        public ICommand GoBackCommand
-        {
-            get
-            {
-                if (_goBack == null)
-                {
-                    _goBack = new RelayCommand(
-                        param => GoBack()
-                    );
-                }
-                return _goBack;
-            }
-        }
-
         public ICommand NewContactCommand
         {
             get
@@ -139,55 +123,10 @@ namespace Engine.ViewModels
             }
         }
 
-        public ICommand NewContactGoBackCommand
-        {
-            get
-            {
-                if (_newContactGoBack == null)
-                {
-                    _newContactGoBack = new RelayCommand(
-                        param => NewContactGoBack()
-                    );
-                }
-                return _newContactGoBack;
-            }
-        }
 
-        public ICommand NewContactDoneCommand
-        {
-            get
-            {
-                if (_newContactDone == null)
-                {
-                    _newContactDone = new RelayCommand(
-                        param => NewContactDone()
-                    );
-                }
-                return _newContactDone;
-            }
-        }
-
-        public ICommand NewContactAddImageCommand
-        {
-            get
-            {
-                if (_newContactAddImage == null)
-                {
-                    _newContactAddImage = new RelayCommand(
-                        param => NewContactAddImage()
-                    );
-                }
-                return _newContactAddImage;
-            }
-        }
         #endregion
 
         #region Methods
-        private void GoBack()
-        {
-            NavigateTo("Dashboard");
-        }
-
         private void Done()
         {
             QuestModel newQuest = new QuestModel(
@@ -211,36 +150,13 @@ namespace Engine.ViewModels
 
         private void NewContactDialog()
         {
-            NavigateTo("New Contact");
+            var result = DialogHost.Show(new NewContactViewModel(), NewContactDialogClosingHandler);
         }
 
-        private void NewContactGoBack()
+        private void NewContactDialogClosingHandler(object sender, DialogClosingEventArgs e)
         {
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
-        }
-
-        private void NewContactDone()
-        {
-            ContactModel newContact = new ContactModel(
-                name: this.NewContact.Name,
-                description: this.NewContact.Description,
-                reputation: this.NewContact.Reputation,
-                imgName: this.NewContact.ImgName
-                );
-
-            // Add new contact to character's contact list
-            this.UserCharacter.CharacterContacts.Add(newContact);
-            // Update selected contact for quest with new contact info
-            this.SelectedContact = newContact;
-
-            // Close dialog host
-            MaterialDesignThemes.Wpf.DialogHost.CloseDialogCommand.Execute(null, null);
-        }
-
-        private void NewContactAddImage()
-        {
-            this.NewContact.ImgName = this.NewContact.SetImage();
+            // Add most recently added contact (one just created by user)
+            this.SelectedContact = this.UserCharacter.CharacterContacts[this.UserCharacter.CharacterContacts.Count -1];
         }
         #endregion
     }

@@ -13,7 +13,8 @@
     <materialDesign:DialogHost CloseOnClickAway="True">
 
         <!--  ================================ QUICK POPOUT MENU ================================  -->
-        <materialDesign:DrawerHost x:Name="close"
+        <materialDesign:DrawerHost
+            x:Name="close"
             BorderBrush="{DynamicResource MaterialDesignDivider}"
             BorderThickness="2"
             LeftDrawerCloseOnClickAway="True">
@@ -307,7 +308,8 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     materialDesign:ButtonAssist.CornerRadius="10"
-                                    Command="{Binding FullHistoryCommand}"
+                                    Command="{Binding NavigateToCommand}"
+                                    CommandParameter="Full History"
                                     FontSize="20"
                                     Style="{StaticResource MaterialDesignRaisedButton}">
 
@@ -520,7 +522,8 @@
                                 Margin="0,16,0,0"
                                 HorizontalAlignment="Center"
                                 materialDesign:ButtonAssist.CornerRadius="10"
-                                Command="{Binding AddQuestCommand}"
+                                Command="{Binding NavigateToCommand}"
+                                CommandParameter="New Quest"
                                 FontSize="20"
                                 Style="{StaticResource MaterialDesignRaisedButton}">
 
@@ -536,7 +539,8 @@
                                 Margin="0,16,0,0"
                                 HorizontalAlignment="Center"
                                 materialDesign:ButtonAssist.CornerRadius="10"
-                                Command="{Binding QuestLogCommand}"
+                                Command="{Binding NavigateToCommand}"
+                                CommandParameter="Quest Log"
                                 FontSize="20"
                                 Style="{StaticResource MaterialDesignRaisedLightButton}">
 

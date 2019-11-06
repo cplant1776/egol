@@ -126,7 +126,8 @@
                     <Button
                         Margin="0"
                         HorizontalAlignment="Center"
-                        Command="{Binding QuestLogCommand}"
+                        Command="{Binding NavigateToCommand}"
+                        CommandParameter="Quest Log"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Style="{DynamicResource MaterialDesignFlatButton}"
                         Tag="QuestLog">
@@ -147,7 +148,8 @@
                     <Button
                         Margin="0"
                         HorizontalAlignment="Center"
-                        Command="{Binding FullHistoryCommand}"
+                        Command="{Binding NavigateToCommand}"
+                        CommandParameter="Full History"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Style="{DynamicResource MaterialDesignFlatButton}"
                         Tag="FullHistory">
@@ -168,7 +170,8 @@
                     <Button
                         Margin="0"
                         HorizontalAlignment="Center"
-                        Command="{Binding AddQuestCommand}"
+                        Command="{Binding NavigateToCommand}"
+                        CommandParameter="New Quest"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Style="{DynamicResource MaterialDesignFlatButton}"
                         Tag="NewQuest">

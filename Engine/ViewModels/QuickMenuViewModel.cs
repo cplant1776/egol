@@ -20,66 +20,17 @@ namespace Engine.ViewModels
         private ICommand _saveCharacter;
         private ICommand _loadCharacter;
         private ICommand _exitProgram;
-        private ICommand _addQuest;
-        private ICommand _fullHistory;
-        private ICommand _questLog;
-
-        private Window _mainWindow;
-
-
 
         #endregion
 
         #region Constructors
         public QuickMenuViewModel()
         {
-            _mainWindow = Application.Current.MainWindow;
+
         }
         #endregion
 
-        #region Public Properties/Commands
-        public ICommand QuestLogCommand
-        {
-            get
-            {
-                if (_questLog == null)
-                {
-                    _questLog = new RelayCommand(
-                        param => QuestLog()
-                    );
-                }
-                return _questLog;
-            }
-        }
-
-        public ICommand FullHistoryCommand
-        {
-            get
-            {
-                if (_fullHistory == null)
-                {
-                    _fullHistory = new RelayCommand(
-                        param => FullHistory()
-                    );
-                }
-                return _fullHistory;
-            }
-        }
-
-        public ICommand AddQuestCommand
-        {
-            get
-            {
-                if (_addQuest == null)
-                {
-                    _addQuest = new RelayCommand(
-                        param => AddQuest()
-                    );
-                }
-                return _addQuest;
-            }
-        }
-
+        #region Public Commands
         public ICommand SaveCharacterCommand
         {
             get
@@ -87,7 +38,7 @@ namespace Engine.ViewModels
                 if (_saveCharacter == null)
                 {
                     _saveCharacter = new RelayCommand(
-                        param => SaveCharacter(param)
+                        param => SaveCharacter()
                     );
                 }
                 return _saveCharacter;
@@ -163,7 +114,7 @@ namespace Engine.ViewModels
 
         }
 
-        private void SaveCharacter(object sender)
+        private void SaveCharacter()
         {
             if (AppSettings.SaveLocation == null)
             {
@@ -214,21 +165,6 @@ namespace Engine.ViewModels
             AppSettings.LoadDestination = "Dashboard";
             AppSettings.LoadDuration = 1;
             NavigateTo("Load");
-        }
-
-        private void FullHistory()
-        {
-            NavigateTo("Full History");
-        }
-
-        private void QuestLog()
-        {
-            NavigateTo("Quest Log");
-        }
-
-        private void AddQuest()
-        {
-            NavigateTo("New Quest");
         }
 
         private void ExitProgram()

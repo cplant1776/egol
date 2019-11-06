@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Engine.ViewModels
 {
 
         public class BaseViewModel : MyObservableObject
         {
+
+        private ICommand _navigateTo;    
+
             private Dictionary<string, int> _pageIndex = new Dictionary<string, int>
             {
                 { "Start", 0 },
@@ -42,6 +46,20 @@ namespace Engine.ViewModels
                 }
             }
 
+        public ICommand NavigateToCommand
+        {
+            get
+            {
+                if (_navigateTo == null)
+                {
+                    _navigateTo = new RelayCommand(
+                        param => NavigateTo(param)
+                    );
+                }
+                return _navigateTo;
+            }
+        }
+
         protected void NavigateTo(string viewName)
         {
             Window mainWindow = (Window)Application.Current.MainWindow;
@@ -49,6 +67,16 @@ namespace Engine.ViewModels
             if (viewModel.ChangePageCommand.CanExecute(viewModel.PageViewModels[_pageIndex[viewName]]))
             {
                 viewModel.ChangePageCommand.Execute(viewModel.PageViewModels[_pageIndex[viewName]]);
+            }
+        }
+
+        protected void NavigateTo(object viewName)
+        {
+            Window mainWindow = (Window)Application.Current.MainWindow;
+            ApplicationViewModel viewModel = (ApplicationViewModel)mainWindow.DataContext;
+            if (viewModel.ChangePageCommand.CanExecute(viewModel.PageViewModels[_pageIndex[(string)viewName]]))
+            {
+                viewModel.ChangePageCommand.Execute(viewModel.PageViewModels[_pageIndex[(string)viewName]]);
             }
         }
 

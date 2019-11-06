@@ -24,19 +24,9 @@ namespace Engine.ViewModels
         private ObservableCollection<EventRecordModel> _eventRecords = new ObservableCollection<EventRecordModel> { };
         private int _characterXP;
 
-        private ICommand _fullHistory;
         private ICommand _completeSelected;
-        private ICommand _addQuest;
-        private ICommand _questLog;
-
-        private ICommand _saveCharacterAs;
-        private ICommand _saveCharacter;
-        private ICommand _loadCharacter;
-        private ICommand _exitProgram;
-        private ICommand _goToHistoryEvent;
         private ICommand _goToQuest;
         private ICommand _openMilestoneDialogCommand;
-        private ICommand _refreshViewCommand;
 
         #endregion
 
@@ -95,20 +85,6 @@ namespace Engine.ViewModels
             get { return "CharacterCreation"; }
         }
 
-        public ICommand FullHistoryCommand
-        {
-            get
-            {
-                if (_fullHistory == null)
-                {
-                    _fullHistory = new RelayCommand(
-                        param => FullHistory()
-                    );
-                }
-                return _fullHistory;
-            }
-        }
-
         public ICommand CompleteSelectedCommand
         {
             get
@@ -120,34 +96,6 @@ namespace Engine.ViewModels
                     );
                 }
                 return _completeSelected;
-            }
-        }
-
-        public ICommand QuestLogCommand
-        {
-            get
-            {
-                if (_questLog == null)
-                {
-                    _questLog = new RelayCommand(
-                        param => QuestLog()
-                    );
-                }
-                return _questLog;
-            }
-        }
-
-        public ICommand AddQuestCommand
-        {
-            get
-            {
-                if (_addQuest == null)
-                {
-                    _addQuest = new RelayCommand(
-                        param => AddQuest()
-                    );
-                }
-                return _addQuest;
             }
         }
 
@@ -179,19 +127,6 @@ namespace Engine.ViewModels
             }
         }
 
-        public ICommand RefreshViewCommand
-        {
-            get
-            {
-                if (_refreshViewCommand == null)
-                {
-                    _refreshViewCommand = new RelayCommand(
-                        param => RefreshView()
-                    );
-                }
-                return _refreshViewCommand;
-            }
-        }
         #endregion
 
         #region Filters
@@ -227,21 +162,6 @@ namespace Engine.ViewModels
             {
                 this.SkillRows.Add(new StatRow(name: DataHandler.getSkillDesc(entry.Key), value: entry.Value, isSkill: true));
             }
-        }
-
-        private void FullHistory()
-        {
-            NavigateTo("Full History");
-        }
-
-        private void QuestLog()
-        {
-            NavigateTo("Quest Log");
-        }
-
-        private void AddQuest()
-        {
-            NavigateTo("New Quest");
         }
 
         private void CompleteSelected()

@@ -30,7 +30,8 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 BorderThickness="0"
-                Command="{Binding GoBackCommand}"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="Dashboard"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <materialDesign:PackIcon
                     Width="50"

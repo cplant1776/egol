@@ -56,6 +56,9 @@
             <DataTemplate DataType="{x:Type viewModels:LoadingViewModel}">
                 <views:LoadingView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:NewContactViewModel}">
+                <views:NewContactView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

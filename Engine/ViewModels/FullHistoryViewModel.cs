@@ -41,26 +41,9 @@ namespace Engine.ViewModels
 
         public MyPlotModel ExpPlotModel { get{ return _expPlotModel; } set { _expPlotModel = value; } }
 
-        public ICommand GoBackCommand
-        {
-            get
-            {
-                if (_goBack == null)
-                {
-                    _goBack = new RelayCommand(
-                        param => GoBack()
-                    );
-                }
-                return _goBack;
-            }
-        }
         #endregion
 
         #region Methods
-        private void GoBack()
-        {
-            NavigateTo("Dashboard");
-        }
         #endregion
     }
 }

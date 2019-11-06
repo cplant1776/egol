@@ -24,7 +24,6 @@ namespace Engine.ViewModels
 
         private ICommand _updateSelectedQuest;
         private ICommand _updateQuestState;
-        private ICommand _goBack;
         private ICommand _setQuestStateActive;
         private ICommand _setQuestStateAccepted;
         private ICommand _setQuestStateCompleted;
@@ -159,20 +158,6 @@ namespace Engine.ViewModels
                     );
                 }
                 return _updateQuestState;
-            }
-        }
-
-        public ICommand GoBackCommand
-        {
-            get
-            {
-                if (_goBack == null)
-                {
-                    _goBack = new RelayCommand(
-                        param => GoBack()
-                    );
-                }
-                return _goBack;
             }
         }
 
@@ -399,11 +384,6 @@ namespace Engine.ViewModels
         private void RefreshQuestStatus()
         {
 
-        }
-
-        private void GoBack()
-        {
-            NavigateTo("Dashboard");
         }
 
         #endregion

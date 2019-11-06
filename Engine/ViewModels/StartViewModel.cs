@@ -12,7 +12,6 @@ namespace Engine.ViewModels
     public class StartViewModel : BaseViewModel, IPageViewModel
     {
         #region Fields
-        private ICommand _newCharacterCommand;
         private ICommand _loadCharacterCommand;
         private ICommand _generateCharacterCommand; 
 
@@ -29,20 +28,6 @@ namespace Engine.ViewModels
         public string Name
         {
             get { return "Start"; }
-        }
-
-        public ICommand NewCharacterCommand
-        {
-            get
-            {
-                if (_newCharacterCommand == null)
-                {
-                    _newCharacterCommand = new RelayCommand(
-                        param => NewCharacter()
-                    );
-                }
-                return _loadCharacterCommand;
-            }
         }
 
         public ICommand LoadCharacterCommand
