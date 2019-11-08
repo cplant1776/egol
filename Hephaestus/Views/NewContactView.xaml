@@ -107,7 +107,7 @@
                             FontSize="20"
                             Foreground="{DynamicResource SecondaryHueLightBrush}"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding NewContactName}" />
+                            Text="{Binding NewContactName, UpdateSourceTrigger=PropertyChanged, Delay=250}" />
                     </GroupBox>
 
                     <!--  Reputation  -->
@@ -198,7 +198,7 @@
                             FontSize="16"
                             Foreground="White"
                             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                            Text="{Binding NewContactDescription}"
+                            Text="{Binding NewContactDescription, UpdateSourceTrigger=PropertyChanged, Delay=250}"
                             TextWrapping="Wrap"
                             VerticalScrollBarVisibility="Auto" />
                     </StackPanel>

@@ -14,18 +14,6 @@
     <SolidColorBrush x:Key="AccentedWindowBackgroundColor" Color="#424242" />
     <SolidColorBrush x:Key="LightFontColor" Color="#FFFFFF" />
 
-    <!--  IMAGE SOURCES  -->
-    <system:String x:Key="PlusIconPath">../../media/icons/Add_grey_16xMD.png</system:String>
-    <system:String x:Key="MinusIconPath">../../media/icons/Subtract_16x.png</system:String>
-
-    <!--  GUI LAYOUT  -->
-    <Grid x:Key="guiLayout">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="9*" />
-        </Grid.RowDefinitions>
-    </Grid>
-
     <!--  Sub Header TextBlock Style  -->
     <Style
         x:Key="MaterialDesignTitleTextBlock"

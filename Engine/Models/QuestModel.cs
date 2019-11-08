@@ -86,6 +86,8 @@ namespace Engine.ViewModels
         public QuestModel()
         {
             this.Id = -1;
+            this.ReputationValue = 0;
+            this.XPValue = 0;
         }
 
         public QuestModel(String title, String description, int xpValue, int contactId,

@@ -101,7 +101,7 @@
                         FontSize="16"
                         Foreground="White"
                         Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                        Text="{Binding MilestoneDescription}"
+                        Text="{Binding MilestoneDescription, UpdateSourceTrigger=PropertyChanged, Delay=250}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
                 </StackPanel>

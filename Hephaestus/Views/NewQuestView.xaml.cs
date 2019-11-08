@@ -27,5 +27,20 @@ namespace Hephaestus.Views
             DataContext = _viewModel;
             InitializeComponent();
         }
+
+        private void QuestTitleUpdatedCommand(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Return) // Return moves off of quest title rather than submits it
+            {
+                TraversalRequest request = new TraversalRequest(FocusNavigationDirection.Next);
+                MoveFocus(request);
+            }
+            else
+            {
+                if (_viewModel.QuestTitleUpdatedCommand.CanExecute(sender))
+                    _viewModel.QuestTitleUpdatedCommand.Execute(sender);
+            }
+
+        }
     }
 }

@@ -10,6 +10,18 @@
     d:DesignWidth="1150"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Style x:Key="ComboboxDropdownPanelContainer" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="Background" Value="{DynamicResource PrimaryHueLightBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+        </Style>
+    </UserControl.Resources>
+
     <materialDesign:DialogHost>
         <Grid>
             <Grid.RowDefinitions>
@@ -71,9 +83,8 @@
                         Grid.Row="0"
                         Margin="16"
                         VerticalAlignment="Stretch"
-                        materialDesign:ColorZoneAssist.Mode="PrimaryDark"
                         materialDesign:ShadowAssist.ShadowDepth="Depth1"
-                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Background="{DynamicResource PrimaryHueDarkBrush}"
                         BorderThickness="3"
                         Header="Details">
 
@@ -112,17 +123,19 @@
                                     x:Name="TitleInput"
                                     Grid.Column="0"
                                     Margin="16,0,0,0"
-                                    materialDesign:HintAssist.Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     materialDesign:HintAssist.Hint="Title"
                                     materialDesign:HintAssist.HintOpacity=".5"
+                                    Background="Transparent"
                                     FontSize="14"
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     IsEditable="True"
+                                    IsTextSearchEnabled="False"
+                                    ItemContainerStyle="{StaticResource ComboboxDropdownPanelContainer}"
                                     ItemsSource="{Binding QuestList}"
+                                    KeyUp="QuestTitleUpdatedCommand"
                                     SelectedItem="{Binding SelectedQuest}"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    Text="{Binding SelectedQuest.Title}">
+                                    Text="{Binding SelectedQuestTitle}">
                                     <ComboBox.ItemTemplate>
 
                                         <DataTemplate>
@@ -136,6 +149,7 @@
                                             </WrapPanel>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
+
                                 </ComboBox>
 
                             </Grid>
@@ -158,6 +172,7 @@
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                                     IsEditable="True"
+                                    ItemContainerStyle="{StaticResource ComboboxDropdownPanelContainer}"
                                     ItemsSource="{Binding ContactList}"
                                     SelectedItem="{Binding SelectedContact}"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -209,6 +224,7 @@
                                     FontSize="16"
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    ItemContainerStyle="{StaticResource ComboboxDropdownPanelContainer}"
                                     ItemsSource="{Binding SelectableXPValues}"
                                     SelectedValue="{Binding SelectedQuest.XPValue}"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -225,15 +241,10 @@
                                     FontSize="16"
                                     FontWeight="Bold"
                                     Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                                    ItemContainerStyle="{StaticResource ComboboxDropdownPanelContainer}"
                                     ItemsSource="{Binding SelectableRepuationValues}"
                                     SelectedValue="{Binding SelectedQuest.ReputationValue}"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel />
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
-                                </ComboBox>
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
 
                                 <!--  Deadline  -->
                                 <DatePicker

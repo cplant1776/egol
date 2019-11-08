@@ -60,12 +60,29 @@ namespace Engine.Utils.test
         public List<ContactModel> GenerateContacts()
         {
             DATE_RANGE = (DateTime.Today - START_DATE).Days;
+            string contactName = "";
 
             List<ContactModel> contactList = new List<ContactModel> { };
             for (int i = 0; i < NUM_OF_CONTACTS; i++)
             {
+                // Make sure contact names are unique if possible
+                if(NUM_OF_CONTACTS < DummyResources.ContactNames.Count)
+                {
+                    while (true)
+                    {
+                        contactName = GetRandomName();
+                        if (contactList.Any(x => x.Name == contactName))
+                            continue;
+                        break;
+                    }
+                }
+                else
+                {
+                    contactName = GetRandomName();
+                }
+
                 contactList.Add(new ContactModel(
-                    name: GetRandomName(),
+                    name: contactName,
                     description: GetRandomDescription(),
                     reputation: RandomIntUnder(100),
                     imgName: GetRandomImage(),

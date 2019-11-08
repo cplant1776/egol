@@ -60,6 +60,7 @@ namespace Engine.ViewModels
             this.Description = "";
             this.Reputation = 0;
             this.ImgName = AppSettings.ContactImageFullPath + "default.png";
+            this.Id = -1;
         }
 
         public ContactModel(String name, String description, int reputation = 0, String imgName = "", int id = -1)
