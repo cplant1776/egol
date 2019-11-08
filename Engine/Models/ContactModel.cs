@@ -97,6 +97,11 @@ namespace Engine.ViewModels
             return this.ImgName;
         }
 
+        public static string GetDefaultImgName()
+        {
+            return AppSettings.ContactImageFullPath + "default.png";
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)

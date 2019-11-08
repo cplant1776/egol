@@ -368,3 +368,6 @@ healthchecksdb
 /Engine - nonfunctional/Models/ContactModel.cs
 /Engine - nonfunctional/Models/CharacterModel.cs
 /Engine - nonfunctional/Engine.csproj
+/Engine/ViewModels/HeaderViewModel.cs
+/Hephaestus/Views/HeaderView.xaml
+/Hephaestus/Views/HeaderView.xaml.cs

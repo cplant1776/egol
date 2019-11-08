@@ -107,7 +107,7 @@
                             FontSize="20"
                             Foreground="{DynamicResource SecondaryHueLightBrush}"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding NewContact.Name}" />
+                            Text="{Binding NewContactName}" />
                     </GroupBox>
 
                     <!--  Reputation  -->
@@ -152,7 +152,7 @@
                                     Minimum="0"
                                     Style="{StaticResource MaterialDesignDiscreteSlider}"
                                     ToolTip="Starting Reputation"
-                                    Value="{Binding NewContact.Reputation}" />
+                                    Value="{Binding NewContactReputation}" />
                             </Grid>
                         </StackPanel>
                     </GroupBox>
@@ -198,7 +198,7 @@
                             FontSize="16"
                             Foreground="White"
                             Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-                            Text="{Binding NewContact.Description}"
+                            Text="{Binding NewContactDescription}"
                             TextWrapping="Wrap"
                             VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
@@ -262,7 +262,7 @@
                         <Image
                             Height="150"
                             Margin="0,0,0,0"
-                            Source="{Binding NewContact.ImgName}" />
+                            Source="{Binding NewContactImgName}" />
                     </StackPanel>
                 </GroupBox>
 
@@ -299,6 +299,7 @@
                     materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding DoneCommand}"
                     FontSize="20"
+                    IsEnabled="{Binding DoneButtonIsEnabled}"
                     Style="{StaticResource MaterialDesignRaisedButton}">
                     <Button.CommandParameter>
                         <system:Boolean xmlns:system="clr-namespace:System;assembly=mscorlib">

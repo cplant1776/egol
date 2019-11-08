@@ -168,12 +168,11 @@ namespace Engine.ViewModels
         {
             QuestModel targetQuest;
 
-            try
+            
+            targetQuest = (QuestModel)SelectedQuest;
+            if(targetQuest == null)
             {
-                targetQuest = (QuestModel)SelectedQuest;
-            }
-            catch (ArgumentOutOfRangeException) //No quest was selected
-            {
+                Console.WriteLine("ERROR: No quest selected!");
                 return;
             }
 
@@ -238,7 +237,14 @@ namespace Engine.ViewModels
         private void MilestoneDialogClosingHandler(object sender, DialogClosingEventArgs e)
         {
             GenerateStatRows();
-            _eventRecords.Add(this.UserCharacter.EventHistory[this.UserCharacter.EventHistory.Count - 1]);
+            try
+            {
+                _eventRecords.Add(this.UserCharacter.EventHistory[this.UserCharacter.EventHistory.Count - 1]);
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("ERORR: Character has no event history!");
+            }
         }
 
         private void GoToQuest(object sender)

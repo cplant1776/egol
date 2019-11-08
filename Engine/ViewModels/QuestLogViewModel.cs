@@ -38,6 +38,10 @@ namespace Engine.ViewModels
             {
                 FindDefaultSelectedQuest();
             }
+            else
+            {
+                QuestInfoShowing = System.Windows.Visibility.Hidden;
+            }
         }
         #endregion
 
@@ -53,6 +57,7 @@ namespace Engine.ViewModels
             {
                 _selectedContact = value;
                 OnPropertyChanged("SelectedContact");
+                OnPropertyChanged("DueDateShowing");
             }
         }
 
@@ -128,6 +133,8 @@ namespace Engine.ViewModels
                     return System.Windows.Visibility.Hidden;
             }
         }
+
+        public System.Windows.Visibility QuestInfoShowing { get; set; }
 
         public bool SelectedQuestStateActive { get { return _selectedQuestStateActive; } set { _selectedQuestStateActive = value; OnPropertyChanged("SelectedQuestStateActive"); } }
         public bool SelectedQuestStateAccepted { get { return _selectedQuestStateAccepted; } set { _selectedQuestStateAccepted = value; OnPropertyChanged("SelectedQuestStateAccepted"); } }

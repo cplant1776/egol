@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,10 @@ namespace Engine.ViewModels
     {
 
         #region Fields
-        private ContactModel _newContact;
+        private string _newContactName;
+        private string _newContactDescription;
+        private int _newContactReputation;
+        private string _newContactImgName;
 
         private ICommand _newContactCancel;
         private ICommand _newContactDone;
@@ -21,11 +25,27 @@ namespace Engine.ViewModels
         #region Constructors
         public NewContactViewModel()
         {
-            _newContact = new ContactModel();
+            this.NewContactImgName = ContactModel.GetDefaultImgName();
         }
         #endregion
 
-        #region Public Commands
+        #region Public Properties/Commands
+        public string NewContactName { get { return _newContactName; } set { _newContactName = value; OnPropertyChanged("NewContactName"); OnPropertyChanged("DoneButtonIsEnabled"); } }
+        public string NewContactDescription { get { return _newContactDescription; } set { _newContactDescription = value; OnPropertyChanged("NewContactDescription"); OnPropertyChanged("DoneButtonIsEnabled"); } }
+        public int NewContactReputation { get { return _newContactReputation; } set { _newContactReputation = value; OnPropertyChanged("NewContactReputation");  } }
+        public string NewContactImgName { get { return _newContactImgName; } set { _newContactImgName = value; OnPropertyChanged("NewContactImgName");  } }
+
+        public bool DoneButtonIsEnabled
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(NewContactDescription) || String.IsNullOrEmpty(NewContactName))
+                    return false;
+                else
+                    return true;
+            }
+        }
+
         public ICommand CancelCommand
         {
             get
@@ -69,21 +89,6 @@ namespace Engine.ViewModels
         }
         #endregion
 
-        #region Public Properties
-        public ContactModel NewContact
-        {
-            get
-            {
-                return _newContact;
-            }
-            set
-            {
-                _newContact = value;
-                OnPropertyChanged("NewContact");
-            }
-        }
-        #endregion
-
         #region Methods
         private void Cancel()
         {
@@ -94,10 +99,10 @@ namespace Engine.ViewModels
         private void Done()
         {
             ContactModel newContact = new ContactModel(
-                name: this.NewContact.Name,
-                description: this.NewContact.Description,
-                reputation: this.NewContact.Reputation,
-                imgName: this.NewContact.ImgName
+                name: this.NewContactName,
+                description: this.NewContactDescription,
+                reputation: this.NewContactReputation,
+                imgName: this.NewContactImgName
                 );
 
             // Add new contact to character's contact list
@@ -109,7 +114,7 @@ namespace Engine.ViewModels
 
         private void AddImage()
         {
-            this.NewContact.ImgName = this.NewContact.SetImage();
+            this.NewContactImgName = DataHandler.UploadImageAndGetPath();
         }
 
         #endregion

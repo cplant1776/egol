@@ -238,6 +238,7 @@
                 Background="{DynamicResource SecondaryHueLightBrush}"
                 Command="{Binding DoneCommand}"
                 FontSize="24"
+                IsEnabled="{Binding DoneButtonIsEnabled}"
                 Style="{StaticResource MaterialDesignRaisedLightButton}">
 
                 <Button.CommandParameter>

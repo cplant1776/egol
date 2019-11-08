@@ -1,6 +1,7 @@
 ﻿using Engine.Models;
 using Engine.Utils;
 using Engine.Utils.test;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -167,14 +168,44 @@ namespace Engine.ViewModels
 
         public void Done()
         {
-            UserCharacter = new CharacterModel(
-                name: CharacterName,
-                description: CharacterDescription,
-                attributes: AttributeRows,
-                skills: SkillRows,
-                imgName: ImgName
-                );
-            NavigateTo("Dashboard");
+            bool isMissingFields = CheckForMissingFields();
+            if (isMissingFields)
+            {
+
+            }
+            else
+            {
+                UserCharacter = new CharacterModel(
+                    name: CharacterName,
+                    description: CharacterDescription,
+                    attributes: AttributeRows,
+                    skills: SkillRows,
+                    imgName: ImgName
+                    );
+                NavigateTo("Dashboard");
+            }
+
+        }
+
+        private bool CheckForMissingFields()
+        {
+            string missingFields = "";
+            string errorTitle = "Missing Fields";
+
+            if (String.IsNullOrEmpty(CharacterName))
+                missingFields += "* Character Name\n";
+            if (String.IsNullOrEmpty(CharacterDescription))
+                missingFields += "* Character Description\n";
+
+            if (String.IsNullOrEmpty(missingFields))
+            {
+                return false;
+            }
+            else
+            {
+                DialogHost.Show(new ErrorDialogViewModel(msg: "Please make sure the following fields are filled: \n\n" + missingFields, title: errorTitle));
+                return true;
+            }
         }
 
         public void Cancel()

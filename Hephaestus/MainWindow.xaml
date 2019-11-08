@@ -59,6 +59,9 @@
             <DataTemplate DataType="{x:Type viewModels:NewContactViewModel}">
                 <views:NewContactView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ErrorDialogViewModel}">
+                <views:ErrorDialogView />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Window.Resources>

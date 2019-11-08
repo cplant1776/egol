@@ -25,18 +25,29 @@ namespace Engine.ViewModels
         public MilestoneViewModel()
         {
             GenerateMilestoneStats();
+            this.MilestoneStat = this.MilestoneStatList[0];
             this.MilestoneValue = 1;
-            this.MilestoneStat = "Attribute 4";
         }
         #endregion
 
         #region Public Properties/Commands
         public string Name { get { return "Milestone"; } }
 
-        public string MilestoneDescription { get { return _milestoneDescription; } set { _milestoneDescription = value; OnPropertyChanged("MilestoneDescription"); } }
+        public string MilestoneDescription { get { return _milestoneDescription; } set { _milestoneDescription = value; OnPropertyChanged("MilestoneDescription"); OnPropertyChanged("DoneButtonIsEnabled"); } }
         public string MilestoneStat { get { return _milestoneStat; } set { _milestoneStat = value; OnPropertyChanged("MilestoneStat"); } }
         public int MilestoneValue { get { return _milestoneValue; } set { _milestoneValue = value; OnPropertyChanged("MilestoneValue"); } }
         public List<string> MilestoneStatList { get { return _milestoneStatList; } set { _milestoneStatList = value; OnPropertyChanged("MilestoneStatList"); } }
+
+        public bool DoneButtonIsEnabled
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(_milestoneDescription))
+                    return true;
+                else
+                    return false;
+            }
+        }
 
 
         public ICommand DoneCommand

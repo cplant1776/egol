@@ -1,5 +1,6 @@
 ﻿using Engine.Utils;
 using Engine.Utils.test;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,11 +82,22 @@ namespace Engine.ViewModels
             if (result == true)
             {
                 string filename = dlg.FileName;
-                loadedChar = DataHandler.LoadCharacterFromXml(filename);
+                try
+                {
+                    loadedChar = DataHandler.LoadCharacterFromXml(filename);
+                    this.UserCharacter = loadedChar;
+                    NavigateTo("Dashboard");
+                }
+                catch(Exception e)  //Error reading file
+                {
+                    Console.WriteLine("ERROR LOADING FILE: " + e);
+                    string errorMessage = "There was a problem loading your file. Please make sure it is properly formatted.";
+                    string errorTitle = "Cannot Load File";
+                    DialogHost.Show(new ErrorDialogViewModel(msg: errorMessage, title: errorTitle));
+                }
             }
 
-            this.UserCharacter = loadedChar;
-            NavigateTo("Dashboard");
+            
         }
 
         public void GenerateCharacter()

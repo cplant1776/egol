@@ -89,7 +89,10 @@
                 </materialDesign:Card>
 
                 <!--  Display Quest Info  -->
-                <Grid x:Name="SelectedQuestInfo" Grid.Column="1">
+                <Grid
+                    x:Name="SelectedQuestInfo"
+                    Grid.Column="1"
+                    Visibility="{Binding QuestInfoShowing}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
@@ -216,7 +219,8 @@
                                             Grid.Column="0"
                                             HorizontalAlignment="Center"
                                             Style="{StaticResource MaterialDesignHeadlineTextBlock}"
-                                            Text="DUE: " />
+                                            Text="DUE: "
+                                            Visibility="{Binding DueDateShowing, Mode=OneWay}" />
                                         <TextBlock
                                             Grid.Column="1"
                                             HorizontalAlignment="Center"

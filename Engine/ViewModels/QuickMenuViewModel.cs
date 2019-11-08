@@ -1,4 +1,5 @@
 ﻿using Engine.Utils;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -144,12 +145,21 @@ namespace Engine.ViewModels
             // Get the selected file name and load a character with it
             if (result == true)
             {
-                string filename = dlg.FileName;
-                loadedChar = DataHandler.LoadCharacterFromXml(filename);
-                AppSettings.UpdateSaveLocation(filename);
-                this.UserCharacter = loadedChar;
-
-                SendToLoadScreen();
+                try
+                {
+                    string filename = dlg.FileName;
+                    loadedChar = DataHandler.LoadCharacterFromXml(filename);
+                    AppSettings.UpdateSaveLocation(filename);
+                    this.UserCharacter = loadedChar;
+                    SendToLoadScreen();
+                }
+                catch (Exception e)  //Error reading file
+                {
+                    Console.WriteLine("ERROR LOADING FILE: " + e);
+                    string errorMessage = "There was a problem loading your file. Please make sure it is properly formatted.";
+                    string errorTitle = "Cannot Load File";
+                    DialogHost.Show(new ErrorDialogViewModel(msg: errorMessage, title: errorTitle));
+                }
                 CloseMenu();
             }
 
