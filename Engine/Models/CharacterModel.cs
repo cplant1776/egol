@@ -220,7 +220,7 @@ namespace Engine.ViewModels
 
         private void SetDefaultImage()
         {
-            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
+            this.ImgName = AppSettings.ImageDirRoot + "contacts/default.png";
         }
         #endregion
 

@@ -262,9 +262,12 @@ namespace Engine.ViewModels
             catch (InvalidCastException) // Double Clicked "RECENT EVENTS" item
             {
                 EventRecordModel selectedEvent = (EventRecordModel)senderList.SelectedItems[0];
-                 targetId = selectedEvent.AssociatedEventId;
+                if (selectedEvent.GetType() == typeof(MilestoneModel)) //If a milestone was clicked, do nothing
+                    return;
+                else
+                    targetId = selectedEvent.AssociatedEventId;
             }
-            catch (ArgumentOutOfRangeException) // Double clicked on contact's chip; not implemented yet
+            catch (ArgumentOutOfRangeException) // Double clicked on contact's chip; not implemented (yet?)
             {
                 return;
             }

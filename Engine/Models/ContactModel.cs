@@ -59,7 +59,7 @@ namespace Engine.ViewModels
             this.Name = "";
             this.Description = "";
             this.Reputation = 0;
-            this.ImgName = AppSettings.ContactImageFullPath + "default.png";
+            this.ImgName = AppSettings.ImageDirRoot + "contacts/default.png";
             this.Id = -1;
         }
 
@@ -76,7 +76,7 @@ namespace Engine.ViewModels
             }
             else
             {
-                this.ImgName = AppSettings.ContactImageFullPath + "default.png";
+                this.ImgName = AppSettings.ImageDirRoot + "contacts/default.png";
             }
 
             // Id
@@ -100,7 +100,7 @@ namespace Engine.ViewModels
 
         public static string GetDefaultImgName()
         {
-            return AppSettings.ContactImageFullPath + "default.png";
+            return AppSettings.ImageDirRoot + "contacts/default.png";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,0 +1,398 @@
+﻿<UserControl
+    x:Class="Egol.Views.CharacterCreationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Egol.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Engine.ViewModels;assembly=Engine"
+    d:DesignHeight="700"
+    d:DesignWidth="1150"
+    mc:Ignorable="d">
+
+    <materialDesign:DialogHost CloseOnClickAway="False">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+
+            <!--  HEADER  -->
+            <Grid Grid.Row="0" Background="{DynamicResource PrimaryHueMidBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  BACK BUTTON  -->
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    BorderThickness="0"
+                    Command="{Binding NavigateToCommand}"
+                    CommandParameter="Start"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <materialDesign:PackIcon
+                        Width="50"
+                        Height="50"
+                        HorizontalAlignment="Stretch"
+                        Foreground="White"
+                        Kind="KeyboardBackspace" />
+                </Button>
+
+                <!--  TEXT  -->
+                <WrapPanel
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <Image
+                        MaxHeight="50"
+                        Margin="0,0,10,0"
+                        Source="{StaticResource AppIcon}" />
+                    <TextBlock
+                        Margin="0"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        Style="{StaticResource MaterialDesignDisplay1TextBlock}"
+                        Text="Create a Character" />
+                </WrapPanel>
+
+
+
+            </Grid>
+
+            <!--  CONTENT  -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <!--  LEFT SIDE  -->
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="7*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Attribute Scroll  -->
+                        <GroupBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="16"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                            Background="{DynamicResource AccentedWindowBackgroundColor}"
+                            Header="Attributes"
+                            Style="{DynamicResource MaterialDesignGroupBox}">
+
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="32"
+                                            Height="32"
+                                            VerticalAlignment="Center"
+                                            Kind="Bacteria" />
+                                        <TextBlock
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                            Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <DataGrid
+                                x:Name="AttributeList"
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Center"
+                                materialDesign:DataGridAssist.CellPadding="2 2 2 2"
+                                AutoGenerateColumns="False"
+                                Background="{StaticResource AccentedWindowBackgroundColor}"
+                                CanUserAddRows="False"
+                                FontSize="16"
+                                Foreground="White"
+                                HeadersVisibility="None"
+                                HorizontalGridLinesBrush="{DynamicResource WindowBackgroundColor}"
+                                ItemsSource="{Binding AttributeRows}"
+                                SelectionMode="Single"
+                                SelectionUnit="Cell"
+                                VerticalScrollBarVisibility="Auto">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Width="100"
+                                        Binding="{Binding StatName}"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Width="60"
+                                        Binding="{Binding StatValue}"
+                                        IsReadOnly="True" />
+
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Command="{Binding Path=DataContext.PlusAttributeCommand, ElementName=AttributeList}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+                                                    <materialDesign:PackIcon
+                                                        HorizontalAlignment="Stretch"
+                                                        Foreground="White"
+                                                        Kind="PlusOutline" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Command="{Binding Path=DataContext.MinusAttributeCommand, ElementName=AttributeList}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+                                                    <materialDesign:PackIcon
+                                                        HorizontalAlignment="Stretch"
+                                                        Foreground="White"
+                                                        Kind="MinusBoxOutline" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+
+
+
+                        <!--  Skill Scroll  -->
+                        <GroupBox
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="16"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                            Background="{DynamicResource AccentedWindowBackgroundColor}"
+                            Header="Skills"
+                            Style="{DynamicResource MaterialDesignGroupBox}">
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="32"
+                                            Height="32"
+                                            VerticalAlignment="Center"
+                                            Kind="Ethereum" />
+                                        <TextBlock
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                            Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <DataGrid
+                                x:Name="SkillList"
+                                Margin="0,8,0,0"
+                                HorizontalAlignment="Center"
+                                materialDesign:DataGridAssist.CellPadding="2 2 2 2"
+                                AutoGenerateColumns="False"
+                                Background="{DynamicResource AccentedWindowBackgroundColor}"
+                                CanUserAddRows="False"
+                                FontSize="16"
+                                Foreground="White"
+                                HeadersVisibility="None"
+                                HorizontalGridLinesBrush="{StaticResource WindowBackgroundColor}"
+                                ItemsSource="{Binding SkillRows}"
+                                SelectionMode="Single"
+                                SelectionUnit="Cell"
+                                VerticalScrollBarVisibility="Auto">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Width="100"
+                                        Binding="{Binding StatName}"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Width="60"
+                                        Binding="{Binding StatValue}"
+                                        IsReadOnly="True" />
+
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Command="{Binding Path=DataContext.PlusSkillCommand, ElementName=SkillList}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+                                                    <materialDesign:PackIcon
+                                                        HorizontalAlignment="Stretch"
+                                                        Foreground="White"
+                                                        Kind="PlusOutline" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Command="{Binding DataContext.MinusSkillCommand, ElementName=SkillList}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+                                                    <materialDesign:PackIcon
+                                                        HorizontalAlignment="Stretch"
+                                                        Foreground="White"
+                                                        Kind="MinusBoxOutline" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+
+                    </Grid>
+
+                    <GroupBox
+                        Grid.Row="1"
+                        Margin="1"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Background="{DynamicResource AccentedWindowBackgroundColor}"
+                        Header="Description"
+                        Style="{StaticResource MaterialDesignGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="24"
+                                        Height="24"
+                                        VerticalAlignment="Center"
+                                        Kind="BookOpenPageVariant" />
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                                        Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <!--  Description Box  -->
+                        <StackPanel Name="DescirptionBoxStack" Grid.Row="1">
+                            <TextBox
+                                x:Name="CharacterDescription"
+                                Height="150"
+                                Margin="20,5,0,0"
+                                materialDesign:HintAssist.Foreground="White"
+                                materialDesign:HintAssist.Hint="Enter your character's Story"
+                                AcceptsReturn="True"
+                                BorderBrush="White"
+                                FontSize="16"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                Text="{Binding CharacterDescription}"
+                                TextWrapping="Wrap"
+                                VerticalScrollBarVisibility="Auto" />
+                        </StackPanel>
+                    </GroupBox>
+
+                </Grid>
+
+                <!--  RIGHT SIDE  -->
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  IMAGE  -->
+                    <materialDesign:Card
+                        Width="200"
+                        Margin="0,20,0,0"
+                        Padding="3"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Foreground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                        <Image
+                            Grid.Row="0"
+                            Margin="0,0,0,0"
+                            Source="{Binding ImgName}" />
+
+                    </materialDesign:Card>
+
+
+                    <!--  Name Input  -->
+                    <TextBox
+                        x:Name="CharacterName"
+                        Grid.Row="1"
+                        Margin="10"
+                        materialDesign:HintAssist.Hint="Name"
+                        FontSize="20"
+                        Foreground="White">
+                        <TextBox.Text>
+                            <Binding Path="CharacterName" UpdateSourceTrigger="PropertyChanged" />
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Button
+                        Grid.Row="2"
+                        Height="50"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Command="{Binding AddImageCommand}"
+                        FontSize="24"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="26"
+                                Height="26"
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Foreground="Black"
+                                Kind="Camera" />
+                            <TextBlock Text="Add Image" />
+                        </StackPanel>
+
+                    </Button>
+
+                    <Button
+                        Grid.Row="3"
+                        Height="50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Command="{Binding DoneCommand}"
+                        FontSize="20"
+                        Style="{StaticResource MaterialDesignRaisedButton}">
+
+                        <TextBlock Text="Create Character" />
+                    </Button>
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

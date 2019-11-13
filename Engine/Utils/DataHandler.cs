@@ -79,7 +79,7 @@ namespace Engine.Utils
             if (dlg.ShowDialog() == true)
             {
                 string source = dlg.FileName;
-                string destination = AppSettings.ContactImageFullPath + System.IO.Path.GetFileName(source);
+                string destination = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "/" + AppSettings.ImageDirRoot + "contacts/" + System.IO.Path.GetFileName(source));
                 // Copy file to resources
                 System.IO.File.Copy(source, destination, true);
                 filePath = destination;

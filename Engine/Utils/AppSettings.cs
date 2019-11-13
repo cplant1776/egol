@@ -15,7 +15,6 @@ namespace Engine.Utils
     {
         /* Set in json */
         public static string json;
-        public static Dictionary<String, String> pagePaths;
         public static Dictionary<int, String> Attributes;
         public static Dictionary<string, int> reverseAttributes;
         public static Dictionary<int, String> Skills;
@@ -23,8 +22,7 @@ namespace Engine.Utils
         public static int AttributePointsPerLevel;
         public static int SkillPointsPerLevel;
         public static string SaveDestination;
-        public static string ContactImagePath;
-        public static string ContactImageFullPath;
+        public static string ImageDirRoot;
         public static int NumOfRecentEvents;
         public static List<int> XPSelectableValues;
 
@@ -43,12 +41,8 @@ namespace Engine.Utils
             json = File.ReadAllText("Utils/appSettings.json");
             var jObject = JObject.Parse(json);
 
-            // Set page paths
-            var jToken = jObject.GetValue("PagePaths");
-            pagePaths = (Dictionary<String, String>)jToken.ToObject(typeof(Dictionary<String, String>));
-
             // Set points gained per level
-            jToken = jObject.GetValue("AttributePointsPerLevel");
+            var jToken = jObject.GetValue("AttributePointsPerLevel");
             AttributePointsPerLevel = (int)jToken.ToObject(typeof(int));
             jToken = jObject.GetValue("SkillPointsPerLevel");
             SkillPointsPerLevel = (int)jToken.ToObject(typeof(int));
@@ -71,14 +65,6 @@ namespace Engine.Utils
             // Reverse skill list
             reverseSkills = (Dictionary<string, int>)Skills.Reverse();
 
-            // Relative path for contact images
-            jToken = jObject.GetValue("ContactImagePath");
-            ContactImagePath = (string)jToken.ToObject(typeof(string));
-
-            // Absolute path for contact images ContactImageFullPath
-            jToken = jObject.GetValue("ContactImageFullPath");
-            ContactImageFullPath = (string)jToken.ToObject(typeof(string));
-
             // Number of displayed recent events on Dashboard
             jToken = jObject.GetValue("NumOfRecentEvents");
             NumOfRecentEvents = (int)jToken.ToObject(typeof(int));
@@ -88,6 +74,8 @@ namespace Engine.Utils
             XPSelectableValues = (List<int>)jToken.ToObject(typeof(List<int>));
 
             GeneratePackIconDict();
+
+            ImageDirRoot = new Uri("pack://application:,,,/media/").AbsolutePath;
         }
 
         public static void GeneratePackIconDict()
@@ -110,16 +98,16 @@ namespace Engine.Utils
                 {'n', PackIconKind.AlphabetN },
                 {'o', PackIconKind.AlphabetO },
                 {'p', PackIconKind.AlphabetP },
-                {'q', PackIconKind.AlphabetQ},
-                {'r', PackIconKind.AlphabetR},
-                {'s', PackIconKind.AlphabetS},
-                {'t', PackIconKind.AlphabetT},
-                {'u', PackIconKind.AlphabetU},
-                {'v', PackIconKind.AlphabetV},
-                {'w', PackIconKind.AlphabetW},
-                {'x', PackIconKind.AlphabetX},
-                {'y', PackIconKind.AlphabetY},
-                {'z', PackIconKind.AlphabetZ},
+                {'q', PackIconKind.AlphabetQ },
+                {'r', PackIconKind.AlphabetR },
+                {'s', PackIconKind.AlphabetS },
+                {'t', PackIconKind.AlphabetT },
+                {'u', PackIconKind.AlphabetU },
+                {'v', PackIconKind.AlphabetV },
+                {'w', PackIconKind.AlphabetW },
+                {'x', PackIconKind.AlphabetX },
+                {'y', PackIconKind.AlphabetY },
+                {'z', PackIconKind.AlphabetZ },
             };
         }
 

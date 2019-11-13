@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Engine.ViewModels
 {
@@ -18,10 +19,13 @@ namespace Engine.ViewModels
         private ContactModel _selectedContact;
         private QuestModel _selectedQuest;
         private string _selectedQuestTitle;
+        private DateTime _selectedQuestDeadline;
         private int _numOfContacts;
+        private bool _deadlineSet;
 
         private ObservableCollection<ContactModel> _contactList;
         private ObservableCollection<QuestModel> _questList;
+
         private ICommand _done;
         private ICommand _newContactDialog;
         private ICommand _questTitleUpdated;
@@ -44,6 +48,9 @@ namespace Engine.ViewModels
 
             this.SelectedQuest.XPValue = 1;
             this.SelectedQuest.ReputationValue = 0;
+
+            SelectedQuestDeadline = DateTime.UtcNow.Date;
+            _deadlineSet = false;
 
         }
         #endregion
@@ -114,6 +121,30 @@ namespace Engine.ViewModels
         public ObservableCollection<ContactModel> ContactList { get { return _contactList; } set { _contactList = value; } }
         public ObservableCollection<QuestModel> QuestList { get { return _questList; } set { _questList = value; } }
         public string SelectedQuestTitle { get { return _selectedQuestTitle; } set { _selectedQuestTitle = value; OnPropertyChanged("SelectedQuestTitle"); } }
+        public Brush DeadlineTextColor
+        {
+            get
+            {
+                if (_deadlineSet)
+                    return Brushes.White;
+                else
+                    return Brushes.Transparent;
+            }
+        }
+        public DateTime SelectedQuestDeadline {
+            get
+            {
+                return _selectedQuestDeadline;
+            }
+            set
+            {
+                _selectedQuestDeadline = value;
+               if(value != new DateTime() && value != DateTime.UtcNow.Date)
+                    _deadlineSet = true;
+                OnPropertyChanged("SelectedQuestDeadline");
+                OnPropertyChanged("DeadlineTextColor");
+            }
+        }
 
 
         public ICommand DoneCommand
@@ -169,13 +200,19 @@ namespace Engine.ViewModels
             }
             else
             {
+                DateTime deadline = new DateTime();
+                if (_deadlineSet)
+                {
+                    deadline = SelectedQuestDeadline;
+                }
+
                 QuestModel newQuest = new QuestModel(
-                    title: SelectedQuest.Title,
+                    title: SelectedQuestTitle,
                     description: SelectedQuest.Description,
                     xpValue: SelectedQuest.XPValue,
                     contactId: SelectedContact.Id,
                     reputationValue: SelectedQuest.ReputationValue,
-                    deadline: SelectedQuest.Deadline);
+                    deadline: deadline);
 
                 if (QuestIsActive)
                 {

@@ -1,0 +1,67 @@
+﻿<UserControl
+    x:Class="Hephaestus.Views.HeaderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Hephaestus.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
+    <!--  HEADER  -->
+    <Grid Background="{DynamicResource PrimaryHueMidBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  BACK BUTTON  -->
+        <Button
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            BorderThickness="0"
+            Command="{Binding NavigateToCommand}"
+            CommandParameter="Dashboard"
+            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+            Visibility="{Binding BackButtonIsVisible, Converter={StaticResource BoolToVis}}">
+            <materialDesign:PackIcon
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Stretch"
+                Foreground="White"
+                Kind="KeyboardBackspace" />
+        </Button>
+
+        <!--  HAMBURGER BUTTON  -->
+        <Button
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            BorderThickness="0"
+            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+            CommandParameter="{x:Static Dock.Left}"
+            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+            Visibility="{Binding QuickMenuButtonIsVisible, Converter={StaticResource BoolToVis}}">
+            <materialDesign:PackIcon
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Stretch"
+                Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                Kind="HamburgerMenu" />
+        </Button>
+
+        <!--  TEXT  -->
+        <TextBlock
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+            Style="{StaticResource MaterialDesignDisplay1TextBlock}"
+            Text="{StaticResource AppName}" />
+    </Grid>
+</UserControl>

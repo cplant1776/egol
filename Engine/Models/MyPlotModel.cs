@@ -77,19 +77,31 @@ namespace Engine.Models
             this.MyModel.Series.Add(s);
 
             // Add x-axis
+            int xMax = (maxDifference > 10) ? maxDifference : 10;
+            Console.WriteLine("xMax: " + xMax);
             this.MyModel.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Bottom,
-                Minimum = 0,
+                Minimum = -1,
                 Maximum = maxDifference,
+                AbsoluteMinimum = 0,
+                AbsoluteMaximum = xMax,
+                Title = "Days",
+                TitleColor = OxyColors.Gold,
             });
 
             // Add y-axis
+            int yMax = (dailyXP.Values.ToList().Max() > 100) ? dailyXP.Values.ToList().Max() : 100;
+            Console.WriteLine("yMax: " + yMax);
             this.MyModel.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Minimum = 0,
+                Minimum = -1,
                 Maximum = dailyXP.Values.ToList().Max(), // Max value is limit
+                AbsoluteMinimum = 0,
+                AbsoluteMaximum = yMax,
+                Title = "Total XP",
+                TitleColor = OxyColors.Gold,
             });
         }
 

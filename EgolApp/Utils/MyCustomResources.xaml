@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:CharSheet.classes.display"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  STRINGS  -->
+    <system:String x:Key="AppName">Egol</system:String>
+
+    <!--  IMAGES  -->
+    <BitmapImage x:Key="AppIcon" UriSource="/media/AppIcon.png" />
+
+    <!--  COLORS  -->
+    <SolidColorBrush x:Key="HeaderBackgroundColor" Color="#673AB7" />
+    <SolidColorBrush x:Key="WindowBackgroundColor" Color="#303030" />
+    <SolidColorBrush x:Key="AccentedWindowBackgroundColor" Color="#424242" />
+    <SolidColorBrush x:Key="LightFontColor" Color="#FFFFFF" />
+
+    <!--  Sub Header TextBlock Style  -->
+    <Style
+        x:Key="MaterialDesignTitleTextBlock"
+        BasedOn="{StaticResource MaterialDesignTitleTextBlock}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource LightFontColor}" />
+    </Style>
+
+
+
+
+
+</ResourceDictionary>

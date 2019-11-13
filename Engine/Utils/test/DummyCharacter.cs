@@ -226,7 +226,7 @@ namespace Engine.Utils.test
         public MilestoneModel GetRandomMilestone()
         {
             return new MilestoneModel(
-                description: "Milestone description",
+                description: "Sample Milestone",
                 eventId: GetRandomId(),
                 value: RandomIntUnder(MAX_MILESTONE_VALUE),
                 attributeId: RandomIntUnder(NUM_OF_ATTRIBUTES),

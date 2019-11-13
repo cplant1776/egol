@@ -1,0 +1,20 @@
+﻿<UserControl
+    x:Class="Egol.Views.LoadingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Egol.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1150"
+    Background="Black"
+    mc:Ignorable="d">
+
+    <ProgressBar
+        Width="100"
+        Height="100"
+        IsIndeterminate="True"
+        Style="{StaticResource MaterialDesignCircularProgressBar}"
+        Value="0" />
+</UserControl>
